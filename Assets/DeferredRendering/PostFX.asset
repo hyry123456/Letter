@@ -16,7 +16,7 @@ MonoBehaviour:
   colorLUTResolution: 32
   ssrSetting:
     useSSR: 1
-    rayMarchingSetp: 960
+    rayMarchingSetp: 48
     marchSetpSize: 4
     maxMarchDistance: 500
     depthThickness: 1

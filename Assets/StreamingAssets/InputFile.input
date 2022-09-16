@@ -1,0 +1,6 @@
+<Type=0,up=119,down=115,speed=10,name=Vertical>
+<Type=0,up=100,down=97,speed=10,name=Horizontal>
+<Type=1,up=101,down=0,speed=50,name=Interaction>
+<Type=1,up=98,down=0,speed=50,name=Bag>
+<Type=1,up=32,down=0,speed=50,name=Jump>
+<Type=1,up=304,down=0,speed=5,name=Run>

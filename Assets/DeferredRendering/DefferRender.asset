@@ -25,7 +25,7 @@ MonoBehaviour:
       clusterCount: {x: 48, y: 32, z: 64}
       isUse: 1
   shadows:
-    maxDistance: 500
+    maxDistance: 100
     distanceFade: 0.1
     directional:
       atlasSize: 2048
@@ -34,8 +34,8 @@ MonoBehaviour:
       cascadeRatio1: 0.1
       cascadeRatio2: 0.25
       cascadeRatio3: 0.5
-      cascadeFade: 0.001
-      cascadeBlend: 1
+      cascadeFade: 0.27
+      cascadeBlend: 2
     other:
       atlasSize: 2048
       filter: 2
