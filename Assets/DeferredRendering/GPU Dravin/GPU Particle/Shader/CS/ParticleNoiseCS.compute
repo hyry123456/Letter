@@ -1,0 +1,68 @@
+#include "../HLSL/ParticleInclude.hlsl"
+#include "../HLSL/ParticleNoiseInc.hlsl"
+
+
+#pragma kernel Noise_PerFrame
+
+//逐帧刷新的方法，用来控制与渲染直接相关的数据
+[numthreads(1, 64, 1)]
+void Noise_PerFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex)
+{
+    int objIndex = gid.y * 64 + index;
+	if (objIndex >= _ParticleCount) return;
+
+    int groupIndex = gid.x * _ParticleCount;
+	int allIndex = objIndex + groupIndex;
+
+    NoiseParticleData o = _ParticleNoiseBuffer[allIndex];
+    Par_Initi_Data init = _InitializeBuffer[gid.x];
+
+    if (o.index.x == init.arriveIndex) {
+        o = InitialParticle(o, init);
+        //o.index.x += _ParticleCount;
+        //o.index.x %= 1000007;
+        _ParticleNoiseBuffer[allIndex] = o;
+    }
+
+    if (o.index.x > init.arriveIndex) {
+        o.index.y = -1;
+        _ParticleNoiseBuffer[allIndex] = o;    //表示不显示
+        return;
+    }
+    if (o.random.w >= o.liveTime) {       //超过存活周期，需要初始化
+        o = InitialParticle(o, init);
+        o.index.x += _ParticleCount;
+        //o.index.x = init.arriveIndex + _ParticleCount;
+        o.index.x %= 1000007;
+        o.index.y = -1;                 //表示不显示
+        _ParticleNoiseBuffer[allIndex] = o;
+        return;
+    }
+    else
+        o.index.y = 1;
+
+    o = UpdataPosition(o, init);    //进行位移
+
+    o = OutParticle(o, init);
+
+    _ParticleNoiseBuffer[allIndex] = o;
+}
+
+#pragma kernel Noise_PerFixFrame
+
+[numthreads(1, 64, 1)]
+void Noise_PerFixFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex){
+    int objIndex = gid.y * 64 + index;
+	if (objIndex >= _ParticleCount) return;
+
+    int groupIndex = gid.x * _ParticleCount;
+	int allIndex = objIndex + groupIndex;
+
+    NoiseParticleData o = _ParticleNoiseBuffer[allIndex];
+    Par_Initi_Data init = _InitializeBuffer[gid.x];
+    if (o.index.x > init.arriveIndex || o.random.w >= o.liveTime) 
+        return;
+
+    o = UpdataSpeed(o, init);
+    _ParticleNoiseBuffer[allIndex] = o;
+}
