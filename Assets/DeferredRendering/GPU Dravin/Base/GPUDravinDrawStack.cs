@@ -39,7 +39,7 @@ namespace DefferedRender
         /// <summary>        /// ÒÆ³ý³öäÖÈ¾Õ»        /// </summary>
         public void RemoveRender(GPUDravinBase clustBase)
         {
-            if (clustBase == null) return;
+            if (clustBase == null || queueStack == null) return;
             queueStack.Remove(clustBase);
         }
 

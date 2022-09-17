@@ -99,5 +99,12 @@ namespace DefferedRender
             planes[5] = GetPlane(transform.forward, transform.position + transform.forward * camera.farClipPlane);//far
             return planes;
         }
+
+        public bool IsOutsideThePlane(Vector4 plane, Vector3 pointPosition)
+        {
+            if (Vector3.Dot(plane, pointPosition) + plane.w > 0)
+                return true;
+            return false;
+        }
     }
 }

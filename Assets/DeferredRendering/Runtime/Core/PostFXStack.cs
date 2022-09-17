@@ -292,8 +292,10 @@ namespace DefferedRender
 			buffer.SetGlobalFloat(fogMinHight, fog.fogMinHeight);
 			buffer.SetGlobalFloat(fogPosYFallOff, fog.fogPosYFallOff);
 
+			RenderTextureFormat format = (useHDR) ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+
 			buffer.GetTemporaryRT(bulkLightTempTexId, camera.pixelWidth, camera.pixelHeight,
-				0, FilterMode.Bilinear, RenderTextureFormat.Default);
+				0, FilterMode.Bilinear, format);
 
 			Draw(soure, bulkLightTempTexId, Pass.Fog);
 

@@ -4,3 +4,4 @@
 <Type=1,up=98,down=0,speed=50,name=Bag>
 <Type=1,up=32,down=0,speed=50,name=Jump>
 <Type=1,up=304,down=0,speed=5,name=Run>
+<Type=1,up=113,down=0,speed=5,name=Skill>

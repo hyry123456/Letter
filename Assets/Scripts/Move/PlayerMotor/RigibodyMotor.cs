@@ -72,16 +72,13 @@ namespace Motor
 
         Vector3 connectionWorldPostion;
 
-        private bool IsWaiting
-        {
-            get
-            {
-                if (waitTime > 0) return true;
-                return false;
-            }
-        }
+        /// <summary>
+        /// 攀爬检测的偏移数值，x是前方缩放，y是向上偏移,z是添加的力的大小
+        /// </summary>
+        [SerializeField]
+        Vector3 climbData = Vector3.one;
 
-        void Start()
+        void Awake()
         {
             velocity = Vector3.zero;
             body = GetComponent<Rigidbody>();
@@ -90,8 +87,6 @@ namespace Motor
             characterInfo = GetComponent<Info.CharacterInfo>();
             if (characterInfo == null) Debug.LogError("角色信息为空");
         }
-
-
 
         public void Move(float horizontal, float vertical)
         {
@@ -115,12 +110,15 @@ namespace Motor
 
         private void FixedUpdate()
         {
+            //传送检测
+            if (CheckTransing())
+                return;
+
             //更新数据，用来对这一个物理帧的数据进行更新之类的
             UpdateState();
-            if (IsWaiting) return;
             //确定在空中还是在地面
             AdjustVelocity();
-
+            ClimbCheck();
 
             if (desiredJump)
             {
@@ -133,7 +131,6 @@ namespace Motor
             body.velocity = velocity;
             ClearState();
         }
-
 
         void UpdateState()
         {
@@ -153,7 +150,6 @@ namespace Motor
             else
                 contactNormal = Vector3.up;
 
-            UpdateWeakTime();
 
             if (connectObj && connectObj.tag == "CheckMove")
             {
@@ -177,7 +173,6 @@ namespace Motor
         {
             desiredJump = true;
         }
-
         void Jump()
         {
             Vector3 jumpDirction;
@@ -221,6 +216,45 @@ namespace Motor
 
         }
 
+        
+        Vector3 targetPos;      //传送到的目标点
+        Vector3 beginPos;       //起始位置，进行Lerp
+        float radio;            //移动比例
+        float speed;            //比例增加的速度
+
+        /// <summary>
+        /// 传送到特定点，在传送过程中需要停止其他力，只剩下向目标点的速度
+        /// </summary>
+        /// <param name="postion">目标位置</param>
+        /// <param name="speed">速度</param>
+        public void TransferToPosition(Vector3 postion, float speed)
+        {
+            //不允许反复传送
+            if (radio > 0) return;
+            float dis = (targetPos - transform.position).magnitude;
+            this.speed = dis / speed;
+            radio = 1 / this.speed * Time.deltaTime;
+            beginPos = transform.position;
+            targetPos = postion;
+        }
+
+        private bool CheckTransing()
+        {
+            if(radio < 0)
+                return false;
+            radio += 1 / this.speed * Time.deltaTime;
+            if(radio > 1.0f)
+            {
+                radio = -1.0f;
+                Vector3 dir = targetPos - beginPos;
+                //保证一个初速度
+                body.velocity = dir.normalized * dir.magnitude * speed * 0.3f;
+                return false;
+            }
+            transform.position = Vector3.Lerp(beginPos, targetPos, radio);
+            return true;
+        }
+
         private void OnCollisionExit(Collision collision)
         {
             EvaluateCollision(collision);
@@ -241,7 +275,7 @@ namespace Motor
                 if (upDot >= minDot)
                 {
                     onGround = true;
-                    //保证如果有多个接触面时能够正确的获取法线，因此用加
+                    //保证如果有多个接触面时能够正确的获取法线
                     contactNormal += normal;
                     connectObj = collision.gameObject;
                 }
@@ -264,10 +298,8 @@ namespace Motor
         {
             //因为速度用的也是世界坐标，因此移动时投影也依靠的是世界坐标，其中right控制x轴，foward控制Y轴
             //将1，0，0投影到接触平面上，
-            //Vector3 xAixs = ProjectOnContactPlane(Vector3.right).normalized;
             Vector3 xAixs = ProjectDirectionOnPlane(Vector3.right, contactNormal);
             //将0，0，1投影到接触平面上
-            //Vector3 zAxis = ProjectOnContactPlane(Vector3.forward).normalized;
             Vector3 zAxis = ProjectDirectionOnPlane(Vector3.forward, contactNormal);
 
             Vector3 relativeVelocity = velocity - connectionVelocity;
@@ -373,70 +405,35 @@ namespace Motor
 
 
         /// <summary>
-        /// 设置动画参数
-        /// </summary>
-        //void SetAnimatorValue()
-        //{
-        //    if (playerInfo == null) return;
-        //    Info.PlayerAction playerAction = playerInfo.characterAction as Info.PlayerAction;
-        //    if (Mathf.Abs(velocity.x) >= 0.1f || Mathf.Abs(velocity.z) >= 0.1f)
-        //        playerAction.Move = true;
-        //    else playerAction.Move = false;
-        //    playerAction.Jump = !onGround;
-        //}
-
-        public float waitTime;
-        Common.INonReturnAndNonParam onWaitEnd;
-
-
-        bool UpdateWeakTime()
-        {
-            if (waitTime < 0) return false;
-            waitTime -= Time.fixedDeltaTime;
-            if(waitTime < 0)
-            {
-                if(onWaitEnd != null)
-                {
-                    onWaitEnd();
-                    onWaitEnd = null;
-                }
-            }
-            return true;
-        }
-
-
-        /// <summary>
         /// 攀爬检测，进行攀爬
         /// </summary>
         void ClimbCheck()
         {
+            Vector3 beginPos, forward;
+            if (playerInputSpace)
+            {
+                forward = playerInputSpace.forward;
+            }
+            else
+            {
+                forward = transform.forward;
+            }
+            forward.y = 0;
+            forward = forward.normalized * climbData.x + Vector3.up * climbData.y;
+            beginPos = transform.position + forward;
+            Debug.DrawRay(beginPos, Vector3.down * 0.3f);
 
-            //if (Physics.Raycast(ClimbCheckPoint.position, Vector3.down, out RaycastHit hit, 0.1f, probeMask))
-            //{
-            //    if (hit.normal.y > minGroundDot)
-            //    {
-            //        rigidbody.useGravity = false;
-            //        rigidbody.velocity = Vector3.zero;
-            //        waitTime = 0.8f;
-            //        if (playerInfo != null)
-            //        {
-            //            playerInfo.allSystemPort.AnimaControl.StartRootAnimate();
-            //            Info.PlayerAction playerAction = playerInfo.characterAction as Info.PlayerAction;
-            //            playerAction.Climb = true;
-            //            onWaitEnd = () =>
-            //            {
-            //                rigidbody.position = hit.point;
-            //                playerInfo.allSystemPort.AnimaControl.StopRootAnimate();
-            //                rigidbody.useGravity = true;
-            //                playerAction.Climb = false;
-            //            };
-            //        }
-            //    }
-            //}
+            if (Physics.Raycast(beginPos, Vector3.down, out RaycastHit hit, 0.5f, probeMask))
+            {
+                if (hit.normal.y > minGroundDot && velocity.y > 0)
+                {
+                    velocity += Vector3.up * climbData.z;
+                    Debug.Log(velocity);
+                }
+            }
         }
 
         float targetRotateY;
-
         /// <summary>       /// 旋转模型        /// </summary>
         void Rotate()
         {
@@ -470,6 +467,7 @@ namespace Motor
             //判断是哪边，也就是顺时针还是逆时针
             return direction.x < 0f ? 360f - angle : angle;
         }
+
 
 
     }

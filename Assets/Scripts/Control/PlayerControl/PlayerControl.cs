@@ -12,6 +12,8 @@ namespace Control
         /// <summary>        /// 主角的摄像机，目前是直接挂摄像机上来        /// </summary>
         public GameObject view;
         private Motor.OribitCamera oribitCamera;
+
+        public float hookSpeed = 3;
         
 
         public static PlayerControl Instance {
@@ -61,11 +63,17 @@ namespace Control
             float vertical = MyInput.Instance.GetAsis(verticalName);
             float horizontal = MyInput.Instance.GetAsis(horizontalName);
             bool jump = MyInput.Instance.GetButtonDown(jumpName);
-
+            bool skill = MyInput.Instance.GetButtonDown("Skill");
 
             motor.Move(horizontal, vertical);
             if (jump)
                 motor.DesireJump();
+
+            if(skill)
+            {
+                if(HookRopeManage.Instance.Target)
+                    motor.TransferToPosition(HookRopeManage.Instance.Target.position, hookSpeed);
+            }
         }
 
         /// <summary>
