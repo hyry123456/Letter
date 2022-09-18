@@ -25,6 +25,8 @@ public class HookRopeManage : GPUDravinBase
     PoolingList<Transform> poolingList;
     Transform target;   //最近的目标
     Material material;  //显示用的材质
+    float particleSize; //粒子大小，读取材质的数据
+
     bool isInsert;      //是否插入绘制栈中
 
     /// <summary>    /// 得到最近的目标对象，可能为空    /// </summary>
@@ -48,6 +50,7 @@ public class HookRopeManage : GPUDravinBase
         material = Resources.Load<Material>("EffectMaterial/SimpleParticle");
         if (material == null)
             Debug.LogError("资源加载错误");
+        particleSize = material.GetFloat("_ParticleSize");
         GPUDravinDrawStack.Instance.InsertRender(this);
         isInsert = true;
     }
@@ -74,14 +77,25 @@ public class HookRopeManage : GPUDravinBase
             target = null;
             return;
         }
+        Transform camTran = camera.transform;
         Vector4[] planes = GetFrustumPlane(camera);
         int minIndex = -1;
         for(int i=0; i<poolingList.size; i++)
         {
             for(int j=0; j < 6; j++)
             {
-                if (IsOutsideThePlane(planes[j], poolingList.list[i].transform.position))
+                Vector3 oriPos = poolingList.list[i].transform.position;
+                //返回false，也就是在里面就退出
+                if (IsOutsideThePlane(planes[j], oriPos +
+                    camTran.right * particleSize + camTran.up * -particleSize)
+                    && IsOutsideThePlane(planes[j], oriPos +
+                    camTran.right * -particleSize + camTran.up * -particleSize)
+                    && IsOutsideThePlane(planes[j], oriPos +
+                    camTran.right * -particleSize + camTran.up * particleSize)
+                    && IsOutsideThePlane(planes[j], oriPos +
+                    camTran.right * particleSize + camTran.up * particleSize))
                     break;
+                
                 if(j == 5)
                 {
                     if (minIndex == -1)

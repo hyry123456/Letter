@@ -52,21 +52,7 @@ struct ShadowData {
 	float strength;
 };
 
-// float MixBakedAndRealtimeShadows (
-// 	ShadowData global, float shadow, int shadowMaskChannel, float strength
-// ) {
-// 	float baked = GetBakedShadow(global.shadowMask, shadowMaskChannel);
-// 	if (global.shadowMask.always) {
-// 		shadow = lerp(1.0, shadow, global.strength);
-// 		shadow = min(baked, shadow);
-// 		return lerp(1.0, shadow, strength);
-// 	}
-// 	if (global.shadowMask.distance) {
-// 		shadow = lerp(baked, shadow, global.strength);
-// 		return lerp(1.0, shadow, strength);
-// 	}
-// 	return lerp(1.0, shadow, strength * global.strength);
-// }
+
 
 float FadedShadowStrength (float distance, float scale, float fade) {
 	return saturate((1.0 - distance * scale) * fade);
