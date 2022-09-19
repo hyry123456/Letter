@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,11 +23,21 @@ namespace Info
         public float walkSpeed = 5;
         public float rotateSpeed = 10;
 
+        /// <summary>        /// 角色得分         /// </summary>
+        protected int score = 0;
+
         /// <summary>        /// 初始化方法        /// </summary>
+
         protected virtual void OnEnable()
         {
             hp = maxHP;
             sp = maxSP;
+            score = 0;
+        }
+        public void getScore()
+        {
+            score++;
+            Debug.Log(score);
         }
     }
 }
