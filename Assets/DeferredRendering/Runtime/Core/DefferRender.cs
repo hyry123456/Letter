@@ -380,8 +380,10 @@ namespace DefferedRender
             {
                 preFrameFinalTex = RenderTexture.GetTemporary(camera.pixelWidth, camera.pixelHeight,
                     0, RenderTextureFormat.Default);
+                preFrameFinalTex.name = "PerFrameFinalTexture";
                 Draw(colorAttachmentId, preFrameFinalTex, CameraRenderMode._CopyBilt);
             }
+            ExecuteBuffer();
         }
 
         /// <summary>	/// 清除使用过的数据，因为纹理图大多数都是在内存中的，因此需要我们手动释放	/// </summary>

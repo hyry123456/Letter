@@ -37,7 +37,7 @@ MonoBehaviour:
     mode: 0
     scatter: 0.7
   toneMapping:
-    mode: 1
+    mode: 0
   colorAdjustments:
     postExposure: 0
     contrast: 0

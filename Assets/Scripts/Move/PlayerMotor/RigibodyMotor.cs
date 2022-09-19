@@ -112,19 +112,21 @@ namespace Motor
         {
             //更新数据，用来对这一个物理帧的数据进行更新之类的
             UpdateState();
-            //确定在空中还是在地面
-            AdjustVelocity();
-            ClimbCheck();
 
             //传送
-            CheckTransing();
-
-            if (desiredJump)
+            if (!CheckTransing())   //非传送才执行下面的语句
             {
-                Jump();
-                desiredJump = false;
+                //确定在空中还是在地面
+                AdjustVelocity();
+                ClimbCheck();
+                if (desiredJump)
+                {
+                    Jump();
+                    desiredJump = false;
+                }
+                Rotate();
             }
-            Rotate();
+
             body.velocity = velocity;
             ClearState();
         }
@@ -235,16 +237,19 @@ namespace Motor
                 return; 
             }
             direct = (postion - transform.position).normalized;
+            Vector3 nowDir = body.velocity.normalized;
+            body.velocity = Mathf.Clamp01( Vector3.Dot(nowDir, direct) ) * body.velocity;
             maxSpeed = speed;
             targetPos = postion;
             body.useGravity = false;
 
-            //speed += 3.0f * Time.deltaTime;
         }
 
-        private void CheckTransing()
+        /// <summary>        /// 进行传送        /// </summary>
+        /// <returns>是否在传送中</returns>
+        private bool CheckTransing()
         {
-            if (maxSpeed < 0) return;
+            if (maxSpeed < 0) return false;
             //speed = Mathf.Min(speed + accrelerate * Time.deltaTime, maxSpeed);
             Vector3 dir = (targetPos - transform.position).normalized;
             if(Vector3.Dot(dir, direct) < 0.3)
@@ -252,9 +257,10 @@ namespace Motor
                 maxSpeed = -1;
                 body.useGravity = true;
                 velocity *= 0.3f;
-                return;
+                return false;
             }
             velocity += dir * maxSpeed;
+            return true;
         }
 
         private void OnCollisionExit(Collision collision)

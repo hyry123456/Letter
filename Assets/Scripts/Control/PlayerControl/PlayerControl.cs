@@ -64,6 +64,7 @@ namespace Control
             float horizontal = MyInput.Instance.GetAsis(horizontalName);
             bool jump = MyInput.Instance.GetButtonDown(jumpName);
             bool skill = MyInput.Instance.GetButtonDown("Skill");
+            bool esc = MyInput.Instance.GetButtonDown("ESC");
 
             motor.Move(horizontal, vertical);
             if (jump)
@@ -73,6 +74,10 @@ namespace Control
             {
                 if(HookRopeManage.Instance.Target)
                     motor.TransferToPosition(HookRopeManage.Instance.Target.position, hookSpeed);
+            }
+            if (esc)
+            {
+                UIExtentControl.Instance?.ShowOrClose();
             }
         }
 
