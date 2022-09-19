@@ -14,6 +14,8 @@ namespace DefferedRender
             useGPUInstancing,        //GPU实例化
             useSRPBatcher;          //SRP批处理
         public bool maskLight;      //是否遮罩灯光
+        [Range(0.25f, 1f)]
+        public float renderScale;          //渲染缩放
 
         [RenderingLayerMaskField]
         public int renderingLayerMask;
@@ -42,7 +44,8 @@ namespace DefferedRender
                 clusterCount = new Vector3Int(16, 16, 36),
                 isUse = false,
             },
-    };
+            renderScale = 1f,
+        };
 
         /// <summary>	/// 阴影设置参数	/// </summary>
         [SerializeField]

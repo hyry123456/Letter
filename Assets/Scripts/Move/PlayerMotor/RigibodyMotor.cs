@@ -1,18 +1,18 @@
-
+ï»¿
 using UnityEngine;
 
 namespace Motor
 {
 
     /// <summary>
-    /// Ä£Äâ±ğÈËµÄÒÆ¶¯Àà£¬ÊÇÒ»¸ö·Ç³£³ÉÊìµÄ°æ±¾
+    /// æ¨¡æ‹Ÿåˆ«äººçš„ç§»åŠ¨ç±»ï¼Œæ˜¯ä¸€ä¸ªéå¸¸æˆç†Ÿçš„ç‰ˆæœ¬
     /// </summary>
     public class RigibodyMotor : MonoBehaviour
     {
 
-        /// <summary>    /// µ±Ç°ËÙ¶È, ÆÚÍûËÙ¶È, Á¬½ÓÎïÌåµÄËÙ¶È    /// </summary>
+        /// <summary>    /// å½“å‰é€Ÿåº¦, æœŸæœ›é€Ÿåº¦, è¿æ¥ç‰©ä½“çš„é€Ÿåº¦    /// </summary>
         Vector3 velocity, desiredVelocity, connectionVelocity;
-        /// <summary>    /// ¼ÓËÙ¶È    /// </summary>
+        /// <summary>    /// åŠ é€Ÿåº¦    /// </summary>
         public float groundAcceleration = 10f, airAcceleration = 5;
 
         Rigidbody body;
@@ -21,50 +21,50 @@ namespace Motor
         private bool desiredJump = false;
 
         public float jumpHeight = 2f;
-        /// <summary>    /// ×î´óÌøÔ¾´ÎÊı    /// </summary>
+        /// <summary>    /// æœ€å¤§è·³è·ƒæ¬¡æ•°    /// </summary>
         public int maxAirJumps = 2;
         private int airJumps = 0;
 
-        /// <summary>    /// ÊÇ·ñÔÚµØÃæÉÏ    /// </summary>
+        /// <summary>    /// æ˜¯å¦åœ¨åœ°é¢ä¸Š    /// </summary>
         private bool onGround = false;
 
-        /// <summary>    /// ×Ö¶ÎOnSteep£¬È·¶¨ÊÇ·ñÔÚĞ±ÃæÉÏ    /// </summary>
+        /// <summary>    /// å­—æ®µOnSteepï¼Œç¡®å®šæ˜¯å¦åœ¨æ–œé¢ä¸Š    /// </summary>
         private bool OnSteep => steepContractCount > 0;
 
-        /// <summary>        /// ×î´óµØÃæµÄÇãĞ±¼Ğ½Ç£¬ÒÔ¼°Â¥ÌİÇãĞ±¼Ğ½Ç        /// </summary>
+        /// <summary>        /// æœ€å¤§åœ°é¢çš„å€¾æ–œå¤¹è§’ï¼Œä»¥åŠæ¥¼æ¢¯å€¾æ–œå¤¹è§’        /// </summary>
         [Range(0, 90)]
         public float maxGroundAngle = 25f, maxStairAngle = 25;
         private float minGroundDot = 0, minStairsDot = 0;
 
         /// <summary>
-        /// ½Ó´¥ÃæµÄ·¨Ïß£¬Õâ¸ö·¨ÏßÊÇÆ½¾ù·¨Ïß£¬ÓÃÀ´È·¶¨ÒÆ¶¯ÃæµÄ·½ÏòÒÔ¼°ÌøÔ¾µÄ·½Ïò
+        /// æ¥è§¦é¢çš„æ³•çº¿ï¼Œè¿™ä¸ªæ³•çº¿æ˜¯å¹³å‡æ³•çº¿ï¼Œç”¨æ¥ç¡®å®šç§»åŠ¨é¢çš„æ–¹å‘ä»¥åŠè·³è·ƒçš„æ–¹å‘
         /// </summary>
         Vector3 contactNormal, steepNormal;
         /// <summary>
-        /// ¶¸ÇÍÃæ¼ì²â£¬Èç¹ûÈËÎï±»¿¨ÔÚ¶¸ÇÍÃæÖĞ£¬ĞèÒª½øĞĞ¼ÆÊı£¬ÅĞ¶ÏÊÇ·ñÒª¶¸ÇÍÃæÌøÔ¾
+        /// é™¡å³­é¢æ£€æµ‹ï¼Œå¦‚æœäººç‰©è¢«å¡åœ¨é™¡å³­é¢ä¸­ï¼Œéœ€è¦è¿›è¡Œè®¡æ•°ï¼Œåˆ¤æ–­æ˜¯å¦è¦é™¡å³­é¢è·³è·ƒ
         /// </summary>
         int steepContractCount = 0;
 
         /// <summary>
-        /// ÓÃÀ´È·¶¨´ËÊ±Àë¿ªµØÃæµÄÊ±¼ä(stepSinceLastGround)£¬ÔÚµØÃæÊ±»á±äÎª0£¬
-        /// ²»ÔÚÊ±»áÖğÎïÀíÖ¡Ë¢ĞÂ
+        /// ç”¨æ¥ç¡®å®šæ­¤æ—¶ç¦»å¼€åœ°é¢çš„æ—¶é—´(stepSinceLastGround)ï¼Œåœ¨åœ°é¢æ—¶ä¼šå˜ä¸º0ï¼Œ
+        /// ä¸åœ¨æ—¶ä¼šé€ç‰©ç†å¸§åˆ·æ–°
         /// </summary>
         int stepSinceLastGround = 0;
-        /// <summary>    /// ÓÃÀ´È·¶¨ÌøÔ¾µÄÊ±¼ä£¬µ±ÌøÔ¾Ê±»á¹éÁã£¬ÔÚÎïÀíÖ¡Ê±ÖğÖ¡Ôö¼Ó    /// </summary>
+        /// <summary>    /// ç”¨æ¥ç¡®å®šè·³è·ƒçš„æ—¶é—´ï¼Œå½“è·³è·ƒæ—¶ä¼šå½’é›¶ï¼Œåœ¨ç‰©ç†å¸§æ—¶é€å¸§å¢åŠ     /// </summary>
         int stepSinceLastJump = 0;
 
-        /// <summary>    /// ÅĞ¶ÏÊ±ºò¿ÉÒÔÌùµØµÄËÙ¶È£¬Èç¹ûËÙ¶È´óÓÚ¸ÃÖµ£¬²»ÔÊĞíÌùµØ    /// </summary>
+        /// <summary>    /// åˆ¤æ–­æ—¶å€™å¯ä»¥è´´åœ°çš„é€Ÿåº¦ï¼Œå¦‚æœé€Ÿåº¦å¤§äºè¯¥å€¼ï¼Œä¸å…è®¸è´´åœ°    /// </summary>
         [SerializeField, Range(0, 100f)]
         float maxSnapSpeed = 100f;
-        /// <summary>    /// ÌùµØµÄ¼ì²â¾àÀë    /// </summary>
+        /// <summary>    /// è´´åœ°çš„æ£€æµ‹è·ç¦»    /// </summary>
         [SerializeField, Range(0, 10f)]
         float probeDistance = 3f;
 
-        /// <summary>    /// ÌùµØ¼ì²éµÄ²ã£¬ÒÔ¼°Â¥Ìİ¼ì²é²ã    /// </summary>
+        /// <summary>    /// è´´åœ°æ£€æŸ¥çš„å±‚ï¼Œä»¥åŠæ¥¼æ¢¯æ£€æŸ¥å±‚    /// </summary>
         [SerializeField]
         LayerMask probeMask, stairsMask = -1;
 
-        /// <summary>    /// ÊäÈë¿Õ¼ä£¬ÓÃÀ´¸ù¾İ¸Ã¿Õ¼äÀ´¿ØÖÆÄ£ĞÍÒÆ¶¯    /// </summary>
+        /// <summary>    /// è¾“å…¥ç©ºé—´ï¼Œç”¨æ¥æ ¹æ®è¯¥ç©ºé—´æ¥æ§åˆ¶æ¨¡å‹ç§»åŠ¨    /// </summary>
         [SerializeField]
         Transform playerInputSpace;
 
@@ -73,7 +73,7 @@ namespace Motor
         Vector3 connectionWorldPostion;
 
         /// <summary>
-        /// ÅÊÅÀ¼ì²âµÄÆ«ÒÆÊıÖµ£¬xÊÇÇ°·½Ëõ·Å£¬yÊÇÏòÉÏÆ«ÒÆ,zÊÇÌí¼ÓµÄÁ¦µÄ´óĞ¡
+        /// æ”€çˆ¬æ£€æµ‹çš„åç§»æ•°å€¼ï¼Œxæ˜¯å‰æ–¹ç¼©æ”¾ï¼Œyæ˜¯å‘ä¸Šåç§»,zæ˜¯æ·»åŠ çš„åŠ›çš„å¤§å°
         /// </summary>
         [SerializeField]
         Vector3 climbData = Vector3.one;
@@ -85,12 +85,12 @@ namespace Motor
             minGroundDot = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
             minStairsDot = Mathf.Cos(maxStairAngle * Mathf.Deg2Rad);
             characterInfo = GetComponent<Info.CharacterInfo>();
-            if (characterInfo == null) Debug.LogError("½ÇÉ«ĞÅÏ¢Îª¿Õ");
+            if (characterInfo == null) Debug.LogError("è§’è‰²ä¿¡æ¯ä¸ºç©º");
         }
 
         public void Move(float horizontal, float vertical)
         {
-            //Êµ¼ÊÉÏ¾ÍÊÇ¼ÓËÙ¶ÈÊÇ¶¨Öµ£¬½ÇÉ«ÊäÈëÖµÊÇÄ¿±êËÙ¶È£¬ÖğÖ¡½«ËÙ¶È±ä»¯ÎªÄ¿±êËÙ¶È
+            //å®é™…ä¸Šå°±æ˜¯åŠ é€Ÿåº¦æ˜¯å®šå€¼ï¼Œè§’è‰²è¾“å…¥å€¼æ˜¯ç›®æ ‡é€Ÿåº¦ï¼Œé€å¸§å°†é€Ÿåº¦å˜åŒ–ä¸ºç›®æ ‡é€Ÿåº¦
             Vector2 playInput = new Vector2(vertical, horizontal);
             playInput = Vector2.ClampMagnitude(playInput, 1);
             if (playerInputSpace)
@@ -103,31 +103,28 @@ namespace Motor
             }
             desiredVelocity = desiredVelocity * characterInfo.runSpeed;
 
-            //ÓëÔËËã£¬·ÀÖ¹ÊäÈë±»¹Ø±Õ
+            //ä¸è¿ç®—ï¼Œé˜²æ­¢è¾“å…¥è¢«å…³é—­
             desiredJump |= Input.GetButtonDown("Jump");
 
         }
 
         private void FixedUpdate()
         {
-            //´«ËÍ¼ì²â
-            if (CheckTransing())
-                return;
-
-            //¸üĞÂÊı¾İ£¬ÓÃÀ´¶ÔÕâÒ»¸öÎïÀíÖ¡µÄÊı¾İ½øĞĞ¸üĞÂÖ®ÀàµÄ
+            //æ›´æ–°æ•°æ®ï¼Œç”¨æ¥å¯¹è¿™ä¸€ä¸ªç‰©ç†å¸§çš„æ•°æ®è¿›è¡Œæ›´æ–°ä¹‹ç±»çš„
             UpdateState();
-            //È·¶¨ÔÚ¿ÕÖĞ»¹ÊÇÔÚµØÃæ
+            //ç¡®å®šåœ¨ç©ºä¸­è¿˜æ˜¯åœ¨åœ°é¢
             AdjustVelocity();
             ClimbCheck();
+
+            //ä¼ é€
+            CheckTransing();
 
             if (desiredJump)
             {
                 Jump();
                 desiredJump = false;
             }
-
             Rotate();
-
             body.velocity = velocity;
             ClearState();
         }
@@ -137,9 +134,9 @@ namespace Motor
             stepSinceLastGround += 1;
             stepSinceLastJump += 1;
             velocity = body.velocity;
-            //µ±²»ÔÚµØÃæÊ±Ö´ĞĞÌù½üµØÃæ·½·¨
-            if (onGround/*ÔÚµØÉÏ*/ || SnapToGround()/*¿ÉÒÔÌù½üµØÃæ£¬Ò²¾ÍÊÇ¸Õ¸ÕÎ´¾­¹ıÌøÔ¾£¬µ«ÊÇ·ÉÁË³öÈ¥*/
-                || CheckSteepContacts()/*ÔÚĞ±ÃæÉÏ£¬ÇÒ±»Ğ±Ãæ°üÎ§*/)
+            //å½“ä¸åœ¨åœ°é¢æ—¶æ‰§è¡Œè´´è¿‘åœ°é¢æ–¹æ³•
+            if (onGround/*åœ¨åœ°ä¸Š*/ || SnapToGround()/*å¯ä»¥è´´è¿‘åœ°é¢ï¼Œä¹Ÿå°±æ˜¯åˆšåˆšæœªç»è¿‡è·³è·ƒï¼Œä½†æ˜¯é£äº†å‡ºå»*/
+                || CheckSteepContacts()/*åœ¨æ–œé¢ä¸Šï¼Œä¸”è¢«æ–œé¢åŒ…å›´*/)
             {
                 stepSinceLastGround = 0;
                 airJumps = 0;
@@ -159,7 +156,7 @@ namespace Motor
 
         void UpdateConnectionState()
         {
-            //Ö»ÓĞÎïÌåÏàÍ¬£¬²ÅÓĞ±ØÒª¼ÆËã
+            //åªæœ‰ç‰©ä½“ç›¸åŒï¼Œæ‰æœ‰å¿…è¦è®¡ç®—
             if(connectObj == preConnectObj)
             {
                 Vector3 connectionMovment =
@@ -176,32 +173,32 @@ namespace Motor
         void Jump()
         {
             Vector3 jumpDirction;
-            //È·¶¨ÌøÔ¾·½Ïò
+            //ç¡®å®šè·³è·ƒæ–¹å‘
             if (onGround)
             {
-                //ÔÚµØÉÏ£¬Ö±½Ó¸ù¾İ½Ó´¥·½Ïò
+                //åœ¨åœ°ä¸Šï¼Œç›´æ¥æ ¹æ®æ¥è§¦æ–¹å‘
                 jumpDirction = contactNormal;
             }
             else if (OnSteep)
             {
-                //ÔÚĞ±Ãæ¾ÍÓÃĞ±Ãæ·½Ïò£¬Í¬Ê±Ìí¼ÓÒ»¸öÏòÉÏµÄ·½Ïò£¬±£Ö¤ÄÜ¹»ÍùÉÏÅÀ
+                //åœ¨æ–œé¢å°±ç”¨æ–œé¢æ–¹å‘ï¼ŒåŒæ—¶æ·»åŠ ä¸€ä¸ªå‘ä¸Šçš„æ–¹å‘ï¼Œä¿è¯èƒ½å¤Ÿå¾€ä¸Šçˆ¬
                 jumpDirction = (steepNormal + Vector3.up).normalized;
                 airJumps = -1;
-                //ÔÚĞ±ÃæÊ±¸ù¾İĞ±Ãæ·½Ïòµ÷ÕûĞı×ª·½Ïò
+                //åœ¨æ–œé¢æ—¶æ ¹æ®æ–œé¢æ–¹å‘è°ƒæ•´æ—‹è½¬æ–¹å‘
                 LoadTargetY(steepNormal);
             }
             else if (airJumps < maxAirJumps)
             {
-                //Èç¹û²»ÔÚµØÉÏÒ²²»ÔÚĞ±Ãæ£¬²¢ÇÒ¿ÉÒÔÔÚ¿ÕÖĞÌøÔ¾
+                //å¦‚æœä¸åœ¨åœ°ä¸Šä¹Ÿä¸åœ¨æ–œé¢ï¼Œå¹¶ä¸”å¯ä»¥åœ¨ç©ºä¸­è·³è·ƒ
                 jumpDirction = Vector3.up;
 
-                //¸ù¾İÆÚÍûµ÷Õû·½Ïò
+                //æ ¹æ®æœŸæœ›è°ƒæ•´æ–¹å‘
                 LoadTargetY(desiredVelocity);
             }
-            //²»ÄÜÌø£¬ÍË³ö
+            //ä¸èƒ½è·³ï¼Œé€€å‡º
             else return;
 
-            //¸ù¾İÖØÁ¦µÄ´óĞ¡À´È·¶¨ÒÆ¶¯ËÙ¶È£¬Òò´ËÖØÁ¦¿É±äÁË
+            //æ ¹æ®é‡åŠ›çš„å¤§å°æ¥ç¡®å®šç§»åŠ¨é€Ÿåº¦ï¼Œå› æ­¤é‡åŠ›å¯å˜äº†
             float jumpSpeed = Mathf.Sqrt(2f * -Physics.gravity.y * jumpHeight);
             float aligneSpeed = Vector3.Dot(velocity, jumpDirction);
             if (aligneSpeed > 0)
@@ -211,48 +208,53 @@ namespace Motor
             velocity += jumpDirction * jumpSpeed;
             airJumps++;
 
-            //ÌøÔ¾Ê±Ë¢ĞÂÌøÔ¾Ê±¼ä£¬±£Ö¤ÔÚÇ°ÃæÕâ¶ÎÊ±¼ä²»»á½øĞĞÌùµØ
+            //è·³è·ƒæ—¶åˆ·æ–°è·³è·ƒæ—¶é—´ï¼Œä¿è¯åœ¨å‰é¢è¿™æ®µæ—¶é—´ä¸ä¼šè¿›è¡Œè´´åœ°
             stepSinceLastJump = 0;
 
         }
 
         
-        Vector3 targetPos;      //´«ËÍµ½µÄÄ¿±êµã
-        Vector3 beginPos;       //ÆğÊ¼Î»ÖÃ£¬½øĞĞLerp
-        float radio;            //ÒÆ¶¯±ÈÀı
-        float speed;            //±ÈÀıÔö¼ÓµÄËÙ¶È
+        Vector3 targetPos;      //ä¼ é€åˆ°çš„ç›®æ ‡ç‚¹
+        //Vector3 beginPos;       //èµ·å§‹ä½ç½®ï¼Œè¿›è¡ŒLerp
+        Vector3 direct;         //ç§»åŠ¨æ–¹å‘
+        float maxSpeed = -1;         //æœ€å¤§é€Ÿåº¦
+        //float speed;            //å½“å‰é€Ÿåº¦
+        //float accrelerate = 10;      //åŠ é€Ÿåº¦
 
         /// <summary>
-        /// ´«ËÍµ½ÌØ¶¨µã£¬ÔÚ´«ËÍ¹ı³ÌÖĞĞèÒªÍ£Ö¹ÆäËûÁ¦£¬Ö»Ê£ÏÂÏòÄ¿±êµãµÄËÙ¶È
+        /// ä¼ é€åˆ°ç‰¹å®šç‚¹ï¼Œåœ¨ä¼ é€è¿‡ç¨‹ä¸­éœ€è¦åœæ­¢å…¶ä»–åŠ›ï¼Œåªå‰©ä¸‹å‘ç›®æ ‡ç‚¹çš„é€Ÿåº¦
         /// </summary>
-        /// <param name="postion">Ä¿±êÎ»ÖÃ</param>
-        /// <param name="speed">ËÙ¶È</param>
+        /// <param name="postion">ç›®æ ‡ä½ç½®</param>
+        /// <param name="speed">é€Ÿåº¦</param>
         public void TransferToPosition(Vector3 postion, float speed)
         {
-            //²»ÔÊĞí·´¸´´«ËÍ
-            if (radio > 0) return;
-            float dis = (targetPos - transform.position).magnitude;
-            this.speed = dis / speed;
-            radio = 1 / this.speed * Time.deltaTime;
-            beginPos = transform.position;
+            //ä¸å…è®¸åå¤ä¼ é€
+            if (maxSpeed > 0) {
+                maxSpeed = -1;  //åœæ­¢é’©é”
+                body.useGravity = true;
+                return; 
+            }
+            direct = (postion - transform.position).normalized;
+            maxSpeed = speed;
             targetPos = postion;
+            body.useGravity = false;
+
+            //speed += 3.0f * Time.deltaTime;
         }
 
-        private bool CheckTransing()
+        private void CheckTransing()
         {
-            if(radio < 0)
-                return false;
-            radio += 1 / this.speed * Time.deltaTime;
-            if(radio > 1.0f)
+            if (maxSpeed < 0) return;
+            //speed = Mathf.Min(speed + accrelerate * Time.deltaTime, maxSpeed);
+            Vector3 dir = (targetPos - transform.position).normalized;
+            if(Vector3.Dot(dir, direct) < 0.3)
             {
-                radio = -1.0f;
-                Vector3 dir = targetPos - beginPos;
-                //±£Ö¤Ò»¸ö³õËÙ¶È
-                body.velocity = dir.normalized * dir.magnitude * speed * 0.3f;
-                return false;
+                maxSpeed = -1;
+                body.useGravity = true;
+                velocity *= 0.3f;
+                return;
             }
-            transform.position = Vector3.Lerp(beginPos, targetPos, radio);
-            return true;
+            velocity += dir * maxSpeed;
         }
 
         private void OnCollisionExit(Collision collision)
@@ -275,11 +277,11 @@ namespace Motor
                 if (upDot >= minDot)
                 {
                     onGround = true;
-                    //±£Ö¤Èç¹ûÓĞ¶à¸ö½Ó´¥ÃæÊ±ÄÜ¹»ÕıÈ·µÄ»ñÈ¡·¨Ïß
+                    //ä¿è¯å¦‚æœæœ‰å¤šä¸ªæ¥è§¦é¢æ—¶èƒ½å¤Ÿæ­£ç¡®çš„è·å–æ³•çº¿
                     contactNormal += normal;
                     connectObj = collision.gameObject;
                 }
-                //¶¸ÇÍÃæÒÆ¶¯¿ØÖÆ£¬µ«ÊÇ±ÜÃâ³¹µ×µÄ´¹Ö±Ãæ
+                //é™¡å³­é¢ç§»åŠ¨æ§åˆ¶ï¼Œä½†æ˜¯é¿å…å½»åº•çš„å‚ç›´é¢
                 else if (upDot > -0.01f)
                 {
                     steepContractCount++;
@@ -292,36 +294,36 @@ namespace Motor
 
 
         /// <summary>
-        /// µ÷ÕûÒÆ¶¯·½Ïò£¬ÓÃÀ´±£Ö¤ÒÆ¶¯µÄ·½ÏòÊÇÑØ×ÅÆ½ÃæµÄ
+        /// è°ƒæ•´ç§»åŠ¨æ–¹å‘ï¼Œç”¨æ¥ä¿è¯ç§»åŠ¨çš„æ–¹å‘æ˜¯æ²¿ç€å¹³é¢çš„
         /// </summary>
         void AdjustVelocity()
         {
-            //ÒòÎªËÙ¶ÈÓÃµÄÒ²ÊÇÊÀ½ç×ø±ê£¬Òò´ËÒÆ¶¯Ê±Í¶Ó°Ò²ÒÀ¿¿µÄÊÇÊÀ½ç×ø±ê£¬ÆäÖĞright¿ØÖÆxÖá£¬foward¿ØÖÆYÖá
-            //½«1£¬0£¬0Í¶Ó°µ½½Ó´¥Æ½ÃæÉÏ£¬
+            //å› ä¸ºé€Ÿåº¦ç”¨çš„ä¹Ÿæ˜¯ä¸–ç•Œåæ ‡ï¼Œå› æ­¤ç§»åŠ¨æ—¶æŠ•å½±ä¹Ÿä¾é çš„æ˜¯ä¸–ç•Œåæ ‡ï¼Œå…¶ä¸­rightæ§åˆ¶xè½´ï¼Œfowardæ§åˆ¶Yè½´
+            //å°†1ï¼Œ0ï¼Œ0æŠ•å½±åˆ°æ¥è§¦å¹³é¢ä¸Šï¼Œ
             Vector3 xAixs = ProjectDirectionOnPlane(Vector3.right, contactNormal);
-            //½«0£¬0£¬1Í¶Ó°µ½½Ó´¥Æ½ÃæÉÏ
+            //å°†0ï¼Œ0ï¼Œ1æŠ•å½±åˆ°æ¥è§¦å¹³é¢ä¸Š
             Vector3 zAxis = ProjectDirectionOnPlane(Vector3.forward, contactNormal);
 
             Vector3 relativeVelocity = velocity - connectionVelocity;
-            //È·¶¨Êµ¼ÊÉÏÔÚÕâ¸öÆ½ÃæÉÏµÄXÒÆ¶¯Öµ
+            //ç¡®å®šå®é™…ä¸Šåœ¨è¿™ä¸ªå¹³é¢ä¸Šçš„Xç§»åŠ¨å€¼
             float currentX = Vector3.Dot(relativeVelocity, xAixs);
-            //È·¶¨Êµ¼ÊÉÏÔÚÕâ¸öÆ½ÃæÉÏµÄZÒÆ¶¯Öµ
+            //ç¡®å®šå®é™…ä¸Šåœ¨è¿™ä¸ªå¹³é¢ä¸Šçš„Zç§»åŠ¨å€¼
             float currentZ = Vector3.Dot(relativeVelocity, zAxis);
 
             float acceleration = onGround ? groundAcceleration : airAcceleration;
             float maxSpeedChange = acceleration * Time.deltaTime;
 
-            //È·¶¨¸ù¾İÆÚÍûµÃµ½µÄÒÆ¶¯Öµ
+            //ç¡®å®šæ ¹æ®æœŸæœ›å¾—åˆ°çš„ç§»åŠ¨å€¼
             float newX = Mathf.MoveTowards(currentX, desiredVelocity.x, maxSpeedChange);
             float newZ = Mathf.MoveTowards(currentZ, desiredVelocity.z, maxSpeedChange);
 
-            //ÒÆ¶¯Òª¸ù¾İÕâ¸öÆ½ÃæµÄ·½ÏòÀ´ÒÆ¶¯£¬Òò´Ë¸ù¾İÊµ¼ÊÖµÓëÆÚÍûÖµµÄ²îÈ·¶¨ÒªÔö¼ÓµÄËÙ¶È´óĞ¡£¬
-            //È»ºó³ËÒÔÍ¶Ó°¼ÆËã³öÀ´µÄXÖµÒÔ¼°ZÖµÈ·¶¨×îºóµÄÒÆ¶¯Öµ
+            //ç§»åŠ¨è¦æ ¹æ®è¿™ä¸ªå¹³é¢çš„æ–¹å‘æ¥ç§»åŠ¨ï¼Œå› æ­¤æ ¹æ®å®é™…å€¼ä¸æœŸæœ›å€¼çš„å·®ç¡®å®šè¦å¢åŠ çš„é€Ÿåº¦å¤§å°ï¼Œ
+            //ç„¶åä¹˜ä»¥æŠ•å½±è®¡ç®—å‡ºæ¥çš„Xå€¼ä»¥åŠZå€¼ç¡®å®šæœ€åçš„ç§»åŠ¨å€¼
             velocity += xAixs * (newX - currentX) + zAxis * (newZ - currentZ);
         }
 
         /// <summary>
-        /// Çå³ıÊı¾İ£¬°ÑÒ»Ğ©Êı¾İ¹éÎª³õÊ¼»¯
+        /// æ¸…é™¤æ•°æ®ï¼ŒæŠŠä¸€äº›æ•°æ®å½’ä¸ºåˆå§‹åŒ–
         /// </summary>
         void ClearState()
         {
@@ -333,18 +335,18 @@ namespace Motor
         }
 
         /// <summary>
-        /// ÓÃÓÚÌù½üµØÃæÓÃµÄ·½·¨£¬¼õÉÙÒÆ¶¯Ê±»á·É³öÈ¥µÄĞ§¹û
+        /// ç”¨äºè´´è¿‘åœ°é¢ç”¨çš„æ–¹æ³•ï¼Œå‡å°‘ç§»åŠ¨æ—¶ä¼šé£å‡ºå»çš„æ•ˆæœ
         /// </summary>
-        /// <returns>ÓÃÀ´ÅäºÏÒ»Ğ©µØÃæ¼ì²âÊ¹ÓÃ£¬Òò´ËÓĞ·µ»ØÖµ</returns>
+        /// <returns>ç”¨æ¥é…åˆä¸€äº›åœ°é¢æ£€æµ‹ä½¿ç”¨ï¼Œå› æ­¤æœ‰è¿”å›å€¼</returns>
         bool SnapToGround()
         {
-            //ÌùµØĞĞÎªÖ»½øĞĞÒ»´Î£¬Í¬Ê±ÓÃÌøÔ¾Ê±¼ä±ÜÃâÌøÔ¾Ê±ÌùµØ
+            //è´´åœ°è¡Œä¸ºåªè¿›è¡Œä¸€æ¬¡ï¼ŒåŒæ—¶ç”¨è·³è·ƒæ—¶é—´é¿å…è·³è·ƒæ—¶è´´åœ°
             if (stepSinceLastGround > 1 || stepSinceLastJump <= 2)
             {
                 return false;
             }
             float speed = velocity.magnitude;
-            //´óÓÚ×î´óËÙ¶È£¬²»½øĞĞÌùµØ
+            //å¤§äºæœ€å¤§é€Ÿåº¦ï¼Œä¸è¿›è¡Œè´´åœ°
             if (speed > maxSnapSpeed)
                 return false;
 
@@ -353,18 +355,18 @@ namespace Motor
                 return false;
 
             float upDot = Vector3.Dot(Vector3.up, hit.normal);
-            //Èç¹ûÉäÖĞµÄÃæ²»ÄÜ×÷Îª¿ÉÒÔÕ¾Á¢µÄÃæ£¬¾Í²»½øĞĞÌù½ü
+            //å¦‚æœå°„ä¸­çš„é¢ä¸èƒ½ä½œä¸ºå¯ä»¥ç«™ç«‹çš„é¢ï¼Œå°±ä¸è¿›è¡Œè´´è¿‘
             if (upDot < GetMinDot(hit.collider.gameObject.layer))
                 return false;
 
             contactNormal = hit.normal;
 
-            //È·¶¨ËÙ¶ÈÔÚ·¨ÏßÉÏµÄ´óĞ¡
+            //ç¡®å®šé€Ÿåº¦åœ¨æ³•çº¿ä¸Šçš„å¤§å°
             float dot = Vector3.Dot(velocity, hit.normal);
-            //±£Ö¤Ö»ÓĞËÙ¶È³¯ÉÏÊ±²Å»áÍùÏÂÑ¹£¬²»»á¼õÉÙÏÂÂäËÙ¶È
+            //ä¿è¯åªæœ‰é€Ÿåº¦æœä¸Šæ—¶æ‰ä¼šå¾€ä¸‹å‹ï¼Œä¸ä¼šå‡å°‘ä¸‹è½é€Ÿåº¦
             if (dot > 0)
             {
-                //¸ù¾İËÙ¶ÈµÄ´óĞ¡ÍùÆ½ÃæÉÏÑ¹
+                //æ ¹æ®é€Ÿåº¦çš„å¤§å°å¾€å¹³é¢ä¸Šå‹
                 velocity = (velocity - hit.normal * dot).normalized * speed;
             }
             connectObj = hit.collider.gameObject;
@@ -373,15 +375,15 @@ namespace Motor
 
         float GetMinDot(int layer)
         {
-            //ÅĞ¶ÏÊÇÂ¥Ìİ»¹ÊÇÕı³£µØÃæ
+            //åˆ¤æ–­æ˜¯æ¥¼æ¢¯è¿˜æ˜¯æ­£å¸¸åœ°é¢
             return (stairsMask & (1 << layer)) == 0 ?
                 minGroundDot : minStairsDot;
         }
 
         /// <summary>
-        /// ¼ì²éĞ±Ãæ£¬µ±±»¶¸ÇÍÃæÎ§ÔÚÒ»ÆğÊ±ËãÊÇÔÚµØÉÏ£¬´ËÊ±½«½Ó´¥·½Ïò¾ÍÊÇÎ§ÈÆµÄ·¨Ïß·½Ïò
+        /// æ£€æŸ¥æ–œé¢ï¼Œå½“è¢«é™¡å³­é¢å›´åœ¨ä¸€èµ·æ—¶ç®—æ˜¯åœ¨åœ°ä¸Šï¼Œæ­¤æ—¶å°†æ¥è§¦æ–¹å‘å°±æ˜¯å›´ç»•çš„æ³•çº¿æ–¹å‘
         /// </summary>
-        /// <returns>ÊÇ·ñ±»Ğ±Ãæ°üÎ§ÇÒÎŞ·¨ÒÆ¶¯</returns>
+        /// <returns>æ˜¯å¦è¢«æ–œé¢åŒ…å›´ä¸”æ— æ³•ç§»åŠ¨</returns>
         bool CheckSteepContacts()
         {
             if (steepContractCount > 1)
@@ -397,7 +399,7 @@ namespace Motor
             return false;
         }
 
-        /// <summary>    /// È·¶¨¸Ã·½ÏòÍ¶Ó°µ½¸ÃÆ½ÃæÉÏµÄ·½ÏòÖµ£¬½øĞĞ¹ı±ê×¼»¯µÄ    /// </summary>
+        /// <summary>    /// ç¡®å®šè¯¥æ–¹å‘æŠ•å½±åˆ°è¯¥å¹³é¢ä¸Šçš„æ–¹å‘å€¼ï¼Œè¿›è¡Œè¿‡æ ‡å‡†åŒ–çš„    /// </summary>
         Vector3 ProjectDirectionOnPlane(Vector3 direction, Vector3 normal)
         {
             return (direction - normal * Vector3.Dot(direction, normal)).normalized;
@@ -405,7 +407,7 @@ namespace Motor
 
 
         /// <summary>
-        /// ÅÊÅÀ¼ì²â£¬½øĞĞÅÊÅÀ
+        /// æ”€çˆ¬æ£€æµ‹ï¼Œè¿›è¡Œæ”€çˆ¬
         /// </summary>
         void ClimbCheck()
         {
@@ -428,43 +430,42 @@ namespace Motor
                 if (hit.normal.y > minGroundDot && velocity.y > 0)
                 {
                     velocity += Vector3.up * climbData.z;
-                    Debug.Log(velocity);
                 }
             }
         }
 
         float targetRotateY;
-        /// <summary>       /// Ğı×ªÄ£ĞÍ        /// </summary>
+        /// <summary>       /// æ—‹è½¬æ¨¡å‹        /// </summary>
         void Rotate()
         {
             Vector3 angle = transform.eulerAngles;
-            //ÒÆ¶¯½Ç¶È
+            //ç§»åŠ¨è§’åº¦
             angle.y = Mathf.MoveTowardsAngle(angle.y, targetRotateY, characterInfo.rotateSpeed);
 
             transform.eulerAngles = angle;
         }
 
         /// <summary>
-        /// ¼ÓÔØĞı×ªÄ¿±êYÖµ£¬Ö»ÓĞÔÚµØÉÏÊ±»òÕßµÅÇ¿Ê±²Å»áĞı×ª
+        /// åŠ è½½æ—‹è½¬ç›®æ ‡Yå€¼ï¼Œåªæœ‰åœ¨åœ°ä¸Šæ—¶æˆ–è€…è¹¬å¼ºæ—¶æ‰ä¼šæ—‹è½¬
         /// </summary>
-        /// <param name="desire">ÆÚÍûÒÆ¶¯µÄÊÀ½ç·½Ïò</param>
+        /// <param name="desire">æœŸæœ›ç§»åŠ¨çš„ä¸–ç•Œæ–¹å‘</param>
         void LoadTargetY(Vector3 desire)
         {
             Vector2 vector2 = new Vector2(desire.x, desire.z);
-            //Ì«Ğ¡¾Í²»µ÷Õû£¬±ÜÃâĞı×ªµ½´íÎó·½Ïò
+            //å¤ªå°å°±ä¸è°ƒæ•´ï¼Œé¿å…æ—‹è½¬åˆ°é”™è¯¯æ–¹å‘
             if (Mathf.Abs(vector2.y) < 0.0001) return;
             targetRotateY = GetAngle(vector2.normalized);
         }
 
         /// <summary>
-        /// ¸ù¾İÒÆ¶¯µÄ²î¾àÖµÅĞ¶ÏĞı×ª½Ç¶È£¬×¢Òâ´«ÈëÖµÒª±ê×¼»¯£¬
-        /// ÉèÖÃÎª¾²Ì¬ÒòÎªÕâ¸öº¯Êı²»ĞèÒªÓÃµ½¶ÔÏóÊı¾İ£¬Òò´ËÖ»ÓÃ¿ª±ÙÒ»¸öº¯ÊıÌå¾Í¹»ÁË
+        /// æ ¹æ®ç§»åŠ¨çš„å·®è·å€¼åˆ¤æ–­æ—‹è½¬è§’åº¦ï¼Œæ³¨æ„ä¼ å…¥å€¼è¦æ ‡å‡†åŒ–ï¼Œ
+        /// è®¾ç½®ä¸ºé™æ€å› ä¸ºè¿™ä¸ªå‡½æ•°ä¸éœ€è¦ç”¨åˆ°å¯¹è±¡æ•°æ®ï¼Œå› æ­¤åªç”¨å¼€è¾Ÿä¸€ä¸ªå‡½æ•°ä½“å°±å¤Ÿäº†
         /// </summary>
         static float GetAngle(Vector2 direction)
         {
-            //Í¨¹ı·´ÓàÏÒº¯Êı¼ÆËã³öĞı×ªµ½Õâ¸öÒÆ¶¯·½ÏòËùĞèÒªµÄyÖµ½Ç¶È
+            //é€šè¿‡åä½™å¼¦å‡½æ•°è®¡ç®—å‡ºæ—‹è½¬åˆ°è¿™ä¸ªç§»åŠ¨æ–¹å‘æ‰€éœ€è¦çš„yå€¼è§’åº¦
             float angle = Mathf.Acos(direction.y) * Mathf.Rad2Deg;
-            //ÅĞ¶ÏÊÇÄÄ±ß£¬Ò²¾ÍÊÇË³Ê±Õë»¹ÊÇÄæÊ±Õë
+            //åˆ¤æ–­æ˜¯å“ªè¾¹ï¼Œä¹Ÿå°±æ˜¯é¡ºæ—¶é’ˆè¿˜æ˜¯é€†æ—¶é’ˆ
             return direction.x < 0f ? 360f - angle : angle;
         }
 
