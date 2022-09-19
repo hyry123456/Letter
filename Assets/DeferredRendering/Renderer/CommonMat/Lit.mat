@@ -60,7 +60,7 @@ Material:
     - _Metallic: 0
     - _NormalMapToggle: 0
     - _NormalScale: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.131
     - _SrcBlend: 1
     - _Width: 1
     - _ZWrite: 1

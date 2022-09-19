@@ -60,6 +60,7 @@ namespace DefferedRender
         CullingResults cullingResults;
         /// <summary>        /// 灯光处理类        /// </summary>
         Lighting lighting = new Lighting();
+        PostFXSetting defaultPostSetting = default;
 
         bool useHDR;
         RenderSetting renderSetting;
@@ -95,6 +96,13 @@ namespace DefferedRender
 
             PrepareBuffer();
             PrepareForSceneWindow();        //准备UI数据
+
+            PostFXSetting thisCameraSetting = camera.GetComponent<DefferPipelineCamera>()?.Settings;
+            if (thisCameraSetting != null)
+                postFXSetting = thisCameraSetting;
+            if (postFXSetting == null)
+                postFXSetting = defaultPostSetting;
+
 
             //准备剔除数据
             if (!Cull(shadowSetting.maxDistance))
