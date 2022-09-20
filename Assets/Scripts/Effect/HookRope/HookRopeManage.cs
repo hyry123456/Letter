@@ -27,6 +27,7 @@ public class HookRopeManage : GPUDravinBase
     Material material;  //显示用的材质
     Material hookRopeMat;   //绳索的材质
     float particleSize; //粒子大小，读取材质的数据
+    float maxHookDistance = 50; //钩锁的检查距离，需要修改就直接改这里
 
     bool isInsert;      //是否插入绘制栈中
 
@@ -100,10 +101,12 @@ public class HookRopeManage : GPUDravinBase
                 
                 if(j == 5)
                 {
+                    float newDis = (oriPos - camera.transform.position).sqrMagnitude;
+                    if (newDis > maxHookDistance * maxHookDistance) continue;
                     if (minIndex == -1)
                         minIndex = i;
-                    else if((poolingList.list[i].transform.position - camera.transform.position).sqrMagnitude <
-                        (poolingList.list[minIndex].transform.position - camera.transform.position).sqrMagnitude)
+                    else if(newDis < (poolingList.list[minIndex].transform.position
+                        - camera.transform.position).sqrMagnitude)
                     {
                         minIndex = i;
                     }
