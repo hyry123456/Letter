@@ -233,15 +233,19 @@ namespace Motor
             //不允许反复传送
             if (maxSpeed > 0) {
                 maxSpeed = -1;  //停止钩锁
-                body.useGravity = true;
-                return; 
+                //body.useGravity = true;
+                HookRopeManage.Instance.CloseHookRope();
+                return;
             }
             direct = (postion - transform.position).normalized;
             Vector3 nowDir = body.velocity.normalized;
             body.velocity = Mathf.Clamp01( Vector3.Dot(nowDir, direct) ) * body.velocity;
+
+            HookRopeManage.Instance.LinkHookRope(postion, transform);
+
             maxSpeed = speed;
             targetPos = postion;
-            body.useGravity = false;
+            //body.useGravity = false;
 
         }
 
@@ -249,16 +253,19 @@ namespace Motor
         /// <returns>是否在传送中</returns>
         private bool CheckTransing()
         {
-            if (maxSpeed < 0) return false;
-            //speed = Mathf.Min(speed + accrelerate * Time.deltaTime, maxSpeed);
+            if (maxSpeed < 0) return false; 
+            
             Vector3 dir = (targetPos - transform.position).normalized;
             if(Vector3.Dot(dir, direct) < 0.3)
             {
                 maxSpeed = -1;
-                body.useGravity = true;
+                //body.useGravity = true;
                 velocity *= 0.3f;
+                HookRopeManage.Instance.CloseHookRope();
                 return false;
             }
+
+
             velocity += dir * maxSpeed;
             return true;
         }

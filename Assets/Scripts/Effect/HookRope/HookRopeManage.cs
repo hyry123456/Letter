@@ -25,6 +25,7 @@ public class HookRopeManage : GPUDravinBase
     PoolingList<Transform> poolingList;
     Transform target;   //最近的目标
     Material material;  //显示用的材质
+    Material hookRopeMat;   //绳索的材质
     float particleSize; //粒子大小，读取材质的数据
 
     bool isInsert;      //是否插入绘制栈中
@@ -48,6 +49,7 @@ public class HookRopeManage : GPUDravinBase
         instance = this;
         poolingList = new PoolingList<Transform>();
         material = Resources.Load<Material>("EffectMaterial/SimpleParticle");
+        hookRopeMat = Resources.Load<Material>("EffectMaterial/HookRopeMat");
         if (material == null)
             Debug.LogError("资源加载错误");
         particleSize = material.GetFloat("_ParticleSize");
@@ -141,8 +143,32 @@ public class HookRopeManage : GPUDravinBase
 
         buffer.SetGlobalVector("_WorldPos", Target.position);
         buffer.DrawProcedural(Matrix4x4.identity, material, 0, MeshTopology.Points, 1);
+        if (isLink)
+        {
+            buffer.SetGlobalVector("_TargetPos", finalPos);
+            buffer.SetGlobalVector("_BeginPos", begin.position);
+            buffer.DrawProcedural(Matrix4x4.identity, hookRopeMat, 0, MeshTopology.Points, 1);
+        }
+
         ExecuteBuffer(ref buffer, context);
         return;
+    }
+
+    Vector3 finalPos;
+    Transform begin;
+    bool isLink = false;
+
+    /// <summary>    /// 显示连接图片    /// </summary>
+    public void LinkHookRope(Vector3 target, Transform begin)
+    {
+        finalPos = target;
+        this.begin = begin;
+        isLink = true;
+    }
+
+    public void CloseHookRope()
+    {
+        isLink = false;
     }
 
     public override void DrawByProjectMatrix(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Matrix4x4 projectMatrix)

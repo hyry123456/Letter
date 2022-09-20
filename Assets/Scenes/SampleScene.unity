@@ -591,7 +591,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19144
+  m_Name: pb_Mesh18372
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -875,21 +875,21 @@ MonoBehaviour:
   noiseDatas:
   - shapeMode: 1
     position: {fileID: 800014702}
-    arc: 1
+    arc: 6.18
     radius: 1
     cubeRange: {x: 0, y: 0, z: 0}
     velocityBegin: {x: 0, y: 0, z: 0}
     velocityEnd: {x: 0, y: 0, z: 0}
     lifeTime: {x: 2, y: 5}
     octave: 1
-    frequency: 1
-    intensity: 3
+    frequency: 5
+    intensity: 100
     isSizeBySpeed: 1
     sizeBySpeedMode: 2
     smoothRange: {x: 0.3, y: 0.6}
     isPhysical: 0
-  particleCount: 1000
-  particleOutCount: 100
+  particleCount: 3000
+  particleOutCount: 1000
   runInUpdate: 1
   isUse: 1
   copyMat: {fileID: 2100000, guid: ec48e79de9e04e04f8c3cb356ce1e66f, type: 2}
@@ -920,7 +920,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  particleSize: 1
+  particleSize: 0.3
   colorWithLive:
     serializedVersion: 2
     key0: {r: 9.098041, g: 3.71543, b: 0, a: 0}
@@ -4075,7 +4075,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19130
+  m_Name: pb_Mesh18350
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
