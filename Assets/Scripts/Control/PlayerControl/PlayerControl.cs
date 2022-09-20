@@ -13,7 +13,7 @@ namespace Control
         public GameObject view;
         private Motor.OribitCamera oribitCamera;
 
-        public float hookSpeed = 3;
+        public float hookSpeed = 1;
         
 
         public static PlayerControl Instance {

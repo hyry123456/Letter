@@ -6,6 +6,13 @@ public class DestinationControl : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Win!");
+        if (other.gameObject.GetComponent<Info.CharacterInfo>().getScore() > 3)
+        {
+            Debug.Log("Win!");
+        }
+        else
+        {
+            Debug.Log("Not Enough Letters");
+        }
     }
 }

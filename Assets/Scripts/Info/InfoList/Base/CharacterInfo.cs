@@ -34,10 +34,13 @@ namespace Info
             sp = maxSP;
             score = 0;
         }
-        public void getScore()
+        public void gainScore()
         {
             score++;
-            Debug.Log(score);
+        }
+        public int getScore()
+        {
+            return score;
         }
     }
 }
