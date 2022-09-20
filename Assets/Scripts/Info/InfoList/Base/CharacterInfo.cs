@@ -34,13 +34,16 @@ namespace Info
             sp = maxSP;
             score = 0;
         }
+        //得分
         public void gainScore()
         {
             score++;
         }
+        //返回分数
         public int getScore()
         {
             return score;
         }
+        
     }
 }
