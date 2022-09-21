@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public GameObject bullet;
     protected int Timer = 0;
     public int shotTime = 3;
+    public int bulletSpeed = 10;
 
     void Start()
     {
@@ -31,20 +32,15 @@ public class Enemy : MonoBehaviour
             shootOnce();
         }
     }
-    protected void shootOnce()
+    protected void shootOnce()//射击一次，注释稍后补充
     {
         Debug.Log("shoot");
-        GameObject instance = Instantiate(bullet, gameObject.transform.position, gameObject.transform.rotation);
-        
-        
+        Vector3 selfPosition = gameObject.transform.position;
+        GameObject instance = Instantiate(bullet, selfPosition, gameObject.transform.rotation);
+        Vector3 distance = playerPosition - selfPosition;
+        distance = Vector3.Normalize(distance);
+        instance.GetComponent<Rigidbody>().AddForce(distance * bulletSpeed * 100);
+        Destroy(instance, 5f);
 
     }
-    //计划实现的内容
-    /*
-     * 1.子弹缓动
-     * 2.子弹销毁
-     * 3.敌人移动(?)
-     * 4.子弹碰撞扣血
-     */
-
 }
