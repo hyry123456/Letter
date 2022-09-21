@@ -260,7 +260,8 @@ namespace Motor
             {
                 maxSpeed = -1;
                 //body.useGravity = true;
-                velocity *= 0.3f;
+                //velocity *= 0.3f;
+                //这里还是把速度衰减去掉了，看起来更连贯一点 ————Egg
                 HookRopeManage.Instance.CloseHookRope();
                 return false;
             }

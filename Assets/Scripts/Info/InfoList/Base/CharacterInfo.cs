@@ -34,10 +34,16 @@ namespace Info
             sp = maxSP;
             score = 0;
         }
-        public void getScore()
+        //得分
+        public void gainScore()
         {
             score++;
-            Debug.Log(score);
         }
+        //返回分数
+        public int getScore()
+        {
+            return score;
+        }
+        
     }
 }
