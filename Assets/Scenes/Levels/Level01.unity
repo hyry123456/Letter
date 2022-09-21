@@ -1915,6 +1915,10 @@ PrefabInstance:
       propertyPath: view
       value: 
       objectReference: {fileID: 1828608297}
+    - target: {fileID: 1909282068909209673, guid: 5b5aa7319febfa641a7f10b0935faaad, type: 3}
+      propertyPath: hookSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1909282068909209675, guid: 5b5aa7319febfa641a7f10b0935faaad, type: 3}
       propertyPath: m_Name
       value: Player
