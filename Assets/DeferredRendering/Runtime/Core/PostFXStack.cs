@@ -28,6 +28,8 @@ namespace DefferedRender
 			BilateralFilter,
 			BlendBulk,
 			Fog,
+			CaculateGray,
+			FXAA,
 		}
 
         const string bufferName = "PostFX";
@@ -81,7 +83,14 @@ namespace DefferedRender
 			fogMinDepth = Shader.PropertyToID("_FogMinDepth"),
 			fogDepthFallOff = Shader.PropertyToID("_FogDepthFallOff"),
 			fogPosYFallOff = Shader.PropertyToID("_FogPosYFallOff"),
-			fogColorsId = Shader.PropertyToID("_Colors");
+			fogColorsId = Shader.PropertyToID("_Colors"),
+
+			finalTempTexId = Shader.PropertyToID("_FinalTempTexure"),
+			fxaaTempTexId = Shader.PropertyToID("_FXAATempTexture"),
+			contrastThresholdId = Shader.PropertyToID("_ContrastThreshold"),
+			relativeThresholdId = Shader.PropertyToID("_RelativeThreshold"),
+			subpixelBlending = Shader.PropertyToID("_SubpixelBlending");
+
 
 
 
@@ -232,9 +241,7 @@ namespace DefferedRender
 			ExecuteBuffer();
 		}
 
-		/// <summary>
-		/// 渲染体积光
-		/// </summary>
+		/// <summary>		/// 渲染体积光		/// </summary>
 		public void DrawBulkLight(int source)
         {
 			buffer.BeginSample("BulkLight");
@@ -270,6 +277,7 @@ namespace DefferedRender
 			ExecuteBuffer();
 		}
 
+		/// <summary>		/// 渲染雾效		/// </summary>
 		public void DrawFog(int soure)
         {
 			buffer.BeginSample("Fog");
@@ -305,6 +313,39 @@ namespace DefferedRender
 
 			buffer.EndSample("Fog");
 			ExecuteBuffer();
+		}
+
+		/// <summary>		/// 对输出到最终图像的位置进行抗锯齿		/// </summary>
+		public void DrawFXAAInFinal(int soure)
+        {
+			buffer.BeginSample("FXAA");
+			FXAASetting fXAA = settings.FXAA;
+
+			buffer.SetGlobalFloat(contrastThresholdId, fXAA.contrastThreshold);
+			buffer.SetGlobalFloat(relativeThresholdId, fXAA.relativeThreshold);
+			buffer.SetGlobalFloat(subpixelBlending, fXAA.subpixelBlending);
+
+			if (fXAA.lowQuality)
+				buffer.EnableShaderKeyword("LOW_QUALITY");
+			else
+				buffer.DisableShaderKeyword("LOW_QUALITY");
+			
+			if(fXAA.luminanceMode == LuminanceMode.Green)
+            {
+				buffer.DisableShaderKeyword("LUMINANCE_GREEN");
+				Draw(soure, BuiltinRenderTextureType.CameraTarget, Pass.FXAA);
+			}
+			else
+            {
+				buffer.EnableShaderKeyword("LUMINANCE_GREEN");
+				buffer.GetTemporaryRT(fxaaTempTexId, camera.pixelWidth, camera.pixelHeight,
+					0, FilterMode.Bilinear, RenderTextureFormat.Default);
+				Draw(soure, fxaaTempTexId, Pass.CaculateGray);
+				Draw(fxaaTempTexId, BuiltinRenderTextureType.CameraTarget, Pass.FXAA);
+				buffer.ReleaseTemporaryRT(fxaaTempTexId);
+			}
+			buffer.EndSample("FXAA");
+
 		}
 
 		/// <summary>	/// 进行Bloom操作	/// </summary>
@@ -456,8 +497,19 @@ namespace DefferedRender
 				new Vector4(1f / lutWidth, 1f / lutHeight, lutHeight - 1f)
 			);
 
-			//绘制最终图像
-			DrawFinal(sourceId);
+			if(settings.FXAA.luminanceMode == LuminanceMode.None)
+            {
+				//绘制最终图像
+				DrawFinal(sourceId);
+            }
+            else
+            {
+				buffer.GetTemporaryRT(finalTempTexId, camera.pixelWidth, camera.pixelHeight, 
+					0, FilterMode.Bilinear, RenderTextureFormat.Default);
+				Draw(sourceId, finalTempTexId, Pass.Final);
+				DrawFXAAInFinal(finalTempTexId);
+				buffer.ReleaseTemporaryRT(finalTempTexId);
+			}
 			buffer.ReleaseTemporaryRT(colorGradingLUTId);
 		}
 

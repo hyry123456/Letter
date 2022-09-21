@@ -215,5 +215,30 @@ Shader "Unlit/PostFXShader"
 
             ENDHLSL
 		}
+
+		Pass	//19
+		{
+			Name "CaculateGray"
+
+            HLSLPROGRAM
+            #pragma vertex BlitPassSimpleVertex
+            #pragma fragment CaculateGray
+
+            ENDHLSL
+		}
+
+		Pass
+		{
+			Name "FXAA"
+            HLSLPROGRAM
+            #pragma vertex BlitPassSimpleVertex
+            #pragma fragment FXAAFragment
+
+			#pragma multi_compile _ LUMINANCE_GREEN
+			#pragma multi_compile _ LOW_QUALITY
+
+            ENDHLSL
+
+		}
     }
 }

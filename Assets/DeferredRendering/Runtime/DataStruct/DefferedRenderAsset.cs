@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,12 +10,12 @@ namespace DefferedRender
     {
         public bool allowHDR;
         public bool 
-            useDynamicBatching,      //¶¯Ì¬Åú´¦Àí
-            useGPUInstancing,        //GPUÊµÀı»¯
-            useSRPBatcher;          //SRPÅú´¦Àí
-        public bool maskLight;      //ÊÇ·ñÕÚÕÖµÆ¹â
+            useDynamicBatching,      //åŠ¨æ€æ‰¹å¤„ç†
+            useGPUInstancing,        //GPUå®ä¾‹åŒ–
+            useSRPBatcher;          //SRPæ‰¹å¤„ç†
+        public bool maskLight;      //æ˜¯å¦é®ç½©ç¯å…‰
         [Range(0.25f, 1f)]
-        public float renderScale;          //äÖÈ¾Ëõ·Å
+        public float renderScale;          //æ¸²æŸ“ç¼©æ”¾
 
         [RenderingLayerMaskField]
         public int renderingLayerMask;
@@ -47,7 +47,7 @@ namespace DefferedRender
             renderScale = 1f,
         };
 
-        /// <summary>	/// ÒõÓ°ÉèÖÃ²ÎÊı	/// </summary>
+        /// <summary>	/// é˜´å½±è®¾ç½®å‚æ•°	/// </summary>
         [SerializeField]
         ShadowSetting shadows = default;
 

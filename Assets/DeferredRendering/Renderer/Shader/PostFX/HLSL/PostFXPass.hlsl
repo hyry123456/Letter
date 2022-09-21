@@ -429,7 +429,6 @@ float4 FinalPassFragment (Varyings input) : SV_TARGET {
 }
 
 
-
 float4 FogPassFragment (Varyings input) : SV_TARGET {
 	float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, input.screenUV, 0);
 	float lineardDepth = Linear01Depth(bufferDepth, _ZBufferParams);
@@ -459,5 +458,18 @@ float4 FogPassFragment (Varyings input) : SV_TARGET {
 	bufferColor.rgb = lerp(bufferColor.rgb, fogColor, finalRatio);
     return bufferColor;
 }
+
+
+float4 CaculateGray(Varyings input) : SV_TARGET{
+	float4 bufferColor = SAMPLE_TEXTURE2D(_PostFXSource, sampler_linear_clamp, input.screenUV);
+	bufferColor.a = LinearRgbToLuminance(bufferColor.rgb);
+	return bufferColor;
+}
+
+float4 FXAAFragment(Varyings input) : SV_TARGET{
+	return ApplyFXAA(input.screenUV);
+}
+
+
 
 #endif

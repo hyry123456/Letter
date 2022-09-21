@@ -248,6 +248,34 @@ namespace DefferedRender
 		};
 		public FogSetting Fog => fog;
 
+		/// <summary>		/// 三种抗锯齿模式		/// </summary>
+		public enum LuminanceMode { None, Green, Calculate }
+		/// <summary>		/// 抗锯齿设置		/// </summary>
+		[Serializable]
+		public struct FXAASetting
+        {
+			public LuminanceMode luminanceMode;
+
+			/// <summary>	/// 对比度阈值	/// </summary>
+			[Range(0.0312f, 0.0833f)]
+			public float contrastThreshold;
+			[Range(0.063f, 0.333f)]
+			public float relativeThreshold;		//对比度高度阈值，舍去高的部分
+			[Range(0f, 1f)]
+			public float subpixelBlending;      //模糊程度控制，调整细节显示比例
+			/// <summary>			/// 高低质量控制			/// </summary>
+			public bool lowQuality;
+
+		}
+
+		[SerializeField]
+		FXAASetting fXAA = new FXAASetting
+		{
+			contrastThreshold = 0.0312f,
+			relativeThreshold = 0.063f,
+			subpixelBlending = 1f
+		};
+		public FXAASetting FXAA => fXAA;
 
 		Material material;
 
