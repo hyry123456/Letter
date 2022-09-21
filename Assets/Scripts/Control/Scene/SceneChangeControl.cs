@@ -59,6 +59,12 @@ namespace Control
             return asyncStatic.progress;
         }
 
+        /// <summary>        /// 重新加载当前运行的场景        /// </summary>
+        public void ReloadActiveScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         public void GameExit()
         {
             Application.Quit();

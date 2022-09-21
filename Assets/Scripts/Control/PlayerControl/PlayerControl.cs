@@ -14,6 +14,8 @@ namespace Control
         private Motor.OribitCamera oribitCamera;
 
         public float hookSpeed = 1;
+
+        public float dieY = -100;
         
 
         public static PlayerControl Instance {
@@ -79,6 +81,9 @@ namespace Control
             {
                 UIExtentControl.Instance?.ShowOrClose();
             }
+
+            if (transform.position.y < dieY)
+                SceneChangeControl.Instance.ReloadActiveScene();
         }
 
         /// <summary>

@@ -127,6 +127,8 @@ namespace Motor
                 Rotate();
             }
 
+            velocity = Vector3.ClampMagnitude(velocity, 40);
+
             body.velocity = velocity;
             ClearState();
         }
@@ -265,7 +267,6 @@ namespace Motor
                 HookRopeManage.Instance.CloseHookRope();
                 return false;
             }
-
 
             velocity += dir * maxSpeed;
             return true;

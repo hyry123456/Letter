@@ -15,6 +15,7 @@ public class UIGameBegin : UIUseBase
 
     private void ChangeScene(PointerEventData eventData)
     {
+        Debug.Log("Change");
         Control.SceneChangeControl.Instance.ChangeScene(targetScene);
     }
 

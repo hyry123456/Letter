@@ -39,7 +39,6 @@ namespace DefferedRender
             }
         }
 
-
         //Êä³ö¡¢×ÅÉ«
         [SerializeField]
         private int rowCount = 1;
