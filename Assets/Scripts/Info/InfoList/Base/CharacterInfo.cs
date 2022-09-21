@@ -44,6 +44,23 @@ namespace Info
         {
             return score;
         }
+        public bool isDead()
+        {
+            if (hp > 0)
+            {
+                return false;
+            }
+            else
+            {
+                Debug.Log("Game Over!");//todo
+                return true;
+            }
+        }
+        public bool modifyHp(int dealtaHp)
+        {
+            hp += dealtaHp;
+            return isDead();
+        }
         
     }
 }

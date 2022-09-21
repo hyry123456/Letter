@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 
     protected GameObject Player;
     protected Vector3 playerPosition;
+    public GameObject bullet;
     protected int Timer = 0;
     public int shotTime = 3;
 
@@ -27,8 +28,16 @@ public class Enemy : MonoBehaviour
         Timer++;
         if (Timer % (shotTime*50) == 0)
         {
-            Debug.Log("trigger");
+            shootOnce();
         }
+    }
+    protected void shootOnce()
+    {
+        Debug.Log("shoot");
+        GameObject instance = Instantiate(bullet, gameObject.transform.position, gameObject.transform.rotation);
+        
+        
+
     }
     //计划实现的内容
     /*
