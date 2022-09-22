@@ -4406,6 +4406,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5334080227322301391, guid: c228b29312450114e9cf71fb7268e70f, type: 3}
   m_PrefabInstance: {fileID: 1350394190}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1493765063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493765065}
+  - component: {fileID: 1493765064}
+  m_Layer: 0
+  m_Name: Water
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1493765064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493765063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e66d63fe6544d34ba9d9a1cdb079530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planeSize: {x: 1000, y: 1000}
+  pointCount: {x: 1000, y: 1000}
+  waterShader: {fileID: 4800000, guid: 8c5aa8b60811adf4ba78b596cd8178d3, type: 3}
+  copyMat: {fileID: 2100000, guid: 30e3f840f4daf7c4ca32c8d896a45bb1, type: 2}
+  debug: 0
+--- !u!4 &1493765065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493765063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1532742392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5334080227322301391, guid: c228b29312450114e9cf71fb7268e70f, type: 3}
@@ -4423,6 +4471,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2040119628367626651, guid: 3d123481e92d27e4199f0036556574db, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.9999924
+      objectReference: {fileID: 0}
     - target: {fileID: 2040119629533312835, guid: 3d123481e92d27e4199f0036556574db, type: 3}
       propertyPath: m_Pivot.x
       value: 0

@@ -19,8 +19,6 @@ void Noise_PerFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex)
 
     if (o.index.x == init.arriveIndex) {
         o = InitialParticle(o, init);
-        //o.index.x += _ParticleCount;
-        //o.index.x %= 1000007;
         _ParticleNoiseBuffer[allIndex] = o;
     }
 

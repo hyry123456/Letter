@@ -54,6 +54,7 @@ namespace Info
             else
             {
                 Debug.Log("Game Over!");//todo
+                Control.SceneChangeControl.Instance.ReloadActiveScene();
                 return true;
             }
         }

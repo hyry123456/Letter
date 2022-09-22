@@ -11,7 +11,7 @@ namespace DefferedRender
         public float interpolation;    //插值需要的数据
         public Vector4 color;           //颜色值，包含透明度
         public float size;             //粒子大小
-        public Vector3 nowSpeed;        //xyz是当前速度，w是存活时间
+        public Vector3 nowSpeed;        //xyz是当前速度
         public float liveTime;         //最多存活时间
     }
 
@@ -23,7 +23,7 @@ namespace DefferedRender
         public Vector3Int InitEnum;     //初始化的根据编号
         public Vector2 sphereData;      //初始化球坐标需要的数据
         public Vector3 cubeRange;       //初始化矩形坐标的范围
-        public Matrix4x4 transfer_M;       //初始化矩形坐标的范围
+        public Matrix4x4 transfer_M;    //初始化矩形坐标的范围
         public Vector2 lifeTimeRange;   //生存周期的范围
 
         public Vector3 noiseData;       //噪声调整速度时需要的数据

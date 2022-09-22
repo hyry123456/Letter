@@ -1,0 +1,39 @@
+
+#include "../HLSL/ParticleFactoryInclude.hlsl"
+
+#pragma kernel Particles_PerFrame
+
+//逐帧刷新的方法，用来控制与渲染直接相关的数据
+[numthreads(64, 1, 1)]
+void Particles_PerFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex)
+{
+    int objIndex = gid.x * 64 + index;
+
+    int groupIndex = gid.x * _ParticleCount;
+	int allIndex = objIndex + groupIndex;
+
+    NoiseParticleData particle = _ParticlesBuffer[allIndex];
+    ParticleNodeData group = _GroupNodeBuffer[groupIndex];
+    if(group.lifeTimeRange.z > _Time.x)
+    {
+        particle = (NoiseParticleData)0;
+        _ParticlesBuffer[allIndex] = particle;
+        return;
+    }
+    float random = (particle.random.x + particle.random.y + particle.random.z)/3.0;
+    if(group.lifeTimeRange.z - group.lifeTimeRange.y - group.lifeTimeRange.x * random < 0)  //判断该粒子是否启动
+    {
+        particle = (NoiseParticleData)0;
+        _ParticlesBuffer[allIndex] = particle;
+        return;
+    }
+    //存活状态行为
+    if(particle.index.y == 0)   //进行初始化
+    {
+        
+    }
+
+
+
+    
+}
