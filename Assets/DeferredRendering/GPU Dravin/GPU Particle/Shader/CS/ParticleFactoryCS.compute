@@ -16,14 +16,14 @@ void Particles_PerFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex)
     ParticleNodeData group = _GroupNodeBuffer[groupIndex];
     if(group.lifeTimeRange.z > _Time.x)
     {
-        particle = (NoiseParticleData)0;
+        particle.index.y = 0;
         _ParticlesBuffer[allIndex] = particle;
         return;
     }
     float random = (particle.random.x + particle.random.y + particle.random.z)/3.0;
     if(group.lifeTimeRange.z - group.lifeTimeRange.y - group.lifeTimeRange.x * random < 0)  //判断该粒子是否启动
     {
-        particle = (NoiseParticleData)0;
+        particle.index.y = 0;
         _ParticlesBuffer[allIndex] = particle;
         return;
     }

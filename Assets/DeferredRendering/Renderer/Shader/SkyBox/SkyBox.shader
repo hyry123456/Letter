@@ -1,4 +1,4 @@
-Shader "Lapu/LapuSky_step1"
+Shader "Lapu/Skybox"
 {
 	Properties
 	{

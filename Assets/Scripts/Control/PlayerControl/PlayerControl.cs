@@ -39,6 +39,14 @@ namespace Control
         {
             instance = this;
         }
+        private void OnDestroy()
+        {
+            instance = null;
+        }
+        private void OnDisable()
+        {
+            instance = null;
+        }
 
         protected void Start()
         {

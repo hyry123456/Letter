@@ -16,7 +16,7 @@ MonoBehaviour:
   colorLUTResolution: 32
   ssrSetting:
     useSSR: 1
-    rayMarchingSetp: 48
+    rayMarchingSetp: 256
     marchSetpSize: 4
     maxMarchDistance: 500
     depthThickness: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
   fXAA:
-    luminanceMode: 0
+    luminanceMode: 2
     contrastThreshold: 0.0312
     relativeThreshold: 0.063
     subpixelBlending: 1
