@@ -44,6 +44,7 @@ namespace Info
         {
             return score;
         }
+        //判断是否死亡
         public bool isDead()
         {
             if (hp > 0)
@@ -56,6 +57,7 @@ namespace Info
                 return true;
             }
         }
+        //操作生命值，返回是否死亡
         public bool modifyHp(int dealtaHp)
         {
             hp += dealtaHp;
