@@ -12,7 +12,6 @@ namespace Common.ResetInput
         public static void Save()
         {
             MyInput myInput = MyInput.Instance;
-            //myInput.ResetInputValue();
             GameObject go = GameObject.Find("Input");
             if(go == null)
             {

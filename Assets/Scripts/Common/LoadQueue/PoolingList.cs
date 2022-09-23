@@ -47,5 +47,10 @@ namespace Common
             size--;
         }
 
+        public void RemoveAll()
+        {
+            size = 1;
+        }
+
     }
 }

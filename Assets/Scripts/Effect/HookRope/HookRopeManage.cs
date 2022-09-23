@@ -128,6 +128,7 @@ public class HookRopeManage : GPUDravinBase
             GPUDravinDrawStack.Instance.RemoveRender(this);
             isInsert = false;
         }
+        poolingList?.RemoveAll();
     }
 
     private void OnDestroy()
@@ -137,6 +138,7 @@ public class HookRopeManage : GPUDravinBase
             GPUDravinDrawStack.Instance.RemoveRender(this);
             isInsert = false;
         }
+        poolingList?.RemoveAll();
     }
 
     public override void DrawByCamera(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Camera camera)

@@ -94,4 +94,4 @@ MonoBehaviour:
     contrastThreshold: 0.0312
     relativeThreshold: 0.063
     subpixelBlending: 1
-    lowQuality: 0
+    lowQuality: 1

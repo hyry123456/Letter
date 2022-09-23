@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DefferedRender
 {
+    [System.Serializable]
     public struct NoiseParticleData
     {
         public Vector4 random;          //xyz是随机数，w是目前存活时间
@@ -11,9 +12,10 @@ namespace DefferedRender
         public float interpolation;    //插值需要的数据
         public Vector4 color;           //颜色值，包含透明度
         public float size;             //粒子大小
-        public Vector3 nowSpeed;        //xyz是当前速度
+        public Vector3 nowSpeed;        //xyz是当前速度，w是存活时间
         public float liveTime;         //最多存活时间
-    }
+    };
+
 
     public struct ParticleInitializeData
     {

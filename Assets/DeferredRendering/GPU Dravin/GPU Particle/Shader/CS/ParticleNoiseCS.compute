@@ -30,7 +30,6 @@ void Noise_PerFrame(int3 gid : SV_GroupID, int index : SV_GroupIndex)
     if (o.random.w >= o.liveTime) {       //超过存活周期，需要初始化
         o = InitialParticle(o, init);
         o.index.x += _ParticleCount;
-        //o.index.x = init.arriveIndex + _ParticleCount;
         o.index.x %= 1000007;
         o.index.y = -1;                 //表示不显示
         _ParticleNoiseBuffer[allIndex] = o;

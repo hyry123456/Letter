@@ -3,15 +3,16 @@
 
 struct NoiseParticleData {
     float4 random;          //xyz是随机数，w是目前存活时间
-    uint2 index;             //状态标记，x是当前编号，y是是否存活
+    int2 index;             //状态标记，x是当前编号，y是是否存活
     float3 worldPos;        //当前位置
     float4 uvTransData;     //uv动画需要的数据
     float interpolation;    //插值需要的数据
     float4 color;           //颜色值，包含透明度
     float size;             //粒子大小
     float3 nowSpeed;        //xyz是当前速度，w是存活时间
-    float liveTime;         //该粒子最多存活时间
+    float liveTime;         //最多存活时间
 };
+
 
 struct Par_Initi_Data{
     float3 beginPos;        //该组粒子运行时间
@@ -181,7 +182,6 @@ float3 CurlNoise3D(float3 pos, int octave)
 }
 
 NoiseParticleData UpdataPosition(NoiseParticleData i, Par_Initi_Data init){
-    // i.nowSpeed += CurlNoise3D(i.worldPos * init.noiseData.y, (int)init.noiseData.x) * init.noiseData.z;
     i.worldPos += i.nowSpeed * _Time.y;
     i.random.w += _Time.y;
     return i;

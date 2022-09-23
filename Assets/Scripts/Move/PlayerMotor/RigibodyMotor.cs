@@ -1,4 +1,5 @@
 ﻿
+using DefferedRender;
 using UnityEngine;
 
 namespace Motor
@@ -86,6 +87,28 @@ namespace Motor
             minStairsDot = Mathf.Cos(maxStairAngle * Mathf.Deg2Rad);
             characterInfo = GetComponent<Info.CharacterInfo>();
             if (characterInfo == null) Debug.LogError("角色信息为空");
+
+            drawData = new ParticleDrawData
+            {
+                beginPos = transform.position,
+                //beginSpeed = Vector3.up * 3,
+                useGravity = false,
+                followSpeed = true,
+                //radian = 3.14f,
+                //radius = 10f,
+                cubeOffset = new Vector3(1, 0.2f, 1),
+                liftTime = 3,
+                showTime = 3,
+                frequency = 1f,
+                octave = 8,
+                intensity = 10,
+                sizeRange = Vector2.up * 0.5f,
+                colorIndex = (int)ColorIndexMode.HighlightToAlpha,
+                sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
+                textureIndex = 0,
+                groupCount = 1,
+            };
+
         }
 
         public void Move(float horizontal, float vertical)
@@ -219,11 +242,8 @@ namespace Motor
 
         
         Vector3 targetPos;      //传送到的目标点
-        //Vector3 beginPos;       //起始位置，进行Lerp
         Vector3 direct;         //移动方向
         float maxSpeed = -1;         //最大速度
-        //float speed;            //当前速度
-        //float accrelerate = 10;      //加速度
 
         /// <summary>
         /// 传送到特定点，在传送过程中需要停止其他力，只剩下向目标点的速度
@@ -247,8 +267,6 @@ namespace Motor
 
             maxSpeed = speed;
             targetPos = postion;
-            //body.useGravity = false;
-
         }
 
         /// <summary>        /// 进行传送        /// </summary>
@@ -277,9 +295,19 @@ namespace Motor
             EvaluateCollision(collision);
         }
 
+        ParticleDrawData drawData;
+
+
         private void OnCollisionStay(Collision collision)
         {
             EvaluateCollision(collision);
+
+            drawData.beginSpeed = collision.contacts[0].normal * 3;
+            drawData.beginPos = collision.contacts[0].point;
+            drawData.cubeOffset.x = 1.0f - collision.contacts[0].normal.x;
+            drawData.cubeOffset.y = 1.0f - collision.contacts[0].normal.y;
+            drawData.cubeOffset.z = 1.0f - collision.contacts[0].normal.z;
+            ParticleNoiseFactory.Instance.DrawCube(drawData);
         }
 
         void EvaluateCollision(Collision collision)
