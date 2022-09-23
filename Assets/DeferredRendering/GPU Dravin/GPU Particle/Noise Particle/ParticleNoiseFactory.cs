@@ -57,7 +57,7 @@ namespace DefferedRender
         public int octave;
         /// <summary>        /// 噪声的强度，越强粒子移动变化越快        /// </summary>
         public float intensity;
-        /// <summary>        /// 粒子的大小方位，size曲线的结果会映射到该数据中        /// </summary>
+        /// <summary>        /// 粒子的大小范围，size曲线的结果会映射到该数据中        /// </summary>
         public Vector2 sizeRange;
         /// <summary>        /// 颜色编号，用来确定粒子的颜色以及透明度        /// </summary>
         public int colorIndex;
