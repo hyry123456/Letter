@@ -107,7 +107,7 @@ namespace Motor
                 colorIndex = (int)ColorIndexMode.HighlightToAlpha,
                 sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
                 textureIndex = 0,
-                groupCount = 1,
+                groupCount = 100,
             };
 
         }
@@ -251,7 +251,7 @@ namespace Motor
         /// </summary>
         /// <param name="postion">目标位置</param>
         /// <param name="speed">速度</param>
-        public void TransferToPosition(Vector3 postion, float speed)
+        public void TransferToPosition(Transform postion, float speed)
         {
             //不允许反复传送
             if (maxSpeed > 0) {
@@ -260,14 +260,15 @@ namespace Motor
                 HookRopeManage.Instance.CloseHookRope();
                 return;
             }
-            direct = (postion - transform.position).normalized;
+            if (postion == null) return;
+            direct = (postion.position - transform.position).normalized;
             Vector3 nowDir = body.velocity.normalized;
             body.velocity = Mathf.Clamp01( Vector3.Dot(nowDir, direct) ) * body.velocity;
 
-            HookRopeManage.Instance.LinkHookRope(postion, transform);
+            HookRopeManage.Instance.LinkHookRope(postion.position, transform);
 
             maxSpeed = speed;
-            targetPos = postion;
+            targetPos = postion.position;
         }
 
         /// <summary>        /// 进行传送        /// </summary>
@@ -298,17 +299,19 @@ namespace Motor
 
         ParticleDrawData drawData;
 
-
-        private void OnCollisionStay(Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
-            EvaluateCollision(collision);
-
             drawData.beginSpeed = collision.contacts[0].normal * 3;
             drawData.beginPos = collision.contacts[0].point;
             drawData.cubeOffset.x = 1.0f - collision.contacts[0].normal.x;
             drawData.cubeOffset.y = 1.0f - collision.contacts[0].normal.y;
             drawData.cubeOffset.z = 1.0f - collision.contacts[0].normal.z;
             ParticleNoiseFactory.Instance.DrawCube(drawData);
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            EvaluateCollision(collision);
         }
 
         void EvaluateCollision(Collision collision)

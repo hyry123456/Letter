@@ -148,10 +148,10 @@ public class HookRopeManage : GPUDravinBase
 
         buffer.SetGlobalVector("_WorldPos", Target.position);
         buffer.DrawProcedural(Matrix4x4.identity, material, 0, MeshTopology.Points, 1);
-        if (isLink)
+        if (isLink && begin != null)
         {
             buffer.SetGlobalVector("_TargetPos", finalPos);
-            buffer.SetGlobalVector("_BeginPos", begin.position);
+            buffer.SetGlobalVector("_BeginPos", begin.position + Vector3.down * 3);
             buffer.DrawProcedural(Matrix4x4.identity, hookRopeMat, 0, MeshTopology.Points, 1);
         }
 

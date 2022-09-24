@@ -83,8 +83,8 @@ namespace Control
 
             if(skill)
             {
-                if(HookRopeManage.Instance.Target)
-                    motor.TransferToPosition(HookRopeManage.Instance.Target.position, hookSpeed);
+                //if(HookRopeManage.Instance.Target)
+                motor.TransferToPosition(HookRopeManage.Instance.Target, hookSpeed);
             }
             if (esc)
             {

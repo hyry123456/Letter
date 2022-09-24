@@ -78,47 +78,68 @@ Shader "Unlit/HookRope"
 
                 float paritcleLen = _ParticleSize;
                 float3 worldPos;
-
-                float3 dir = normalize(_TargetPos - _BeginPos);
-                float dotSize = abs( dot(dir, UNITY_MATRIX_V[2].xyz) );
                 float dis = distance(_TargetPos, _BeginPos) * _YScale;
 
-                if(dot(UNITY_MATRIX_V[0].xyz, dir) < 0) {        //In Left
-                    //Zero
-                    worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
-                    o[0].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[0].uv = float2(0, 0);
+                worldPos = _BeginPos + UNITY_MATRIX_V[0].xyz * paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                // worldPos = _BeginPos + float3(-1, 0, 0) * paritcleLen;
+                o[0].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                o[0].uv = float2(0, 0);
 
-                    worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;;
-                    o[1].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[1].uv = float2(1, 0);
+                worldPos = _BeginPos + UNITY_MATRIX_V[0].xyz * + -paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                // worldPos = _BeginPos + float3(1, 0, 0) * +paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                o[1].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                o[1].uv = float2(1, 0);
 
-                    worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
-                    o[2].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[2].uv = float2(0, dis);
+                worldPos = _TargetPos + UNITY_MATRIX_V[0].xyz * paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                // worldPos = _TargetPos + float3(-1, 0, 0) * paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                o[2].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                o[2].uv = float2(0, dis);
 
-                    worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
-                    o[3].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[3].uv = float2(1, dis);
-                }
-                else{
-                    //Zero
-                    worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
-                    o[0].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[0].uv = float2(0, 0);
+                worldPos = _TargetPos + UNITY_MATRIX_V[0].xyz * + -paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                // worldPos = _TargetPos + float3(1, 0, 0) * +paritcleLen + -unity_MatrixV[2].xyz * paritcleLen;
+                o[3].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                o[3].uv = float2(1, dis);
 
-                    worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;;
-                    o[1].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[1].uv = float2(1, 0);
+                // float3 dir = normalize(_TargetPos - _BeginPos);
+                // float dotSize = abs( dot(dir, UNITY_MATRIX_V[2].xyz) );
+                // float dis = distance(_TargetPos, _BeginPos) * _YScale;
 
-                    worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
-                    o[2].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[2].uv = float2(0, dis);
+                // if(dot(UNITY_MATRIX_V[0].xyz, dir) < 0) {        //In Left
+                //     //Zero
+                //     worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
+                //     o[0].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[0].uv = float2(0, 0);
 
-                    worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
-                    o[3].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
-                    o[3].uv = float2(1, dis);
-                }
+                //     worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;;
+                //     o[1].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[1].uv = float2(1, 0);
+
+                //     worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
+                //     o[2].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[2].uv = float2(0, dis);
+
+                //     worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
+                //     o[3].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[3].uv = float2(1, dis);
+                // }
+                // else{
+                //     //Zero
+                //     worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
+                //     o[0].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[0].uv = float2(0, 0);
+
+                //     worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _BeginPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;;
+                //     o[1].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[1].uv = float2(1, 0);
+
+                //     worldPos = UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * -UNITY_MATRIX_V[1].xyz;
+                //     o[2].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[2].uv = float2(0, dis);
+
+                //     worldPos = -UNITY_MATRIX_V[0].xyz * paritcleLen + _TargetPos + paritcleLen * dotSize * UNITY_MATRIX_V[1].xyz;
+                //     o[3].pos = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+                //     o[3].uv = float2(1, dis);
+                // }
 
 
 
