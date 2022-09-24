@@ -11,7 +11,7 @@ namespace Control
 
         /// <summary>        /// 主角的摄像机，目前是直接挂摄像机上来        /// </summary>
         public GameObject view;
-        private Motor.FirstPersonCameraControl FirstPersonCameraControl;
+        private Motor.OribitCamera oribitCamera;
 
         public float hookSpeed = 1;
 
@@ -52,7 +52,7 @@ namespace Control
         {
             motor = GetComponent<Motor.RigibodyMotor>();
 
-            FirstPersonCameraControl = view.GetComponent<Motor.FirstPersonCameraControl>();
+            oribitCamera = view.GetComponent<Motor.OribitCamera>();
         }
 
         /// <summary>
@@ -62,8 +62,7 @@ namespace Control
         {
             float xMouse = Input.GetAxis("Mouse X");
             float yMouse = -Input.GetAxis("Mouse Y");
-            FirstPersonCameraControl.SetCameraInput(yMouse, xMouse);
-            view.transform.position = transform.position;//new
+            oribitCamera.SetCameraInput(yMouse, xMouse);
         }
         /// <summary>
         /// 物理帧刷新的属性计算位置，一些没有必要逐帧计算的可以在这里进行计算
