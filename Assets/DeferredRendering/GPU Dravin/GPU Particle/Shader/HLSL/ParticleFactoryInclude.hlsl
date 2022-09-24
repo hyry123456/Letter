@@ -7,7 +7,7 @@ struct ParticleNodeData
     float3 cubeRange;       //初始化矩形坐标的范围, 分别表示xyz的偏移范围
     float3 lifeTimeRange;   //生存周期的范围,x:随机释放时间,Y:存活时间,Z:最大生存到的时间
     float3 noiseData;       //噪声调整速度时需要的数据, x:噪声采样次数, y:噪声采样频率, z:强度
-    int3 outEnum;           //确定输出时算法的枚举，x:followSpeed?
+    int3 outEnum;           //确定输出时算法的枚举，x:followSpeed? y:初始化速度方式
     float2 smoothRange;     //粒子的大小范围，用来对应size曲线的大小
     int2 uvCount;        //x:row，y:column,
     int2 drawData;     //x:颜色条编号,y是大小的编号
@@ -60,20 +60,49 @@ float3 GetCubeBeginPos(float3 random, float3 cubeRange){
 
 //对单个粒子进行初始化
 void InitialFactory(ParticleNodeData origin, inout NoiseParticleData particle){
+    float3 offsetPos;       //存储一下生成的偏移坐标，方便后面计算
     //首先初始化位置
     switch(origin.initEnum.x){
-        case 0:
-            particle.worldPos = origin.beginPos;
-            break;
+        // case 0:
+        //     
         case 1:
-            particle.worldPos = origin.beginPos + GetSphereBeginPos(particle.random.xy, origin.sphereData.x, origin.sphereData.y);
+            offsetPos = GetSphereBeginPos(particle.random.xy, origin.sphereData.x, origin.sphereData.y);
+            particle.worldPos = origin.beginPos + offsetPos;
             break;
         case 2:
-            particle.worldPos = origin.beginPos + GetCubeBeginPos(particle.random.xyz, origin.cubeRange);
+            offsetPos = GetCubeBeginPos(particle.random.xyz, origin.cubeRange);
+            particle.worldPos = origin.beginPos + offsetPos;
+            break;
+        default:
+            particle.worldPos = origin.beginPos;
+            offsetPos = particle.random.xyz;
             break;
     }
+
+    float speed = length(origin.beginSpeed) * particle.random.y;    //根据速度大小确定一个随机速度
+    float3 normal = normalize(origin.beginSpeed);
+    float3 direct = normalize(offsetPos);
+
     //初始化速度
-    particle.nowSpeed = origin.beginSpeed * particle.random.xyz;
+    switch(origin.outEnum.y){
+
+        case 1:     //速度是法线以及大小，在粒子位置生成一个垂直于法线且是向外的力度
+            particle.nowSpeed = normalize( (direct - normal * dot(direct, normal)) ) * speed;
+            break;
+        case 2:     //在粒子位置生成一个垂直于法线且是向内的力度
+            particle.nowSpeed = -normalize( (direct - normal * dot(direct, normal)) ) * speed;
+            break;
+        case 3:     //朝向起始位置的速度，也就是往中间汇集
+            particle.nowSpeed = -normalize(offsetPos) * speed;
+            break;
+        case 4:     //离开起始位置的速度，也就是从中间往外面跑
+            particle.nowSpeed = normalize(offsetPos) * speed;
+            break;
+        default: //默认模式,传入速度就是初始化速度
+            particle.nowSpeed = origin.beginSpeed * particle.random.xyz;
+            break;
+    }
+
     //图片编号以及标记为存活
     particle.index = uint2(origin.initEnum.z, 1);
     //存活时间与最大生存时间初始化

@@ -92,6 +92,7 @@ namespace Motor
             {
                 beginPos = transform.position,
                 //beginSpeed = Vector3.up * 3,
+                speedMode = SpeedMode.VerticalVelocityOutside,
                 useGravity = false,
                 followSpeed = true,
                 //radian = 3.14f,
