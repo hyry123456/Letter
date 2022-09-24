@@ -5,88 +5,7 @@ using UnityEngine.Rendering;
 
 namespace DefferedRender
 {
-    [System.Serializable]
-    /// <summary>    /// 粒子的根据数据    /// </summary>
-    public struct ParticleNodeData
-    {
-        public Vector3 beginPos;        //该组粒子运行初始位置
-        public Vector3 beginSpeed;      //初始速度
-        public Vector3Int initEnum;     //x:初始化的形状,y:是否使用重力，z:图片编号
-        public Vector2 sphereData;      //初始化球坐标需要的数据, x=角度, y=半径
-        public Vector3 cubeRange;       //初始化矩形坐标的范围
-        public Vector3 lifeTimeRange;   //生存周期的范围,x:随机释放时间,Y:存活时间,Z:最大生存到的时间
-        public Vector3 noiseData;       //噪声调整速度时需要的数据
-        public Vector3Int outEnum;      //确定输出时算法的枚举,x:followSpeed?
-        public Vector2 smoothRange;     //粒子的大小范围
-        public Vector2Int uvCount;        //x:row，y:column,
-        public Vector2Int drawData;     //x:颜色条编号,y是大小的编号
-    };
 
-    /// <summary>    /// 当个图片中的图集数量    /// </summary>
-    [System.Serializable]
-    public struct TextureUVCount
-    {
-        public int rowCount;
-        public int columnCount;
-    }
-
-    /// <summary>
-    /// 渲染粒子时的根据数据，设置一个结构体方便确定形参类型，不然数据太多了,不好检查
-    /// </summary>
-    public struct ParticleDrawData
-    {
-        /// <summary>        /// 初始位置，会在该位置及其周围生成粒子        /// </summary>
-        public Vector3 beginPos;
-        /// <summary>        /// 初始速度，用来进行默认速度初始化        /// </summary>
-        public Vector3 beginSpeed;
-        /// <summary>        /// 是否对粒子使用重力        /// </summary>
-        public bool useGravity;
-        /// <summary>        /// 粒子渲染是否要跟随速度，而不是朝向摄像机        /// </summary>
-        public bool followSpeed;
-        /// <summary>        /// radius是角度，radian是弧度(0-3.14)，用来控制这个球渲染的范围        /// </summary>
-        public float radius, radian;
-        /// <summary>        /// 矩形生成粒子时确定这个矩形的大小，分别表示xyz的偏移值        /// </summary>
-        public Vector3 cubeOffset;
-        /// <summary>        /// 这个粒子的最长生存周期        /// </summary>
-        public float liftTime;
-        /// <summary>        /// 单个粒子的显示时间，注意，显示时间请不要超过生存时间        /// </summary>
-        public float showTime;
-        /// <summary>        /// 噪声采样的频率        /// </summary>
-        public float frequency;
-        /// <summary>        /// 噪声采样的循环次数，次数越多越混乱，更有噪声的感觉，不要超过8次        /// </summary>
-        public int octave;
-        /// <summary>        /// 噪声的强度，越强粒子移动变化越快        /// </summary>
-        public float intensity;
-        /// <summary>        /// 粒子的大小范围，size曲线的结果会映射到该数据中        /// </summary>
-        public Vector2 sizeRange;
-        /// <summary>        /// 颜色编号，用来确定粒子的颜色以及透明度        /// </summary>
-        public int colorIndex;
-        /// <summary>        /// 选择的大小曲线编号        /// </summary>
-        public int sizeIndex;
-        /// <summary>        /// 选择的图片编号        /// </summary>
-        public int textureIndex;
-        /// <summary>        /// 粒子组数量，也就是要生成的粒子数量，一组有64个粒子        /// </summary>
-        public int groupCount;
-    }
-
-    /// <summary>    /// 颜色条目的可选模式    /// </summary>
-    public enum ColorIndexMode
-    {
-        /// <summary>   /// 全白，且透明到透明，中间一部分为白色    /// </summary>
-        AlphaToAlpha = 0,
-        /// <summary>        /// 透明到透明，中间是明亮的黄光        /// </summary>
-        HighlightAlphaToAlpha = 1,
-        /// <summary>        /// 强光，前面不透明，后面透明        /// </summary>
-        HighlightToAlpha = 2,
-    }
-
-    public enum SizeCurveMode
-    {
-        /// <summary>        /// 从小到大        /// </summary>
-        SmallToBig = 0, 
-        /// <summary>        /// 从小到大再到小，类似正态分布曲线        /// </summary>
-        Small_Hight_Small = 1,
-    }
 
     public class ParticleNoiseFactory : GPUDravinBase
     {
@@ -389,6 +308,7 @@ namespace DefferedRender
                 uvCounts[drawData.textureIndex].columnCount);
             particleNodes[index].drawData = new Vector2Int(drawData.colorIndex, drawData.sizeIndex);
             particleNodes[index].outEnum.x = drawData.followSpeed ? 1 : 0;
+            particleNodes[index].outEnum.y = (int)drawData.speedMode;
             groupsBuffer.SetData(particleNodes, index, index, 1);
         }
 
