@@ -13,8 +13,12 @@ public class LetterControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<Info.CharacterInfo>().gainScore();//获得分数
-        Parent.gameObject.SetActive(false);
+        if (other.gameObject.name == "Player")//按名字查找
+        {
+            other.gameObject.GetComponent<Info.CharacterInfo>()?.gainScore();//获得分数
+            Parent.gameObject.SetActive(false);
+        }
+        else return;
     }
     private void Update()
     {

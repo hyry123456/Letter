@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 selfPosition = gameObject.transform.position;
         Vector3 distance = playerPosition - selfPosition;//获取敌人与玩家的坐标差
-        Debug.Log(distance.sqrMagnitude);
+        //Debug.Log(distance.sqrMagnitude);
         if (distance.sqrMagnitude > (viewDistance*viewDistance))
         {
             return;//太远了就不打了

@@ -32,7 +32,7 @@ namespace Control
             //Common.SceneObjectMap objectMap = Common.SceneObjectMap.Instance;
             //Application.targetFrameRate = -1;
             Application.targetFrameRate = 60;
-            Debug.Log("60");
+            //Debug.Log("60");
         }
 
 

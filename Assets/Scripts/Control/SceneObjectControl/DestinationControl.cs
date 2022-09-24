@@ -13,11 +13,11 @@ public class DestinationControl : MonoBehaviour
         {
             if(targetSceneName != null && targetSceneName.Length != 0)
                 Control.SceneChangeControl.Instance.ChangeScene(targetSceneName);
-            Debug.Log("Win!");
+            //Debug.Log("Win!");
         }
         else
         {
-            Debug.Log("Not Enough Letters");
+            //Debug.Log("Not Enough Letters");
         }
     }
 }
