@@ -4,6 +4,7 @@ public class LetterControl : MonoBehaviour
 {
     protected Transform Parent;
     protected Transform Light;
+
     protected int Timer = 0;
     protected bool IsLightActive = true;
     private void Start()
@@ -26,6 +27,10 @@ public class LetterControl : MonoBehaviour
     }
     
     private void FixedUpdate()
+    {
+        LightSwitch();
+    }
+    private void LightSwitch()
     {
         Timer++;
         if (Timer % 100 == 0)

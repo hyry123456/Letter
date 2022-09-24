@@ -586,6 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 902312862}
+  CameraHeight: 0
   hookSpeed: 1
   dieY: -100
   verticalName: Vertical
