@@ -300,8 +300,8 @@ namespace DefferedRender
             particleNodes[index].beginSpeed = drawData.beginSpeed;
             particleNodes[index].cubeRange = drawData.cubeOffset;
             particleNodes[index].sphereData = new Vector2(drawData.radian, drawData.radius);
-            particleNodes[index].lifeTimeRange = new Vector3(drawData.liftTime
-                - drawData.showTime, drawData.showTime, Time.time + drawData.liftTime);
+            particleNodes[index].lifeTimeRange = new Vector3(drawData.lifeTime
+                - drawData.showTime, drawData.showTime, Time.time + drawData.lifeTime);
             particleNodes[index].noiseData = new Vector3(drawData.frequency, drawData.octave, drawData.intensity);
             particleNodes[index].smoothRange = drawData.sizeRange;
             particleNodes[index].uvCount = new Vector2Int(uvCounts[drawData.textureIndex].rowCount,
