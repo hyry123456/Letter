@@ -44,7 +44,7 @@ void ShadowCasterPassFragment (Varyings input) {
 	ClipLOD(input.positionCS_SS.xy, unity_LODFade.x);
 	
 	float4 base = GetBase(config);
-	#if defined(_SHADOWS_CLIP)
+	#if defined(_CLIPPING)
 		clip(base.a - GetCutoff(config));
 	#elif defined(_SHADOWS_DITHER)
 		float dither = InterleavedGradientNoise(input.positionCS_SS.xy, 0);

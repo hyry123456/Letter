@@ -1,4 +1,4 @@
-Shader "Unlit/TerrainDraw"
+Shader "Terrain/TerrainDraw"
 {
     Properties
     {
@@ -11,6 +11,9 @@ Shader "Unlit/TerrainDraw"
 		ENDHLSL
         Pass
         {
+            Tags {
+                "LightMode" = "OutGBuffer"
+            }
 			Blend One Zero
 			ZWrite On
 			HLSLPROGRAM

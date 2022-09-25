@@ -1,4 +1,4 @@
-Shader "Unlit/GBufferReady"
+Shader "Defferer/GBufferReady"
 {
     Properties
     {
@@ -74,6 +74,7 @@ Shader "Unlit/GBufferReady"
 			HLSLPROGRAM
 			#pragma target 3.5
 			#pragma shader_feature _ _SHADOWS_CLIP _SHADOWS_DITHER
+			#pragma shader_feature _CLIPPING
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_instancing
 			#pragma vertex ShadowCasterPassVertex

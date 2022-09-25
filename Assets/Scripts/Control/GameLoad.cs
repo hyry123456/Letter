@@ -30,9 +30,8 @@ namespace Control
 
             Common.SustainCoroutine sustain = Common.SustainCoroutine.Instance; //º”‘ÿ–≠≥Ã
             //Common.SceneObjectMap objectMap = Common.SceneObjectMap.Instance;
-            //Application.targetFrameRate = -1;
-            Application.targetFrameRate = 60;
-            Debug.Log("60");
+            Application.targetFrameRate = -1;
+            //Application.targetFrameRate = 60;
         }
 
 

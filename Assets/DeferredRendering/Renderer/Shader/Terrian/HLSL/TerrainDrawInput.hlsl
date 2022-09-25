@@ -67,15 +67,39 @@ struct TerrainTextureData{
     float4 maskValue;
 };
 
+struct TriplanarUV{
+    float2 x, y, z;
+};
+
+TriplanarUV GetTriplanarUV(float3 worldPos){
+    TriplanarUV triUV;
+    triUV.x = worldPos.zy;
+    triUV.y = worldPos.xz;
+    triUV.z = worldPos.xy;
+    return triUV;
+}
+
 void GetTerrainData(float4 spiltCol, uint index, float2 trueUV, float3 worldPos, inout TerrainTextureData texData){
-    float2 worldUV = float2(worldPos.x + worldPos.y * 0.5, worldPos.z + worldPos.y * 0.5);
+    // float2 worldUV = float2(worldPos.x + worldPos.y * 0.5, worldPos.z + worldPos.y * 0.5);
+    TriplanarUV triUvs = GetTriplanarUV(worldPos);
     for(uint i = 0; (index * 4 + i) <= _TextureCount; i++){
-        texData.baseCol += SAMPLE_TEXTURE2D_ARRAY(_VTexture_Diffuse, sampler_VTexture_Diffuse, worldUV, index * 4 + i).rgb *
-            _SpecularBuffer[index * 4 + i].rgb * spiltCol[i];
-        texData.normal += SAMPLE_TEXTURE2D_ARRAY(_VTexture_Normal, sampler_VTexture_Normal, worldUV, index * 4 + i) * spiltCol[i];
+        float3 avgBaseCol = ( SAMPLE_TEXTURE2D_ARRAY(_VTexture_Diffuse, sampler_VTexture_Diffuse, triUvs.x, index * 4 + i).rgb
+            + SAMPLE_TEXTURE2D_ARRAY(_VTexture_Diffuse, sampler_VTexture_Diffuse, triUvs.y, index * 4 + i).rgb +
+            SAMPLE_TEXTURE2D_ARRAY(_VTexture_Diffuse, sampler_VTexture_Diffuse, triUvs.z, index * 4 + i).rgb ) / 3.0;
+        texData.baseCol += avgBaseCol * _SpecularBuffer[index * 4 + i].rgb * spiltCol[i];
+
+        float4 avgNormal = ( SAMPLE_TEXTURE2D_ARRAY(_VTexture_Normal, sampler_VTexture_Normal, triUvs.x, index * 4 + i)
+            + SAMPLE_TEXTURE2D_ARRAY(_VTexture_Normal, sampler_VTexture_Normal, triUvs.y, index * 4 + i) +
+            SAMPLE_TEXTURE2D_ARRAY(_VTexture_Normal, sampler_VTexture_Normal, triUvs.z, index * 4 + i) ) / 3.0;
+        texData.normal += avgNormal * spiltCol[i];
+
         texData.normalScale += _TerrainDataBuffer[index * 4 + i].x * spiltCol[i];
         texData.pbrData += _TerrainDataBuffer[index * 4 + i].yz * spiltCol[i];
-        texData.maskValue += SAMPLE_TEXTURE2D_ARRAY(_VTexture_Mask, sampler_VTexture_Mask, worldUV, index * 4 + i) * spiltCol[i];
+
+        float4 avgMask = ( SAMPLE_TEXTURE2D_ARRAY(_VTexture_Mask, sampler_VTexture_Mask, triUvs.x, index * 4 + i) +
+            SAMPLE_TEXTURE2D_ARRAY(_VTexture_Mask, sampler_VTexture_Mask, triUvs.y, index * 4 + i) +
+            SAMPLE_TEXTURE2D_ARRAY(_VTexture_Mask, sampler_VTexture_Mask, triUvs.z, index * 4 + i) ) / 3.0;
+        texData.maskValue += avgMask * spiltCol[i];
     }
 }
 

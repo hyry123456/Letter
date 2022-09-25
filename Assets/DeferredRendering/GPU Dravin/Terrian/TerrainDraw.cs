@@ -54,8 +54,6 @@ namespace DefferedRender
         private ComputeBuffer terrainDataBuffer;
 
 
-        //public ComputeShader computeShader;
-        //private int createKernel, clipKernel, clipPlaneKernel;
         [Range(2, 50)]
         public int tessCount = 2;
         [Range(1, 60)]
@@ -64,12 +62,14 @@ namespace DefferedRender
         public float tessMinDistance = 10;
         [Min(0.0f)]
         public float tessMaxDistance = 100;
+        [Min(0.0f)]
+        public float terrainSize = 1000;
 
         #region VisualTexSetting
 
         public Texture2D normalTex;
         public RenderTexture heightmapTex;
-        Terrain terrain;
+        public Terrain terrain;
 
         public TextureMode visualTexMode = TextureMode._128;
         private Texture2DArray visualTex_Diffuse;
@@ -86,7 +86,7 @@ namespace DefferedRender
             if(!gameObject.activeSelf || !this.enabled) return;
             GPUDravinDrawStack.Instance.InsertRender(this);
             isInsert = true;
-            terrain = GetComponent<Terrain>();
+            //terrain = GetComponent<Terrain>();
             //ReadyBuffer();
             CreateMesh();
             GetVisualTexture();
@@ -97,10 +97,10 @@ namespace DefferedRender
         private void OnValidate()
         {
 
-            //OnEnable();
-            terrain = GetComponent<Terrain>();
-            ReadyBuffer();
+            //terrain = GetComponent<Terrain>();
             CreateMesh();
+            ReadyBuffer();
+            GetVisualTexture();
         }
 
         private void OnDisable()
@@ -113,7 +113,6 @@ namespace DefferedRender
                 GPUDravinDrawStack.Instance.RemoveRender(this);
                 isInsert = false;
             }
-            //createMeshBuffer?.Dispose();
             //clipResultBuffer?.Dispose();
             //argsBuffer?.Dispose();
             specularBuffer?.Dispose();
@@ -175,6 +174,22 @@ namespace DefferedRender
             terrainDataBuffer = new ComputeBuffer(length, sizeof(float) * 3);
             terrainDataBuffer.SetData(datas);
 
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            if(meshFilter == null)
+            {
+                meshFilter = gameObject.AddComponent<MeshFilter>();
+                meshFilter.sharedMesh = planeMesh;
+            }
+            if(meshFilter.sharedMesh != planeMesh)
+                meshFilter.sharedMesh = planeMesh;
+            MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+            if(renderer == null)
+            {
+                renderer = gameObject.AddComponent<MeshRenderer>();
+                renderer.sharedMaterial = ShowMat;
+            }
+            if(renderer.sharedMaterial != ShowMat)
+                renderer.sharedMaterial = ShowMat;
         }
 
         private void GetVisualTexture()
@@ -226,12 +241,11 @@ namespace DefferedRender
             {
                 for (int j = 0; j < this.tessCount; j++)
                 {
-                    verts.Add(begin + new Vector3(i / (tessCount - 1.0f) * 1000.0f, 
-                        0, j / (tessCount - 1.0f) * 1000.0f));
+                    verts.Add(begin + new Vector3(i / (tessCount - 1.0f) * terrainSize,
+                        0, j / (tessCount - 1.0f) * terrainSize));
                     uvs.Add(new Vector2(i / (tessCount - 1.0f), j / (tessCount - 1.0f)));
                     if (i == 0 || j == 0)
                         continue;
-                    //一个标准的描述平面的顶点连接案例，需要逆时针，保证平面渲染的方向是朝我们这边的
                     tris.Add(tessCount * i + j);
                     tris.Add(tessCount * i + j - 1);
                     tris.Add(tessCount * (i - 1) + j - 1);
@@ -241,13 +255,18 @@ namespace DefferedRender
                 }
             }
 
+
             if (planeMesh)
                 DestroyImmediate(planeMesh);
             planeMesh = new Mesh();
-            planeMesh.SetVertices(verts);
-            planeMesh.SetUVs(0, uvs);
-            planeMesh.SetTriangles(tris, 0);
+            planeMesh.vertices = verts.ToArray();
+            planeMesh.uv = uvs.ToArray();
+            planeMesh.triangles = tris.ToArray();
+            planeMesh.RecalculateNormals();
+            Bounds bounds = new Bounds(new Vector3(terrainSize / 2, 0, terrainSize / 2), Vector3.one * terrainSize);
+            planeMesh.bounds = bounds;
         }
+
 
         public override void DrawByCamera(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Camera camera)
         {
@@ -259,8 +278,8 @@ namespace DefferedRender
             Material material = ShowMat;
             if (material == null || planeMesh == null) return;
 
-            buffer.DrawMesh(planeMesh, Matrix4x4.identity, material, 0, 1);
-            ExecuteBuffer(ref buffer, context);
+            //buffer.DrawMesh(planeMesh, Matrix4x4.identity, material, 0, 1);
+            //ExecuteBuffer(ref buffer, context);
             return;
         }
 
@@ -273,6 +292,7 @@ namespace DefferedRender
         {
             if (isDebug)
             {
+                //GetVisualTexture();
                 Texture2D[] textures_Spilt = new Texture2D[terrain.terrainData.alphamapTextures.Length];
                 for (int i = 0; i < textures_Spilt.Length; i++)
                 {
@@ -285,17 +305,16 @@ namespace DefferedRender
             if (material == null || planeMesh == null) return;
 
 
-            buffer.DrawMesh(planeMesh, Matrix4x4.identity, material, 0, 0);
-            ExecuteBuffer(ref buffer, context);
+            //buffer.DrawMesh(planeMesh, Matrix4x4.identity, material, 0, 0);
+            //ExecuteBuffer(ref buffer, context);
         }
-
 
         public override void SetUp(ScriptableRenderContext context, CommandBuffer buffer, Camera camera)
         {
             buffer.SetGlobalFloat("_TessDegree", tessDegree);
             buffer.SetGlobalTexture("_HeightTex", heightmapTex);
             buffer.SetGlobalFloat("_Height",
-                terrain.terrainData.heightmapScale.x * terrain.terrainData.heightmapScale.y);
+                terrain.terrainData.heightmapScale.y * 2);
             buffer.SetGlobalFloat("_TessDistanceMax", tessMaxDistance);
             buffer.SetGlobalFloat("_TessDistanceMin", tessMinDistance);
             buffer.SetGlobalTexture("_NormalTex", normalTex);
@@ -307,14 +326,13 @@ namespace DefferedRender
             buffer.SetGlobalBuffer("_SpecularBuffer", specularBuffer);
             buffer.SetGlobalBuffer("_TerrainDataBuffer", terrainDataBuffer);
 
-            Vector4[] clipPlane = GetFrustumPlane(Camera.main);
-            buffer.SetGlobalVectorArray("_ClipPlane", clipPlane);
+            //Vector4[] clipPlane = GetFrustumPlane(Camera.main);
+            //buffer.SetGlobalVectorArray("_ClipPlane", clipPlane);
 
             ExecuteBuffer(ref buffer, context);
 
             return;
         }
-
 
     }
 }

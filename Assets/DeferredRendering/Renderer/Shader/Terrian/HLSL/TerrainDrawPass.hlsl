@@ -4,7 +4,6 @@
 #include "../../ShaderLibrary/GI.hlsl"
 
 
-
 struct FragInput{
     float4 positionCS : SV_POSITION;
     float3 TtoW0 : TEXCOORD1;
@@ -84,7 +83,6 @@ void TerrainFragment(FragInput input,
 
     _GBufferColorTex = float4(texData.baseCol, 1);
     _GBufferNormalTex = float4(bump * 0.5 + 0.5, 1);
-    // _GBufferNormalTex = float4(normal.xyz, 1);
     _GBufferSpecularTex = float4(texData.pbrData, 0.8, 1);
     _GBufferBakeTex = 0;
 }

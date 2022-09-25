@@ -66,14 +66,16 @@ inline float4 AnimateVertex(float4 pos, float3 normal, float4 animParams)
     vWaves = SmoothTriangleWave( vWaves );
     float2 vWavesSum = vWaves.xz + vWaves.yw;
 
+    float4 wind = UNITY_ACCESS_INSTANCED_PROP(UnityPerTree, _Wind);
+
     // Edge (xz) and branch bending (y)
     float3 bend = animParams.y * fDetailAmp * normal.xyz;
     bend.y = animParams.w * fBranchAmp;
-    pos.xyz += ((vWavesSum.xyx * bend) + (_Wind.xyz * vWavesSum.y * animParams.w)) * _Wind.w;
+    pos.xyz += ((vWavesSum.xyx * bend) + (wind.xyz * vWavesSum.y * animParams.w)) * wind.w;
 
     // Primary bending
     // Displace position
-    pos.xyz += animParams.z * _Wind.xyz;
+    pos.xyz += animParams.z * wind.xyz;
 
     return pos;
 }

@@ -48,7 +48,6 @@ float4 _ScreenParams;
 float4 _ZBufferParams;
 float4 _Time;
 
-float4 _Wind;    //Unity的树提供的数据
 
 
 

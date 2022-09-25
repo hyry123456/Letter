@@ -11,7 +11,7 @@ float3 TransferLight(Surface surface, Light light){
 	float3 backLightDir = surface.normal * (1.0 - surface.width) + light.direction ;
 
 	//注意, 直接使用默认的阴影投影方式生成的阴影是有问题的，需要调整阴影投影矩阵，不然这里会出现错误的遮挡
-	float fLTDot = pow( saturate( dot(surface.viewDirection, -backLightDir)), 3.0) * light.attenuation;
+	float fLTDot = pow( saturate( dot(surface.viewDirection, -backLightDir)), 2.0) * light.attenuation * 6;
 	// return surface.shiftColor;
 	return fLTDot * surface.shiftColor * light.color * (1.0 - surface.width);
 }

@@ -105,7 +105,6 @@ float4 SSS_Fragment(Varyings i) : SV_Target{
     return reflectTex;
 }
 
-
 float4 DrawGBufferColorFragment(Varyings i) : SV_Target
 {
     float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, i.screenUV, 0);
