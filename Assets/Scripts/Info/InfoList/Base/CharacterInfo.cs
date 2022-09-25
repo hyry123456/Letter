@@ -34,17 +34,18 @@ namespace Info
             sp = maxSP;
             score = 0;
         }
-        //得分
+        /// <summary>        /// 得分        /// </summary>
         public void gainScore()
         {
             score++;
         }
-        //返回分数
+        /// <summary>        /// 返回分数        /// </summary>
         public int getScore()
         {
             return score;
         }
-        //判断是否死亡
+
+        /// <summary>        /// 判断是否死亡        /// </summary>
         public bool isDead()
         {
             if (hp > 0)
@@ -53,17 +54,24 @@ namespace Info
             }
             else
             {
-                //Debug.Log("Game Over!");
-                Control.SceneChangeControl.Instance.ReloadActiveScene();
+                DealWithDeath();
                 return true;
             }
         }
-        //操作生命值，返回是否死亡
+        /// <summary>        /// 操作生命值        /// </summary>
+        /// <returns>        ///是否死亡           /// </returns>
         public bool modifyHp(int dealtaHp)
         {
             hp += dealtaHp;
             return isDead();
         }
-        
+
+        /// <summary>        /// 死亡后的操作        /// </summary>
+        private void DealWithDeath()
+        {
+            //Debug.Log("Game Over!");
+            //Control.SceneChangeControl.Instance.ReloadActiveScene();//暂时注释掉死亡，便于测试
+        }
+
     }
 }
