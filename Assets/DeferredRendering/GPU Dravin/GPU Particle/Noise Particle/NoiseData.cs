@@ -149,7 +149,7 @@ namespace DefferedRender
         /// <summary>        /// 矩形生成粒子时确定这个矩形的大小，分别表示xyz的偏移值        /// </summary>
         public Vector3 cubeOffset;
         /// <summary>        /// 这个粒子的最长生存周期        /// </summary>
-        public float liftTime;
+        public float lifeTime;
         /// <summary>        /// 单个粒子的显示时间，注意，显示时间请不要超过生存时间        /// </summary>
         public float showTime;
         /// <summary>        /// 噪声采样的频率        /// </summary>

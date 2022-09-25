@@ -9,10 +9,6 @@ namespace Control
         private static PlayerControl instance;
         private Motor.RigibodyMotor motor;
 
-        /// <summary>        /// 主角的摄像机，目前是直接挂摄像机上来        /// </summary>
-        public GameObject view;
-        private Motor.FirstPersonCameraControl FirstPersonCameraControl;
-
         public float hookSpeed = 1;
 
         public float dieY = -100;
@@ -51,20 +47,16 @@ namespace Control
         protected void Start()
         {
             motor = GetComponent<Motor.RigibodyMotor>();
-
-            FirstPersonCameraControl = view.GetComponent<Motor.FirstPersonCameraControl>();
         }
 
         /// <summary>
         /// 时时刷新的控制属性的存放位置
         /// </summary>
-        private void Update()
-        {
-            float xMouse = Input.GetAxis("Mouse X");
-            float yMouse = -Input.GetAxis("Mouse Y");
-            FirstPersonCameraControl.SetCameraInput(yMouse, xMouse);
-            view.transform.position = transform.position;//new
-        }
+        //private void Update()
+        //{
+        //    //由于改为第一人称，相机相关代码已转移至FirstPersonCameraControl
+        //}
+
         /// <summary>
         /// 物理帧刷新的属性计算位置，一些没有必要逐帧计算的可以在这里进行计算
         /// </summary>

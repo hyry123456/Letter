@@ -98,7 +98,7 @@ namespace Motor
                 //radian = 3.14f,
                 //radius = 10f,
                 cubeOffset = new Vector3(1, 0.2f, 1),
-                liftTime = 3,
+                lifeTime = 3,
                 showTime = 3,
                 frequency = 1f,
                 octave = 8,
@@ -306,7 +306,7 @@ namespace Motor
             drawData.cubeOffset.x = 1.0f - collision.contacts[0].normal.x;
             drawData.cubeOffset.y = 1.0f - collision.contacts[0].normal.y;
             drawData.cubeOffset.z = 1.0f - collision.contacts[0].normal.z;
-            ParticleNoiseFactory.Instance.DrawCube(drawData);
+            //ParticleNoiseFactory.Instance.DrawCube(drawData);
         }
 
         private void OnCollisionStay(Collision collision)

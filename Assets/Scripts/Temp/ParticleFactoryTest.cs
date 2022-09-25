@@ -25,7 +25,7 @@ public class ParticleFactoryTest : UIUseBase
             radian = 3.14f,
             radius = 10f,
             cubeOffset = Vector3.one * 100,
-            liftTime = 10,
+            lifeTime = 10,
             showTime = 8,
             frequency = 10f,
             octave = 8,

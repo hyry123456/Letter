@@ -53,7 +53,7 @@ namespace Info
             }
             else
             {
-                Debug.Log("Game Over!");//todo
+                //Debug.Log("Game Over!");
                 Control.SceneChangeControl.Instance.ReloadActiveScene();
                 return true;
             }

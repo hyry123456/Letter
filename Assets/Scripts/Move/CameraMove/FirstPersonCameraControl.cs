@@ -4,10 +4,14 @@ namespace Motor
 {
     public class FirstPersonCameraControl : MonoBehaviour
     {
+        /// <summary>        /// 玩家节点     /// </summary>
+        public GameObject Player;
         /// <summary>        /// 用户的鼠标灵敏度        /// </summary>
         public float Sensitivity = 200;
         /// <summary>        /// 用户的鼠标输入        /// </summary>
         Vector2 playerInput;
+        /// <summary>        /// 相机的高度        /// </summary>
+        public float CameraHeight = 0;
         /// <summary>    /// 确定摄像机的视锥体的大小    /// </summary>
         Vector3 CameraHalfExtends
         {
@@ -24,13 +28,35 @@ namespace Motor
                 return halfExtends;
             }
         }
-        //相机旋转的分量，为了以后方便把他们放在了全局
+
+        //相机旋转的分量，为了方便使用把他们放在了全局
         private float xRotation;
         private float yRotation;
-        
+        //鼠标移动的分量，为了方便使用把他们放在了全局
+        private float xMouse;
+        private float yMouse;
+
+        private void Start()
+        {
+            
+        }
+
         private void Update()
         {
+            xMouse = Input.GetAxis("Mouse X");
+            yMouse = -Input.GetAxis("Mouse Y");
+            SetCameraInput(yMouse, xMouse);
+            setCameraPosition();
             ManualRotation();
+        }
+        /// <summary>
+        /// 调整摄像机位置
+        /// </summary>
+        private void setCameraPosition()
+        {
+            Vector3 CameraPlace = Player.transform.position;
+            CameraPlace.y += CameraHeight;//稍微调高摄像机的高度
+            transform.position = CameraPlace;//设置摄像机位置
         }
 
         /// <summary>   /// 管理旋转角度  /// </summary>
