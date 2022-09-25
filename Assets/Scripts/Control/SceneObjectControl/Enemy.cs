@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         playerPosition = Player.transform.position;//获取玩家坐标
-        gameObject.transform.Find("Head").transform.LookAt(playerPosition);//时刻看向玩家
+        transform.GetChild(1).LookAt(playerPosition);//时刻看向玩家
         
     }
     private void FixedUpdate()

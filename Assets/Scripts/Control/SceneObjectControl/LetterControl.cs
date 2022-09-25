@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class LetterControl : MonoBehaviour
 {
+    /// <summary> /// 旋转速度/// </summary>
+    public float RotateSpeed = 50;
+    /// <summary> /// 父节点/// </summary>
     protected Transform Parent;
+    /// <summary> /// 灯光节点/// </summary>
     protected Transform Light;
-
+    /// <summary> /// 计时器/// </summary>
     protected int Timer = 0;
+    /// <summary> /// 记录灯光开关的变量/// </summary>
     protected bool IsLightActive = true;
     private void Start()
     {
@@ -23,13 +28,14 @@ public class LetterControl : MonoBehaviour
     }
     private void Update()
     {
-        Parent.Rotate(Vector3.up, Time.deltaTime * 50f);//转圈
+        Parent.Rotate(Vector3.up, Time.deltaTime * RotateSpeed);//转圈
     }
     
     private void FixedUpdate()
     {
         LightSwitch();
     }
+    /// <summary>///判断灯光开关/// </summary>
     private void LightSwitch()
     {
         Timer++;

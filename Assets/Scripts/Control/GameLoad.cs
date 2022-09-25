@@ -29,7 +29,14 @@ namespace Control
             DontDestroyOnLoad(gameObject);
 
             Common.SustainCoroutine sustain = Common.SustainCoroutine.Instance; //º”‘ÿ–≠≥Ã
+<<<<<<< HEAD
             Application.targetFrameRate = -1;
+=======
+            //Common.SceneObjectMap objectMap = Common.SceneObjectMap.Instance;
+
+            Application.targetFrameRate = -1;
+
+>>>>>>> 3709854a057de584b36aecb80a2d677bf9d33d80
         }
 
 
