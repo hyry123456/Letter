@@ -50,8 +50,14 @@ namespace DefferedRender
             }
         }
 
+        //public Material detailMat;
+        public ComputeShader computDetail;
+        int kernel;
+
         private ComputeBuffer specularBuffer;
         private ComputeBuffer terrainDataBuffer;
+
+        public RenderTexture detailTex;
 
 
         [Range(2, 50)]
@@ -67,9 +73,9 @@ namespace DefferedRender
 
         #region VisualTexSetting
 
-        public Texture2D normalTex;
+        private Texture2D normalTex;
         public RenderTexture heightmapTex;
-        public Terrain terrain;
+        private Terrain terrain;
 
         public TextureMode visualTexMode = TextureMode._128;
         private Texture2DArray visualTex_Diffuse;
@@ -77,7 +83,10 @@ namespace DefferedRender
         private Texture2DArray visualTex_Mask;
         private Texture2DArray visualTex_Splat;
 
+        //public Texture2D detailOrigin;
+
         public bool isDebug = false;
+
 
         #endregion
 
@@ -86,8 +95,9 @@ namespace DefferedRender
             if(!gameObject.activeSelf || !this.enabled) return;
             GPUDravinDrawStack.Instance.InsertRender(this);
             isInsert = true;
-            //terrain = GetComponent<Terrain>();
-            //ReadyBuffer();
+            terrain = GetComponent<Terrain>();
+            kernel = computDetail.FindKernel("CSMain");
+
             CreateMesh();
             GetVisualTexture();
             SetNormal();
@@ -96,8 +106,7 @@ namespace DefferedRender
 
         private void OnValidate()
         {
-
-            //terrain = GetComponent<Terrain>();
+            terrain = GetComponent<Terrain>();
             CreateMesh();
             ReadyBuffer();
             GetVisualTexture();
@@ -113,10 +122,11 @@ namespace DefferedRender
                 GPUDravinDrawStack.Instance.RemoveRender(this);
                 isInsert = false;
             }
-            //clipResultBuffer?.Dispose();
-            //argsBuffer?.Dispose();
             specularBuffer?.Dispose();
             terrainDataBuffer?.Dispose();
+
+            if (detailTex != null)
+                RenderTexture.ReleaseTemporary(detailTex);
         }
 
         private void OnDestroy()
@@ -133,9 +143,19 @@ namespace DefferedRender
             specularBuffer?.Dispose();
             terrainDataBuffer?.Dispose();
 
-            //createMeshBuffer?.Dispose();
-            //clipResultBuffer?.Dispose();
-            //argsBuffer?.Dispose();
+            if (detailTex != null)
+                RenderTexture.ReleaseTemporary(detailTex);
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            Vector3 point = collision.contacts[0].point;
+            Vector3 begin = transform.position;
+            Vector3 beginUV = new Vector3((point.x - begin.x) / terrainSize,
+                (point.z - begin.z) / terrainSize, 0.005f);
+            computDetail.SetTexture(kernel, "Result", detailTex);
+            computDetail.SetVector("_Center", beginUV);
+            computDetail.Dispatch(kernel, 1, 1, 1);
         }
 
         private void SetNormal()
@@ -174,18 +194,28 @@ namespace DefferedRender
             terrainDataBuffer = new ComputeBuffer(length, sizeof(float) * 3);
             terrainDataBuffer.SetData(datas);
 
-            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            Transform childTrans = transform.Find("TerrainDraw");
+            GameObject child;
+            if (childTrans == null)
+            {
+                child = new GameObject("TerrainDraw");
+                child.transform.parent = transform;
+            }
+            else
+                child = childTrans.gameObject;
+
+            MeshFilter meshFilter = child.GetComponent<MeshFilter>();
             if(meshFilter == null)
             {
-                meshFilter = gameObject.AddComponent<MeshFilter>();
+                meshFilter = child.AddComponent<MeshFilter>();
                 meshFilter.sharedMesh = planeMesh;
             }
             if(meshFilter.sharedMesh != planeMesh)
                 meshFilter.sharedMesh = planeMesh;
-            MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+            MeshRenderer renderer = child.GetComponent<MeshRenderer>();
             if(renderer == null)
             {
-                renderer = gameObject.AddComponent<MeshRenderer>();
+                renderer = child.AddComponent<MeshRenderer>();
                 renderer.sharedMaterial = ShowMat;
             }
             if(renderer.sharedMaterial != ShowMat)
@@ -229,7 +259,13 @@ namespace DefferedRender
             }
             visualTex_Splat = TextureArrayCreate.CreateTextureArrayBySet(textures_Spilt);
 
+            detailTex = RenderTexture.GetTemporary(1024, 1024, 0, RenderTextureFormat.Default);
+            detailTex.enableRandomWrite = true;
+            detailTex.Create();
+            Graphics.Blit(Texture2D.grayTexture, detailTex);    //初始化为灰度
+
         }
+
 
         private void CreateMesh()
         {
@@ -255,7 +291,6 @@ namespace DefferedRender
                 }
             }
 
-
             if (planeMesh)
                 DestroyImmediate(planeMesh);
             planeMesh = new Mesh();
@@ -267,7 +302,6 @@ namespace DefferedRender
             planeMesh.bounds = bounds;
         }
 
-
         public override void DrawByCamera(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Camera camera)
         {
 
@@ -275,8 +309,8 @@ namespace DefferedRender
 
         public override void DrawByProjectMatrix(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Matrix4x4 projectMatrix)
         {
-            Material material = ShowMat;
-            if (material == null || planeMesh == null) return;
+            //Material material = ShowMat;
+            //if (material == null || planeMesh == null) return;
 
             //buffer.DrawMesh(planeMesh, Matrix4x4.identity, material, 0, 1);
             //ExecuteBuffer(ref buffer, context);
@@ -313,6 +347,7 @@ namespace DefferedRender
         {
             buffer.SetGlobalFloat("_TessDegree", tessDegree);
             buffer.SetGlobalTexture("_HeightTex", heightmapTex);
+            buffer.SetGlobalTexture("_DetailTex", detailTex);
             buffer.SetGlobalFloat("_Height",
                 terrain.terrainData.heightmapScale.y * 2);
             buffer.SetGlobalFloat("_TessDistanceMax", tessMaxDistance);

@@ -24,6 +24,10 @@ void TerrainGeom(triangle TessOutPut IN[3], inout TriangleStream<FragInput> tris
     IN[1].vertex.y += SAMPLE_TEXTURE2D_LOD(_HeightTex, sampler_HeightTex, IN[1].uv, 0).r * _Height;
     IN[2].vertex.y += SAMPLE_TEXTURE2D_LOD(_HeightTex, sampler_HeightTex, IN[2].uv, 0).r * _Height;
 
+    IN[0].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[0].uv, 0).r * 0.3;
+    IN[1].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[1].uv, 0).r * 0.3;
+    IN[2].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[2].uv, 0).r * 0.3;
+
     output[0].positionCS = TransformWorldToHClip(IN[0].vertex.xyz);
     output[1].positionCS = TransformWorldToHClip(IN[1].vertex.xyz);
     output[2].positionCS = TransformWorldToHClip(IN[2].vertex.xyz);
@@ -36,9 +40,16 @@ void TerrainGeom(triangle TessOutPut IN[3], inout TriangleStream<FragInput> tris
     output[1].worldPos = IN[1].vertex.xyz;
     output[2].worldPos = IN[2].vertex.xyz;
 
-    float3 normal0 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
-    float3 normal1 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
-    float3 normal2 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    float3 po0To1 = normalize( IN[1].vertex.xyz - IN[0].vertex.xyz );
+    float3 po1To2 = normalize( IN[2].vertex.xyz - IN[1].vertex.xyz );
+    float3 po2To0 = normalize( IN[0].vertex.xyz - IN[2].vertex.xyz );
+
+    // float3 normal0 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    // float3 normal1 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    // float3 normal2 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    float3 normal0 = cross(po0To1, -po2To0);
+    float3 normal1 = cross(po1To2, -po0To1);
+    float3 normal2 = cross(po2To0, -po1To2);
 
     float3 tangent = float3(1,1,1);
     float3 worldBinormal0 = cross(normal0, tangent);

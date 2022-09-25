@@ -19,6 +19,9 @@ SAMPLER(sampler_NormalTex);
 TEXTURE2D(_HeightTex);         //高度纹理
 SAMPLER(sampler_HeightTex);
 
+TEXTURE2D(_DetailTex);         //高度纹理
+SAMPLER(sampler_DetailTex);
+
 CBUFFER_START(UnityPerMaterial)
     float _TessDegree;       //细分程度参数
     float _TessDistanceMin; //最小距离

@@ -56,14 +56,14 @@ MonoBehaviour:
     useFog: 0
     fogMaxHeight: 1000
     fogMinHeight: 100
-    fogMaxDepth: 0.73
+    fogMaxDepth: 0.077
     fogMinDepth: 0
     fogDepthFallOff: 1.22
     fogPosYFallOff: 3
     colors:
       serializedVersion: 2
       key0: {r: 0, g: 0.21688865, b: 0.3301887, a: 1}
-      key1: {r: 0, g: 0.5495522, b: 0.745283, a: 1}
+      key1: {r: 0, g: 0.3892751, b: 0.5283019, a: 1}
       key2: {r: 0, g: 0.5495522, b: 0.745283, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
