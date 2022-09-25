@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Destination
+  m_Name: Destination_Active
   m_Shader: {fileID: 4800000, guid: 281f008706905a14b988faea22873f76, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
