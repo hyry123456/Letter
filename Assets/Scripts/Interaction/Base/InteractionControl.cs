@@ -23,7 +23,7 @@ namespace Interaction
 
         private Control.PlayerControl playerControl;
         /// <summary>        /// 交互检测射线的起始点        /// </summary>
-        public Transform beginPos;
+        //public Transform beginPos;
         /// <summary>        /// 当前可以触发的交互信息        /// </summary>
         public InteractionBase nowInteractionInfo;
         /// <summary>        /// 是否正在交互中        /// </summary>
@@ -41,7 +41,7 @@ namespace Interaction
             }
             instance = this;
         }
-
+        
         /// <summary>        /// 挂到主角上，由主角时时交互        /// </summary>
         private void Start()
         {
@@ -63,7 +63,7 @@ namespace Interaction
             if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir() * 3, out hit, interacteCheckDistance))
             {
                 InteractionBase hitInfo = hit.transform.GetComponent<InteractionBase>();
-                if (hitInfo != null && (hitInfo.interactionType & InteractionType.Enemy) == 0)
+                if (hitInfo != null)
                 {
                     nowInteractionInfo = hitInfo;
                     return;
@@ -80,7 +80,8 @@ namespace Interaction
             if (interactionInfo == null) { 
                 Debug.Log("交互对象空了");
             }
-            StartCoroutine(interactionInfo.InteractionBehavior());
+            //运行交互行为
+            interactionInfo.InteractionBehavior();
         }
 
         /// <summary>
@@ -92,9 +93,9 @@ namespace Interaction
         }
 
         /// <summary>
-        /// 按下了交互键时运行该函数
+        /// 运行当前正在交互的交互事件
         /// </summary>
-        public void PressInteraction()
+        public void RunInteraction()
         {
             if (nowInteractionInfo == null) return;
             RunInteraction(nowInteractionInfo);

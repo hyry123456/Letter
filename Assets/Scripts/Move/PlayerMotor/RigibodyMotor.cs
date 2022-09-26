@@ -470,7 +470,6 @@ namespace Motor
             forward.y = 0;
             forward = forward.normalized * climbData.x + Vector3.up * climbData.y;
             beginPos = transform.position + forward;
-            Debug.DrawRay(beginPos, Vector3.down * 0.3f);
 
             if (Physics.Raycast(beginPos, Vector3.down, out RaycastHit hit, 0.5f, probeMask))
             {

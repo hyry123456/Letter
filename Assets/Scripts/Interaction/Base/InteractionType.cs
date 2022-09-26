@@ -8,7 +8,6 @@ namespace Interaction
     {
         Object = 1,
         PasserBy = 2,
-        Enemy = 4,
         Task = 8,
         /// <summary>       /// ‘À∂ØΩªª•        /// </summary>
         Move = 16,

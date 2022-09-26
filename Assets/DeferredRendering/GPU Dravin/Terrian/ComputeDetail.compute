@@ -8,5 +8,11 @@ void CSMain (uint3 id : SV_GroupThreadID)
 {
     uint2 uv = _Center.xy * 1024 + id.xy - uint2(1, 1);
     float value = Result[uv];
-    Result[uv] += (id.xy == uint2(1, 1))? value * -0.5 : value * 0.1;
+    Result[uv] += (id.x == id.y == 1)? value * -0.5 : value * 0.1;
+    //if (id.x == id.y == 1) {
+    //    Result[uv] += value * -0.5;
+    //}
+    //else
+    //    Result[uv] += value * 0.1;
+    //
 }

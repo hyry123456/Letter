@@ -50,7 +50,8 @@ namespace Motor
         /// </summary>
         private void setCameraPosition()
         {
-            Vector3 CameraPlace = Player.transform.position;
+            //Vector3 CameraPlace = Player.transform.position;
+            Vector3 CameraPlace = Control.PlayerControl.Instance.transform.position;
             CameraPlace.y += CameraHeight;//调整摄像机高度
             transform.position = CameraPlace;//同步位置
         }

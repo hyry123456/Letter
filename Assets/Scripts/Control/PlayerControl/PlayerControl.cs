@@ -8,6 +8,7 @@ namespace Control
     {
         private static PlayerControl instance;
         private Motor.RigibodyMotor motor;
+        private Interaction.InteractionControl interactionControl;
 
         public float hookSpeed = 1;
 
@@ -47,6 +48,7 @@ namespace Control
         protected void Start()
         {
             motor = GetComponent<Motor.RigibodyMotor>();
+            interactionControl = GetComponent<Interaction.InteractionControl>();
         }
 
         /// <summary>
@@ -68,20 +70,20 @@ namespace Control
             bool jump = MyInput.Instance.GetButtonDown(jumpName);
             bool skill = MyInput.Instance.GetButtonDown("Skill");
             bool esc = MyInput.Instance.GetButtonDown("ESC");
+            bool interacte = MyInput.Instance.GetButtonDown(interacteName);
 
             motor.Move(horizontal, vertical);
             if (jump)
                 motor.DesireJump();
 
             if(skill)
-            {
-                //if(HookRopeManage.Instance.Target)
                 motor.TransferToPosition(HookRopeManage.Instance.Target, hookSpeed);
-            }
+            
             if (esc)
-            {
                 UIExtentControl.Instance?.ShowOrClose();
-            }
+
+            if (interacte && interactionControl != null)
+                interactionControl.RunInteraction();
 
             if (transform.position.y < dieY)
                 SceneChangeControl.Instance.ReloadActiveScene();

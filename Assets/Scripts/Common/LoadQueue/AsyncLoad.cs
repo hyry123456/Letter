@@ -80,10 +80,12 @@ public class AsyncLoad : MonoBehaviour
     public void AddAction(Action action)
     {
         resetEvent.Set();
+        if (localCommands.Contains(action)) //如果已经在栈中，就退出
+            return;
 
         lock (commands)
         {
-            if(!commands.Contains(action))
+            if(!commands.Contains(action))  //只有不在运行栈也不在等待栈时才可以加入等待栈
                 commands.Add(action);   //加入到待加载栈中，而不是执行栈中
         }
     }

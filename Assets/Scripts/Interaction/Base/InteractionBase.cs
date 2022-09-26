@@ -26,11 +26,8 @@ namespace Interaction
         /// </summary>
         protected abstract void OnEnable();
 
-        /// <summary>
-        /// 该交互行为需要干的事情
-        /// </summary>
-        /// <returns>协程放回，方便延时</returns>
-        public abstract IEnumerator InteractionBehavior();
+        /// <summary>        /// 该交互行为需要干的事情        /// </summary>
+        public abstract void InteractionBehavior();
 
     }
 }

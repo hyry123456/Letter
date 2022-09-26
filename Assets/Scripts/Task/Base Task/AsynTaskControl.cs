@@ -1,17 +1,28 @@
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using UnityEngine;
 
 namespace Task
 {
+    public enum TaskMode
+    {
+        /// <summary>   /// 任务未开始   /// </summary>
+        NotStart = 1,
+        /// <summary>   /// 任务开始中   /// </summary>
+        Start = 2,
+        /// <summary>   /// 任务完成     /// </summary>
+        Finish = 4,
+    }
 
     struct TaskInfo
     {
         public string Name;
-        /// <summary>        /// 任务状态，0=未开始、1=开始中、2=完成        /// </summary>
-        public int state;
+        public TaskMode state;
+        /// <summary>        /// 是否属于当前正在运行的场景        /// </summary>
+        public bool isInRuntimeScene;
     }
     public class AsynTaskControl
     {
@@ -34,6 +45,18 @@ namespace Task
         private static string completeTaskPath = Application.streamingAssetsPath + "/Task/CompleteTask.task";
         /// <summary>        /// 进行中的任务的存储文件        /// </summary>
         private static string obtainTaskPath = Application.streamingAssetsPath + "/Task/ObtainTask.task";
+        /// <summary>        /// 进行反射查找类的名称前缀        /// </summary>
+        const string chapterPrefix = "Task.";
+
+        /// <summary>        /// 进行中的任务        /// </summary>
+        private List<Chapter> exectuteTasks;
+
+        /// <summary>        /// 所有任务的映射容器，<编号，名称>        /// </summary>
+        private Dictionary<int, TaskInfo> taskMap;
+        /// <summary>
+        /// 当前运行的场景名称，因为任务是在子线程中加载的，因此需要在协程中进行名称获取
+        /// </summary>
+        string nowSceneName;
 
         /// <summary>        /// 返回开始状态，重置所有任务        /// </summary>
         public static void ClearData()
@@ -48,19 +71,34 @@ namespace Task
             AsyncLoad.Instance.AddAction(LoadTask);
         }
 
-        /// <summary>        /// 进行中的任务        /// </summary>
-        private List<Chapter> exectuteTasks;
-
-
-        /// <summary>        /// 所有任务的映射容器，<编号，名称>        /// </summary>
-        private Dictionary<int, TaskInfo> taskMap;
+        private bool FindTaskName()
+        {
+            nowSceneName = Control.SceneChangeControl.Instance.GetRuntimeSceneName();
+            return true;
+        }
 
         private void LoadTask()
         {
+            nowSceneName = null;
+            Common.SustainCoroutine.Instance.AddCoroutine(FindTaskName);
+            while(nowSceneName == null)
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(1));  //休眠该线程，等待场景名称获取
+            }
+
             LoadAllTask();          //加载所有的任务
             LoadObtainTask();       //加载所有持有的任务
             LoadCompleteTask();     //确定完成的任务
             ReadyTask();            //开始执行任务检测
+        }
+
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        /// <summary>        /// 通过反射创建章节对象        /// </summary>
+        /// <param name="chapterName">章节名称</param>
+        private Chapter GetChapter(string chapterName)
+        {
+            return (Chapter)assembly.CreateInstance(chapterName);
         }
 
         /// <summary>        /// 生成所有任务的映射关系表        /// </summary>
@@ -76,20 +114,24 @@ namespace Task
                 return;
             taskMap = new Dictionary<int, TaskInfo>(allTasks.Length);
 
-            string chapterPrefix = "FireControl.Task.";
-            Assembly assembly = Assembly.GetExecutingAssembly();
             for (int i = 0; i < allTasks.Length; i++)
             {
                 if (allTasks[i] == null || allTasks[i].Length == 0)
                     continue;
                 string target = chapterPrefix + allTasks[i].Trim();
-                Chapter chapterTask = (Chapter)assembly.CreateInstance(target);
+                Chapter chapterTask = GetChapter(target);
+
                 if (chapterTask == null)
                 {
                     Debug.Log(target);
                 }
-                //生成所有章节的映射关系
-                taskMap.Add(chapterTask.chapterID, new TaskInfo { Name = allTasks[i].Trim(), state = 0 });
+                //生成所有章节的映射关系，章节编号：章节信息
+                taskMap.Add(chapterTask.chapterID, new TaskInfo {
+                    Name = allTasks[i].Trim(), 
+                    state = 0,
+                    //判断该任务是否要在该场景运行
+                    isInRuntimeScene = (nowSceneName == chapterTask.runtimeScene), 
+                });
             }
         }
 
@@ -103,16 +145,16 @@ namespace Task
             List<string> task = Common.FileReadAndWrite.ReadFileByAngleBrackets(obtainTaskPath);
             if (task != null && task.Count > 0)
             {
-                string chapterPrefix = "FireControl.Task.";
-                Assembly assembly = Assembly.GetExecutingAssembly();
                 for (int i = 0; i < task.Count; i++)
                 {
                     string[] tremps = task[i].Split(' ');
                     int index = int.Parse(tremps[0]);
                     TaskInfo taskInfo = taskMap[index];
-                    taskInfo.state = 1;     //运行中
-                    Chapter chapterTask = 
-                        (Chapter)assembly.CreateInstance(chapterPrefix + taskInfo.Name);
+                    //非本场景的任务，直接跳过
+                    if (!taskInfo.isInRuntimeScene) continue;
+
+                    taskInfo.state = TaskMode.Start;     //运行中
+                    Chapter chapterTask = GetChapter(chapterPrefix + taskInfo.Name);
                     taskMap[index] = taskInfo;
 
                     //插入到正在运行的任务数组中
@@ -140,18 +182,19 @@ namespace Task
                 string[] comTasks = completeTask.Split('\n');
                 if (comTasks != null && comTasks.Length > 0)
                 {
-                    string chapterPrefix = "FireControl.Task.";
-                    Assembly assembly = Assembly.GetExecutingAssembly();
                     for (int i = 0; i < comTasks.Length; i++)
                     {
                         int value;
                         if (int.TryParse(comTasks[i], out value))
                         {
-                            taskMap.TryGetValue(value, out TaskInfo task);
-                            task.state = 2;     //表示完成
+                            TaskInfo task = taskMap[value];
+                            task.state ^= TaskMode.Finish;     //表示完成
+
+                            //非运行在本场景，标识为完成后跳过
+                            if (!task.isInRuntimeScene) continue;
                             taskMap[value] = task;
-                            Chapter chapterTask = 
-                                (Chapter)assembly.CreateInstance(chapterPrefix + task.Name);
+
+                            Chapter chapterTask = GetChapter(chapterPrefix + task.Name);
                             chapterTask.CompleteChapter();      //调用任务完成的方法
                         }
                     }
@@ -163,13 +206,12 @@ namespace Task
         private void ReadyTask()
         {
             if (taskMap == null) return;
-            string chapterPrefix = "FireControl.Task.";
-            Assembly assembly = Assembly.GetExecutingAssembly();
             foreach(TaskInfo info in taskMap.Values)
             {
-                if (info.state != 0)
+                //未开始的任务就调用检查方法看看是否要开始该任务
+                if (info.state != 0 || !info.isInRuntimeScene)
                     continue;
-                Chapter chapterTask = (Chapter)assembly.CreateInstance(chapterPrefix + info.Name);
+                Chapter chapterTask = GetChapter(chapterPrefix + info.Name);
                 chapterTask.CheckAndLoadChapter();
             }
         }
@@ -181,7 +223,7 @@ namespace Task
         /// <param name="taskId">任务的编号，注意该编号值要唯一</param>
         public bool CheckTaskIsComplete(int taskId)
         {
-            return taskMap[taskId].state == 2;
+            return (taskMap[taskId].state & TaskMode.Finish) != 0;
         }
 
         /// <summary>        /// 任务完成的通用行为，将该任务退出，然后保存文件        /// </summary>
@@ -192,14 +234,14 @@ namespace Task
             //调用退出函数
             chapter.ExitChapter();
             TaskInfo info = taskMap[chapter.chapterID];
-            info.state = 2;         //完成任务
+            info.state = TaskMode.Finish;         //完成任务
             taskMap[chapter.chapterID] = info;
 
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("");
 
             foreach (KeyValuePair<int, TaskInfo> taskInfo in taskMap)
             {
-                if(taskInfo.Value.state == 2)
+                if(taskInfo.Value.state == TaskMode.Finish)
                 {
                     stringBuilder.Append(taskInfo.Key.ToString() + '\n');
                 }
@@ -230,6 +272,14 @@ namespace Task
         public List<Chapter> GetExecuteChapter()
         {
             return exectuteTasks;
+        }
+
+        /// <summary>
+        /// 重新加载一次任务，可在切换场景后调用，用来判断这个场景中的任务
+        /// </summary>
+        public void ReLoadTask()
+        {
+            AsyncLoad.Instance.AddAction(LoadTask);
         }
 
         /// <summary>        /// 获取单个真正运行的任务        /// </summary>
@@ -288,10 +338,8 @@ namespace Task
             TaskInfo info = taskMap[chapterId];
             if (info.state != 0)
                 return false;
-            info.state = 1;
-            string chapterPrefix = "FireControl.Task.";
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Chapter chapter = (Chapter)assembly.CreateInstance(chapterPrefix + info.Name);
+            info.state = TaskMode.Start;
+            Chapter chapter = GetChapter(chapterPrefix + info.Name);
 
             if (exectuteTasks == null)
             {
@@ -308,6 +356,18 @@ namespace Task
                 return true;
             }
 
+        }
+
+        /// <summary>        /// 准备章节，可以作为章节的启动方法        /// </summary>
+        /// <param name="chapterId">章节编号</param>
+        public void ReadyChapter(int chapterId)
+        {
+            TaskInfo taskInfo = taskMap[chapterId];
+            if(taskInfo.state == TaskMode.NotStart)
+            {
+                Chapter chapter = GetChapter(chapterPrefix + taskInfo.Name);
+                chapter.CheckAndLoadChapter();
+            }
         }
 
 

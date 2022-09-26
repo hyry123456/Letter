@@ -44,8 +44,8 @@ namespace DefferedRender
         }
 
         //public Material detailMat;
-        public ComputeShader computDetail;
-        int kernel;
+        //public ComputeShader computDetail;
+        //int kernel;
 
         private ComputeBuffer specularBuffer;
         private ComputeBuffer terrainDataBuffer;
@@ -88,7 +88,7 @@ namespace DefferedRender
             GPUDravinDrawStack.Instance.InsertRender(this);
             isInsert = true;
             terrain = GetComponent<Terrain>();
-            kernel = computDetail.FindKernel("CSMain");
+            //kernel = computDetail.FindKernel("CSMain");
 
             CreateMesh();
             GetVisualTexture();
@@ -139,16 +139,16 @@ namespace DefferedRender
                 RenderTexture.ReleaseTemporary(detailTex);
         }
 
-        private void OnCollisionStay(Collision collision)
-        {
-            Vector3 point = collision.contacts[0].point;
-            Vector3 begin = transform.position;
-            Vector3 beginUV = new Vector3((point.x - begin.x) / terrainSize,
-                (point.z - begin.z) / terrainSize, 0.005f);
-            computDetail.SetTexture(kernel, "Result", detailTex);
-            computDetail.SetVector("_Center", beginUV);
-            computDetail.Dispatch(kernel, 1, 1, 1);
-        }
+        //private void OnCollisionStay(Collision collision)
+        //{
+        //    Vector3 point = collision.contacts[0].point;
+        //    Vector3 begin = transform.position;
+        //    Vector3 beginUV = new Vector3((point.x - begin.x) / terrainSize,
+        //        (point.z - begin.z) / terrainSize, 0.005f);
+        //    //computDetail.SetTexture(kernel, "Result", detailTex);
+        //    //computDetail.SetVector("_Center", beginUV);
+        //    //computDetail.Dispatch(kernel, 1, 1, 1);
+        //}
 
         private void SetNormal()
         {
@@ -290,7 +290,7 @@ namespace DefferedRender
             planeMesh.uv = uvs.ToArray();
             planeMesh.triangles = tris.ToArray();
             planeMesh.RecalculateNormals();
-            Bounds bounds = new Bounds(new Vector3(terrainSize / 2, 0, terrainSize / 2), Vector3.one * terrainSize);
+            Bounds bounds = new Bounds(begin + new Vector3(terrainSize / 2, 0, terrainSize / 2), Vector3.one * terrainSize);
             planeMesh.bounds = bounds;
         }
 
@@ -339,7 +339,7 @@ namespace DefferedRender
         {
             buffer.SetGlobalFloat("_TessDegree", tessDegree);
             buffer.SetGlobalTexture("_HeightTex", heightmapTex);
-            buffer.SetGlobalTexture("_DetailTex", detailTex);
+            //buffer.SetGlobalTexture("_DetailTex", detailTex);
             buffer.SetGlobalFloat("_Height",
                 terrain.terrainData.heightmapScale.y * 2);
             buffer.SetGlobalFloat("_TessDistanceMax", tessMaxDistance);

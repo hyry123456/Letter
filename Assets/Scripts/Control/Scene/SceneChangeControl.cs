@@ -59,6 +59,12 @@ namespace Control
             return asyncStatic.progress;
         }
 
+        /// <summary>        /// 获得正在运行中的场景的名称        /// </summary>
+        public string GetRuntimeSceneName()
+        {
+            return SceneManager.GetActiveScene().name;
+        }
+
         /// <summary>        /// 重新加载当前运行的场景        /// </summary>
         public void ReloadActiveScene()
         {

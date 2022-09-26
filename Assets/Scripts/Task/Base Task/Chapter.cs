@@ -21,10 +21,14 @@ namespace Task
         public int chapterID;
         /// <summary>        /// 当前完成的子章节编号        /// </summary>
         public int nowCompletePartId;
-        /// <summary>        /// 如果任务需要文本文件，用该路径存储文件        /// </summary>
+        /// <summary>        
+        /// 如果任务需要文本文件，用该路径存储文件，整个章节的文本都加到其中，方便一同读取
+        /// </summary>
         public string chapterSavePath;
         /// <summary>        /// 文本读取后的存储位置        /// </summary>
         private List<string> readData;
+        /// <summary>        /// 存在的场景，用来判断该任务是否运行在该场景        /// </summary>
+        public string runtimeScene;
 
         /// <summary>
         /// 检查小节完成情况，用于任务的时时检查，判断是否可以进入下一个任务状态
@@ -32,8 +36,8 @@ namespace Task
         /// <param name="info">交互信息</param>
         public abstract void CheckTask(InteracteInfo info);
         /// <summary>
-        /// 检查该章节是否可以启动，可以时自己调用加载方法，
-        /// 该方法只有在未完成且未获取时才会调用
+        /// 检查该章节是否可以启动，可以时调用加载方法，
+        /// 在加载时会在未启用时调用，否则可能在某个任务完成后判断是否满足启用要求
         /// </summary>
         public abstract void CheckAndLoadChapter();
 
@@ -57,8 +61,8 @@ namespace Task
         public abstract void ExitChapter();
 
         /// <summary>
-        /// 当章节完成时进行的方法，比如加载、删除场景之类的，
-        /// 目前先放在这里先，之后换在其他位置
+        /// 当章节完成了，在重新开始游戏时会运行该方法，
+        /// 用来加载、删除场景之类的，之后有更好的加载方式可以不用该方法
         /// </summary>
         public abstract void CompleteChapter();
 

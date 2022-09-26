@@ -7,7 +7,7 @@ namespace Task
     /// </summary>
     public abstract class AsynChapterBase : Chapter
     {
-        protected string targetPart = "FireControl.Task.";
+        protected string targetPart = "Task.";
 
         //初始化案例
         //public AsynChapterBase()
@@ -19,6 +19,7 @@ namespace Task
         //    //任务文件用编号命名
         //    chapterSavePath = Application.streamingAssetsPath + "/" + "Task/Chapter/0.task";
         //    targetPart = targetPart +"赋值子章节名称";
+        //    runtimeScene = "simpleScene";
         //}
 
 
@@ -26,16 +27,24 @@ namespace Task
         {
             nowCompletePartId++;
             part.ExitTaskEvent(this);       //退出当前任务
+
             if (nowCompletePartId == taskPartCount)     //章节完成
             {
+                //保存完成的任务
                 AsynTaskControl.Instance.CompleteChapter(this);
+                //更新获取中的任务
+                AsynTaskControl.Instance.SaveObtainChapter();
                 return;
             }
             //未完成就搜索子章节
-            string targetPartStr = targetPart + (nowCompletePartId).ToString();
+            string targetPartStr = targetPart + nowCompletePartId.ToString();
             Assembly assembly = Assembly.GetExecutingAssembly();
             part = (ChapterPart)assembly.CreateInstance(targetPartStr);
             part.EnterTaskEvent(this, false);
+
+            //更新获取中的任务
+            AsynTaskControl.Instance.SaveObtainChapter();
+
         }
 
         public override void CheckTask(Interaction.InteracteInfo info)

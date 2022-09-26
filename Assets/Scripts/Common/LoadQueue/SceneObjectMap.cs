@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Common
 {
     /// <summary>    /// 场景的组件管理类，用来用名称找到物体    /// </summary>
-    public class SceneObjectMap 
+    public class SceneObjectMap : MonoBehaviour
     {
         private static SceneObjectMap instance;
         public static SceneObjectMap Instance
@@ -12,14 +12,30 @@ namespace Common
             get
             {
                 if(instance == null)
-                    instance = new SceneObjectMap();
+                {
+                    GameObject go = new GameObject("SceneObjectMap");
+                    instance = go.AddComponent<SceneObjectMap>();
+                }
                 return instance;
             }
         }
-        private SceneObjectMap()
+        private void Awake()
         {
+            if(instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            instance = this;
             LoadAllObject();
         }
+
+        private void OnDestroy()
+        {
+            instance = null;
+            objectMap.Clear();
+        }
+
         const string controlName = "ControlObject";
 
         Dictionary<string, GameObject> objectMap;

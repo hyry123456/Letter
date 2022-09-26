@@ -24,9 +24,9 @@ void TerrainGeom(triangle TessOutPut IN[3], inout TriangleStream<FragInput> tris
     IN[1].vertex.y += SAMPLE_TEXTURE2D_LOD(_HeightTex, sampler_HeightTex, IN[1].uv, 0).r * _Height;
     IN[2].vertex.y += SAMPLE_TEXTURE2D_LOD(_HeightTex, sampler_HeightTex, IN[2].uv, 0).r * _Height;
 
-    IN[0].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[0].uv, 0).r * 0.3;
-    IN[1].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[1].uv, 0).r * 0.3;
-    IN[2].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[2].uv, 0).r * 0.3;
+    // IN[0].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[0].uv, 0).r * 0.3;
+    // IN[1].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[1].uv, 0).r * 0.3;
+    // IN[2].vertex.y += SAMPLE_DEPTH_TEXTURE_LOD(_DetailTex, sampler_DetailTex, IN[2].uv, 0).r * 0.3;
 
     output[0].positionCS = TransformWorldToHClip(IN[0].vertex.xyz);
     output[1].positionCS = TransformWorldToHClip(IN[1].vertex.xyz);
