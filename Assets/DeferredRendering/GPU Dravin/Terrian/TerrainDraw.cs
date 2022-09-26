@@ -4,13 +4,6 @@ using UnityEngine.Rendering;
 
 namespace DefferedRender
 {
-    public enum TextureMode
-    {
-        _128 = 128,
-        _256 = 256,
-        _512 = 512,
-        _1024 = 1024
-    }
 
     enum Pass
     {
@@ -38,8 +31,8 @@ namespace DefferedRender
         public Mesh planeMesh;
 
         public Shader showShader;
-        public Material showMat;
-        public Material ShowMat
+        private Material showMat;
+        protected Material ShowMat
         {
             get
             {
@@ -61,23 +54,22 @@ namespace DefferedRender
 
 
         [Range(2, 50)]
-        public int tessCount = 2;
+        public int tessCount = 10;
         [Range(1, 60)]
-        public int tessDegree = 1;
+        public int tessDegree = 30;
         [Min(0.0f)]
-        public float tessMinDistance = 10;
+        public float tessMinDistance = 300;
         [Min(0.0f)]
-        public float tessMaxDistance = 100;
+        public float tessMaxDistance = 800;
         [Min(0.0f)]
         public float terrainSize = 1000;
 
         #region VisualTexSetting
 
         private Texture2D normalTex;
-        public RenderTexture heightmapTex;
+        private RenderTexture heightmapTex;
         private Terrain terrain;
 
-        public TextureMode visualTexMode = TextureMode._128;
         private Texture2DArray visualTex_Diffuse;
         private Texture2DArray visualTex_Normal;
         private Texture2DArray visualTex_Mask;

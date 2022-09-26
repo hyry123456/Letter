@@ -1,6 +1,3 @@
-
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +19,9 @@ namespace Info
         /// <summary>        /// 行走速度        /// </summary>
         public float walkSpeed = 5;
         public float rotateSpeed = 10;
+
+        /// <summary>        /// 判断角色是否死亡        /// </summary>
+        public bool isDie => hp <= 0;
 
         /// <summary>        /// 角色得分         /// </summary>
         protected int score = 0;
@@ -46,28 +46,22 @@ namespace Info
         }
 
         /// <summary>        /// 判断是否死亡        /// </summary>
-        public bool isDead()
+        protected void CheckDead()
         {
-            if (hp > 0)
-            {
-                return false;
-            }
-            else
-            {
+            if(isDie)
                 DealWithDeath();
-                return true;
-            }
         }
+
         /// <summary>        /// 操作生命值        /// </summary>
-        /// <returns>        ///是否死亡           /// </returns>
-        public bool modifyHp(int dealtaHp)
+        public void modifyHp(int dealtaHp)
         {
             hp += dealtaHp;
-            return isDead();
+            CheckDead();
+            return;
         }
 
         /// <summary>        /// 死亡后的操作        /// </summary>
-        private void DealWithDeath()
+        protected virtual void DealWithDeath()
         {
             //Debug.Log("Game Over!");
             //Control.SceneChangeControl.Instance.ReloadActiveScene();//暂时注释掉死亡，便于测试

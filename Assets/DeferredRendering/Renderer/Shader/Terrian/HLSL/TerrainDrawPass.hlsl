@@ -44,12 +44,12 @@ void TerrainGeom(triangle TessOutPut IN[3], inout TriangleStream<FragInput> tris
     float3 po1To2 = normalize( IN[2].vertex.xyz - IN[1].vertex.xyz );
     float3 po2To0 = normalize( IN[0].vertex.xyz - IN[2].vertex.xyz );
 
-    // float3 normal0 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
-    // float3 normal1 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
-    // float3 normal2 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
-    float3 normal0 = cross(po0To1, -po2To0);
-    float3 normal1 = cross(po1To2, -po0To1);
-    float3 normal2 = cross(po2To0, -po1To2);
+    float3 normal0 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    float3 normal1 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    float3 normal2 = SAMPLE_TEXTURE2D_LOD(_NormalTex, sampler_NormalTex, IN[0].uv, 0).xyz;
+    // float3 normal0 = cross(po0To1, -po2To0);
+    // float3 normal1 = cross(po1To2, -po0To1);
+    // float3 normal2 = cross(po2To0, -po1To2);
 
     float3 tangent = float3(1,1,1);
     float3 worldBinormal0 = cross(normal0, tangent);
