@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - ControlObject
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Shelter
   - Water
   - UI
   - 

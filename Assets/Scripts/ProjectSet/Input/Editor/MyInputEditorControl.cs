@@ -49,6 +49,10 @@ namespace Common.ResetInput
             {
                 return str[0];
             }
+            if(str.Length > 5 && str.Substring(0, 5) == "alpha")
+            {
+                return (int)(KeyCode.Alpha0 + int.Parse(str[5].ToString()));
+            }
             switch (str)
             {
                 case "tab":
@@ -57,7 +61,7 @@ namespace Common.ResetInput
                     return (int)KeyCode.RightShift;
                 case "leftshift":
                     return (int)KeyCode.LeftShift;
-                case "esc":
+                case "escape":
                     return (int)KeyCode.Escape;
                 case "none":
                     return 0;

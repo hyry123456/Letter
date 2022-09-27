@@ -3,7 +3,9 @@ using UnityEngine;
 
 namespace Common
 {
-    /// <summary>    /// 场景的组件管理类，用来用名称找到物体    /// </summary>
+    /// <summary>    
+    /// 场景的组件管理类，用来用名称找到物体
+    /// </summary>
     public class SceneObjectMap : MonoBehaviour
     {
         private static SceneObjectMap instance;
@@ -37,7 +39,6 @@ namespace Common
         }
 
         const string controlName = "ControlObject";
-
         Dictionary<string, GameObject> objectMap;
 
         void LoadAllObject()

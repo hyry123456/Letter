@@ -1,28 +1,28 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Motor
 {
     public class FirstPersonCameraControl : MonoBehaviour
     {
-        /// <summary>        /// Íæ¼Ò½Úµã     /// </summary>
+        /// <summary>        /// ç©å®¶èŠ‚ç‚¹     /// </summary>
         public GameObject Player;
-        /// <summary>        /// ÁéÃô¶È        /// </summary>
+        /// <summary>        /// çµæ•åº¦        /// </summary>
         public float Sensitivity = 200;
-        /// <summary>        /// Íæ¼ÒÊäÈë        /// </summary>
+        /// <summary>        /// ç©å®¶è¾“å…¥        /// </summary>
         Vector2 playerInput;
-        /// <summary>        /// Ïà»ú¸ß¶È        /// </summary>
+        /// <summary>        /// ç›¸æœºé«˜åº¦        /// </summary>
         public float CameraHeight = 0;
-        /// <summary>    /// »ñÈ¡Ïà»úÊÓ×¶    /// </summary>
+        /// <summary>    /// è·å–ç›¸æœºè§†é”¥    /// </summary>
         Vector3 CameraHalfExtends
         {
             get
             {
                 Vector3 halfExtends;
                 Camera regularCamera = GetComponent<Camera>();
-                //????????¦Å?Y??????§³???????????????????????fieldOfView???????????????????????????????
+                //????????Îµ?Y??????Ğ¡???????????????????????fieldOfView???????????????????????????????
                 halfExtends.y = regularCamera.nearClipPlane * Mathf.Tan(0.5f * Mathf.Deg2Rad * regularCamera.fieldOfView);
-                //????????????X???§³
+                //????????????X???Ğ¡
                 halfExtends.x = halfExtends.y * regularCamera.aspect;
                 //Z???????????????????????
                 halfExtends.z = 0f;
@@ -30,10 +30,10 @@ namespace Motor
             }
         }
 
-        //ÉãÏñ»úĞı×ªµÄ½Ç¶È
+        //æ‘„åƒæœºæ—‹è½¬çš„è§’åº¦
         private float xRotation;
         private float yRotation;
-        //Êó±êÒÆ¶¯¾àÀë
+        //é¼ æ ‡ç§»åŠ¨è·ç¦»
         private float xMouse;
         private float yMouse;
 
@@ -46,21 +46,21 @@ namespace Motor
             ManualRotation();
         }
         /// <summary>
-        /// ÉèÖÃÏà»úÎ»ÖÃ
+        /// è®¾ç½®ç›¸æœºä½ç½®
         /// </summary>
         private void setCameraPosition()
         {
             //Vector3 CameraPlace = Player.transform.position;
             Vector3 CameraPlace = Control.PlayerControl.Instance.transform.position;
-            CameraPlace.y += CameraHeight;//µ÷ÕûÉãÏñ»ú¸ß¶È
-            transform.position = CameraPlace;//Í¬²½Î»ÖÃ
+            CameraPlace.y += CameraHeight;//è°ƒæ•´æ‘„åƒæœºé«˜åº¦
+            transform.position = CameraPlace;//åŒæ­¥ä½ç½®
         }
 
-        /// <summary>   /// ÈËÎªµ÷ÕûÉãÏñ»úĞı×ª  /// </summary>
-        /// <returns>ÊÇ·ñĞèÒªµ÷Õû</returns>
+        /// <summary>   /// äººä¸ºè°ƒæ•´æ‘„åƒæœºæ—‹è½¬  /// </summary>
+        /// <returns>æ˜¯å¦éœ€è¦è°ƒæ•´</returns>
         bool ManualRotation()
         {
-            //µ÷ÕûµÄãĞÖµ
+            //è°ƒæ•´çš„é˜ˆå€¼
             float e = 0.001f;
             if (playerInput.x < -e || playerInput.x > e || playerInput.y < -e || playerInput.y > e)
             {
@@ -75,18 +75,18 @@ namespace Motor
             return false;
         }
         /// <summary>
-        /// ¸ù¾İÒÆ¶¯µÄ²î¾àÖµÅĞ¶ÏĞı×ª½Ç¶È£¬×¢Òâ´«ÈëÖµÒª±ê×¼»¯£¬
-        /// ÉèÖÃÎª¾²Ì¬ÒòÎªÕâ¸öº¯Êı²»ĞèÒªÓÃµ½¶ÔÏóÊı¾İ£¬Òò´ËÖ»ÓÃ¿ª±ÙÒ»¸öº¯ÊıÌå¾Í¹»ÁË
+        /// æ ¹æ®ç§»åŠ¨çš„å·®è·å€¼åˆ¤æ–­æ—‹è½¬è§’åº¦ï¼Œæ³¨æ„ä¼ å…¥å€¼è¦æ ‡å‡†åŒ–ï¼Œ
+        /// è®¾ç½®ä¸ºé™æ€å› ä¸ºè¿™ä¸ªå‡½æ•°ä¸éœ€è¦ç”¨åˆ°å¯¹è±¡æ•°æ®ï¼Œå› æ­¤åªç”¨å¼€è¾Ÿä¸€ä¸ªå‡½æ•°ä½“å°±å¤Ÿäº†
         /// </summary>
         static float GetAngle(Vector2 direction)
         {
-            //Í¨¹ı·´ÓàÏÒº¯Êı¼ÆËã³öĞı×ªµ½Õâ¸öÒÆ¶¯·½ÏòËùĞèÒªµÄyÖµ½Ç¶È
+            //é€šè¿‡åä½™å¼¦å‡½æ•°è®¡ç®—å‡ºæ—‹è½¬åˆ°è¿™ä¸ªç§»åŠ¨æ–¹å‘æ‰€éœ€è¦çš„yå€¼è§’åº¦
             float angle = Mathf.Acos(direction.y) * Mathf.Rad2Deg;
-            //ÅĞ¶ÏÊÇÄÄ±ß£¬Ò²¾ÍÊÇË³Ê±Õë»¹ÊÇÄæÊ±Õë
+            //åˆ¤æ–­æ˜¯å“ªè¾¹ï¼Œä¹Ÿå°±æ˜¯é¡ºæ—¶é’ˆè¿˜æ˜¯é€†æ—¶é’ˆ
             return direction.x < 0f ? 360f - angle : angle;
         }
 
-        /// <summary>   /// ÏŞÖÆ½Ç¶È´óĞ¡  /// </summary>
+        /// <summary>   /// é™åˆ¶è§’åº¦å¤§å°  /// </summary>
         private void ConstrainAngle()
         {
             if (yRotation > 0f)
@@ -99,14 +99,14 @@ namespace Motor
             }
             xRotation = Mathf.Clamp(xRotation, -89f, 89f);
         }
-        /// <summary>   /// ÉèÖÃÏà»úĞı×ª½Ç¶ÈµÄÊäÈë  /// </summary>
+        /// <summary>   /// è®¾ç½®ç›¸æœºæ—‹è½¬è§’åº¦çš„è¾“å…¥  /// </summary>
         public void SetCameraInput(float mouseY, float mouseX)
         {
             playerInput = new Vector2(mouseY, mouseX);
         }
 
 
-        //ÒÔÏÂÄÚÈİÊÇÎªÁË²âÊÔÊÓ½Ç
+        //ä»¥ä¸‹å†…å®¹æ˜¯ä¸ºäº†æµ‹è¯•è§†è§’
         public Text t1;
         public Text t2;
         public Text t3;

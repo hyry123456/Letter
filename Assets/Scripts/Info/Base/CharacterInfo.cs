@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Info
 {
      [System.Serializable]
-    public class CharacterInfo : MonoBehaviour
+    public abstract class CharacterInfo : MonoBehaviour
     {
 
         public string characterName;
@@ -13,7 +13,6 @@ namespace Info
         [HideInInspector]
         public int sp = 10;
         public int maxSP = 10;
-        public List<string> skills;
         /// <summary>        /// 跑步速度        /// </summary>
         public float runSpeed = 10;
         /// <summary>        /// 行走速度        /// </summary>
@@ -53,7 +52,7 @@ namespace Info
         }
 
         /// <summary>        /// 操作生命值        /// </summary>
-        public void modifyHp(int dealtaHp)
+        public virtual void modifyHp(int dealtaHp)
         {
             hp += dealtaHp;
             CheckDead();
@@ -61,11 +60,6 @@ namespace Info
         }
 
         /// <summary>        /// 死亡后的操作        /// </summary>
-        protected virtual void DealWithDeath()
-        {
-            //Debug.Log("Game Over!");
-            //Control.SceneChangeControl.Instance.ReloadActiveScene();//暂时注释掉死亡，便于测试
-        }
-
+        protected abstract void DealWithDeath();
     }
 }

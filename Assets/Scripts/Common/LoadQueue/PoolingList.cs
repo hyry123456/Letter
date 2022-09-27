@@ -1,6 +1,3 @@
-using UnityEngine;
-
-
 namespace Common
 {
     /// <summary>
@@ -46,7 +43,6 @@ namespace Common
             list[reIndex] = list[size - 1];
             size--;
         }
-
         public void RemoveAll()
         {
             size = 1;

@@ -1,12 +1,12 @@
 
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 namespace Skill
 {
     public class SkillManage : MonoBehaviour
     {
+        [SerializeField]
         /// <summary>        /// 技能释放者的技能列表        /// </summary>
         protected List<SkillBase> skills;
         /// <summary>        /// 公开技能释放者的所有技能，但是不允许修改        /// </summary>
@@ -46,7 +46,6 @@ namespace Skill
                 }
             }
         }
-
 
         /// <summary>        /// 检查并释放该技能        /// </summary>
         /// <param name="skill">技能对象</param>
@@ -109,6 +108,21 @@ namespace Skill
             return canUse;
         }
 
-
+        /// <summary> /// 添加技能，根据名称进行技能剔除，避免重复添加   /// </summary>
+        public void AddSkill(SkillBase skill)
+        {
+            if(skills == null)
+            {
+                skills = new List<SkillBase>();
+                skills.Add(skill);
+                return;
+            }
+            for(int i=0; i<skills.Count; i++)
+            {
+                if (skills[i].skillName == skill.skillName)
+                    return;
+            }
+            skills.Add(skill);
+        }
     }
 }

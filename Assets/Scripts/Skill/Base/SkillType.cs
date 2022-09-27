@@ -1,6 +1,7 @@
 
 namespace Skill
 {
+    [System.Serializable]
     public enum SkillType 
     {
         /// <summary>        /// Ô¶³Ì¹¥»÷¼¼ÄÜ        /// </summary>

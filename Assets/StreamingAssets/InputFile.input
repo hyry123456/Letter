@@ -6,3 +6,6 @@
 <Type=1,up=304,down=0,speed=5,name=Run>
 <Type=1,up=113,down=0,speed=5,name=Skill>
 <Type=1,up=27,down=0,speed=5,name=ESC>
+<Type=1,up=49,down=0,speed=5,name=Alpha1>
+<Type=1,up=50,down=0,speed=5,name=Alpha2>
+<Type=1,up=51,down=0,speed=5,name=Alpha3>

@@ -9,8 +9,7 @@ namespace Control
         private static PlayerControl instance;
         private Motor.RigibodyMotor motor;
         private Interaction.InteractionControl interactionControl;
-
-        public float hookSpeed = 1;
+        private PlayerSkillControl skillControl;
 
         public float dieY = -100;
         
@@ -49,15 +48,17 @@ namespace Control
         {
             motor = GetComponent<Motor.RigibodyMotor>();
             interactionControl = GetComponent<Interaction.InteractionControl>();
+            skillControl = GetComponent<PlayerSkillControl>();
         }
 
         /// <summary>
         /// 时时刷新的控制属性的存放位置
         /// </summary>
-        //private void Update()
-        //{
-        //    //由于改为第一人称，相机相关代码已转移至FirstPersonCameraControl
-        //}
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+                skillControl.ReleaseChooseSkill();
+        }
 
         /// <summary>
         /// 物理帧刷新的属性计算位置，一些没有必要逐帧计算的可以在这里进行计算
@@ -68,7 +69,7 @@ namespace Control
             float vertical = MyInput.Instance.GetAsis(verticalName);
             float horizontal = MyInput.Instance.GetAsis(horizontalName);
             bool jump = MyInput.Instance.GetButtonDown(jumpName);
-            bool skill = MyInput.Instance.GetButtonDown("Skill");
+            //bool skill = MyInput.Instance.GetButtonDown("Skill");
             bool esc = MyInput.Instance.GetButtonDown("ESC");
             bool interacte = MyInput.Instance.GetButtonDown(interacteName);
 
@@ -76,8 +77,8 @@ namespace Control
             if (jump)
                 motor.DesireJump();
 
-            if(skill)
-                motor.TransferToPosition(HookRopeManage.Instance.Target, hookSpeed);
+            //if(skill)
+            //    motor.TransferToPosition(HookRopeManage.Instance.Target, hookSpeed);
             
             if (esc)
                 UIExtentControl.Instance?.ShowOrClose();
