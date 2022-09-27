@@ -57,7 +57,7 @@ namespace Control
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
-                skillControl.ReleaseChooseSkill();
+                skillControl?.ReleaseChooseSkill();
         }
 
         /// <summary>
