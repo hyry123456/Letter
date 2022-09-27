@@ -21,7 +21,6 @@ namespace Info
             string prefit = "Skill.";
             for (int i=0; i<defaultSkill.Length; i++)
             {
-                Debug.Log(prefit + defaultSkill[i]);
                 Skill.SkillBase skillBase = (Skill.SkillBase)
                     assembly.CreateInstance(prefit + defaultSkill[i]);
                 skillManage.AddSkill(skillBase);

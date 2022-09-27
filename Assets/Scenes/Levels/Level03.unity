@@ -5142,8 +5142,61 @@ PrefabInstance:
       propertyPath: playerInputSpace
       value: 
       objectReference: {fileID: 1828608301}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1909282068909209672, guid: 5b5aa7319febfa641a7f10b0935faaad, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5b5aa7319febfa641a7f10b0935faaad, type: 3}
+--- !u!1 &1615336765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1909282068909209675, guid: 5b5aa7319febfa641a7f10b0935faaad, type: 3}
+  m_PrefabInstance: {fileID: 1615336764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1615336766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615336765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1752ad7f85c0ed408d72daaa63ab08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1615336767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615336765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2063735e514fac144bd188408be802fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: 
+  maxHP: 10
+  sp: 10
+  maxSP: 10
+  runSpeed: 10
+  walkSpeed: 5
+  rotateSpeed: 10
+  defaultSkill:
+  - HookRope
+  - SingleBullet
+--- !u!114 &1615336768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615336765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce7e3396eaacdb4d882ba0c83ed53e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nowSkill: 0
 --- !u!1001 &1660625945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5531,7 +5584,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b85995c9db4bf43917bd5e48bcdf1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   Sensitivity: 200
+  CameraHeight: 0
+  t1: {fileID: 0}
+  t2: {fileID: 0}
+  t3: {fileID: 0}
 --- !u!4 &1852113082 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7617654934646980914, guid: b5de3c8d7d65e0b408087e611d8277a1, type: 3}
