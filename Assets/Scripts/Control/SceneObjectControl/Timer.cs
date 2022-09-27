@@ -93,6 +93,7 @@ public class Timer : MonoBehaviour
         {
             minute = 0;
             second = 0;
+            isStopped = true;
             return;
         }
         while (second > 60)
