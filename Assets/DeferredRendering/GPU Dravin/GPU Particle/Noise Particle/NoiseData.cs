@@ -183,10 +183,12 @@ namespace DefferedRender
 
     public enum SizeCurveMode
     {
-        /// <summary>        /// 从小到大        /// </summary>
-        SmallToBig = 0,
+        /// <summary>        /// 从小到大，且上凸        /// </summary>
+        SmallToBig_Epirelief = 0,
         /// <summary>        /// 从小到大再到小，类似正态分布曲线        /// </summary>
         Small_Hight_Small = 1,
+        /// <summary>        /// 从小到大，下凸        /// </summary>
+        SmallToBig_Subken = 2,
     }
 
     #endregion

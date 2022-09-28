@@ -76,6 +76,7 @@ public class Bullet_Pooling : ObjectPoolBase
         };
     }
 
+
     /// <summary>  /// 攻击的目标，当打到该目标的敌人时会扣血 /// </summary>
     public string attackTargetTag;
 

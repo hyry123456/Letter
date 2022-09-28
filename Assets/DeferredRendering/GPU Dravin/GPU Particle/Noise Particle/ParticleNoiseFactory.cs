@@ -118,7 +118,7 @@ namespace DefferedRender
         /// <summary>        /// 初始化所有的条目，也就是颜色和大小        /// </summary>
         private void InitializeMode()
         {
-            curves = new AnimationCurve[2];
+            curves = new AnimationCurve[3];
             Keyframe keyframe = new Keyframe();
             //第一个，逐渐变大
             keyframe.time = 0; keyframe.value = 0; keyframe.inTangent = 2; keyframe.outTangent = 2;
@@ -134,6 +134,13 @@ namespace DefferedRender
             curves[1].AddKey(keyframe);
             keyframe.time = 1; keyframe.value = 0; keyframe.inTangent = -5; keyframe.outTangent = -5;
             curves[1].AddKey(keyframe);
+            //第三个，下凹曲线
+            curves[2] = new AnimationCurve();
+            keyframe.time = 0; keyframe.value = 0; keyframe.inTangent = 0; keyframe.outTangent = 0;
+            curves[2].AddKey(keyframe);
+            keyframe.time = 1; keyframe.value = 1; keyframe.inTangent = 2; keyframe.outTangent = 2;
+            curves[2].AddKey(keyframe);
+
 
             //添加颜色
             gradients = new Gradient[3];
@@ -146,7 +153,7 @@ namespace DefferedRender
             alphaKeys[0] = new GradientAlphaKey(); alphaKeys[0].alpha = 0; alphaKeys[0].time = 0;
             alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.05f;
             alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 1; alphaKeys[2].time = 0.95f;
-            alphaKeys[3] = new GradientAlphaKey(); alphaKeys[3].alpha = 0; alphaKeys[3].time = 0f;
+            alphaKeys[3] = new GradientAlphaKey(); alphaKeys[3].alpha = 0; alphaKeys[3].time = 1f;
             gradients[0].SetKeys(colorKeys, alphaKeys);
 
             //添加第二个

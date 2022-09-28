@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 13635550}
   - component: {fileID: 13647794}
   - component: {fileID: 13681708}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: tree04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,10 +105,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.21
+  m_Radius: 0.40153715
   m_Height: 3.95
   m_Direction: 1
-  m_Center: {x: 0.9, y: 1.83, z: 1.01}
+  m_Center: {x: 0.7084629, y: 1.83, z: 1.01}
 --- !u!136 &13647794
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -119,10 +119,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.17
+  m_Radius: 0.5072572
   m_Height: 3.95
   m_Direction: 1
-  m_Center: {x: -0.2, y: 1.83, z: 0.35}
+  m_Center: {x: -0.28555512, y: 1.83, z: 0.34999996}
 --- !u!136 &13681708
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -133,10 +133,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.16
+  m_Radius: 0.3922149
   m_Height: 3.95
   m_Direction: 1
-  m_Center: {x: -1.54, y: 1.83, z: 0.58}
+  m_Center: {x: -1.3244483, y: 1.83, z: 0.59666336}
 --- !u!21 &2113140
 Material:
   serializedVersion: 6

@@ -62,13 +62,15 @@ namespace Control
             //判断是否有可以遮挡的物体
             if(Physics.Raycast(transform.position, playerDir, out hit, seeDis, shelterMask))
             {
-                playerDir += hit.normal;
-                playerDir.Normalize();
-                motor.Move(playerDir.z, playerDir.x);
-                time = 0;
-                return;
+                if (hit.collider.tag != "Player")
+                {
+                    Debug.DrawRay(transform.position, playerDir.normalized * hit.distance);
+                    playerDir += hit.normal * 1.5f;
+                    motor.Move(playerDir.z, playerDir.x);
+                    time = 0;
+                    return;
+                }
             }
-
             if (isFar)      //距离遥远，追赶
             {
                 motor.Move(playerDir.z, playerDir.x);

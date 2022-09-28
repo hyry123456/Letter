@@ -8,6 +8,7 @@ namespace Info
     {
 
         public string characterName;
+        [SerializeField]
         protected int hp = 10;
         public int maxHP = 10;
         [HideInInspector]

@@ -152,7 +152,6 @@ namespace DefferedRender
 			/// <summary>		/// 对比度		/// </summary>
 			[Range(-100f, 100f)]
 			public float contrast;
-
 			/// <summary>		/// 颜色过滤		/// </summary>
 			[ColorUsage(false, true)]
 			public Color colorFilter;
@@ -173,6 +172,11 @@ namespace DefferedRender
 		};
 
 		public ColorAdjustmentsSettings ColorAdjustments => colorAdjustments;
+
+		public void SetColorFilter(Color filter)
+        {
+			colorAdjustments.colorFilter = filter;
+		}
 
 		/// <summary>	/// 白平衡阐述控制	/// </summary>
 		[Serializable]

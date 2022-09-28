@@ -50,7 +50,7 @@ namespace Task
                 intensity = 0.1f,
                 sizeRange = Vector2.up,
                 colorIndex = (int)DefferedRender.ColorIndexMode.HighlightToAlpha,
-                sizeIndex = (int)DefferedRender.SizeCurveMode.SmallToBig,
+                sizeIndex = (int)DefferedRender.SizeCurveMode.SmallToBig_Epirelief,
                 textureIndex = 0,
                 groupCount = 1,
             };

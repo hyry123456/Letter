@@ -15,5 +15,17 @@ namespace Skill
         public string skillName;
         /// <summary>        /// 技能类型，用来分类        /// </summary>
         public SkillType skillType;
+
+        /// <summary>
+        /// 初始化案例
+        /// </summary>
+        //public SkillBase()
+        //{
+        //    expendSP = 0;
+        //    nowCoolTime = 0;
+        //    coolTime = 0;
+        //    skillName = "Skill Name;
+        //    skillType = SkillType.TYPE;
+        //}
     }
 }
