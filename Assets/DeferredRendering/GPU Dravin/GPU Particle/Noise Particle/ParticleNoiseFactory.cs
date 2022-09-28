@@ -10,7 +10,7 @@ namespace DefferedRender
     public class ParticleNoiseFactory : GPUDravinBase
     {
         /// <summary>        /// 粒子组的数量        /// </summary>
-        const int particleGroupCount = 3600;
+        const int particleGroupCount = 7200;
         /// <summary>        /// 粒子组        /// </summary>
         ParticleNodeData[] particleNodes;
         /// <summary>        /// 粒子组存储位置，每一次更新都只会更新该数据        /// </summary

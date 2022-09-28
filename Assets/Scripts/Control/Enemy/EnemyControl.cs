@@ -64,7 +64,7 @@ namespace Control
             {
                 if (hit.collider.tag != "Player")
                 {
-                    Debug.DrawRay(transform.position, playerDir.normalized * hit.distance);
+                    //Debug.DrawRay(transform.position, playerDir.normalized * hit.distance);
                     playerDir += hit.normal * 1.5f;
                     motor.Move(playerDir.z, playerDir.x);
                     time = 0;

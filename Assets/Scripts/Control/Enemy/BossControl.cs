@@ -8,12 +8,15 @@ namespace Control
         Transform player;
         Motor.EnemyMotor motor;
         Info.EnemyInfo enemyInfo;
+        /// <summary>   /// boss状态，用来执行不同的攻击方式   /// </summary>
+        int bossState;
 
         private void Start()
         {
             player = PlayerControl.Instance.transform;
             motor = GetComponent<Motor.EnemyMotor>();
             enemyInfo = GetComponent<Info.EnemyInfo>();
+            
         }
 
         //Boss具体的攻击方式由技能系统决定，由于Boss位置的特殊性，暂时不给Boss加寻路

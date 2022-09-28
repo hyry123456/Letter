@@ -14,8 +14,8 @@ namespace Skill
             skillType = SkillType.Dodge;
         }
 
-        const float sustainTime = 2;
-        float nowTime = 0, minForece = 10, maxForece = 30;
+        const float sustainTime = 1;
+        float nowTime = 0, minForece = 10, maxForece = 5;
         Rigidbody rb;
         Camera camera;
         /// <summary>    /// 释放加速技能    /// </summary>

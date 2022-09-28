@@ -19,6 +19,8 @@ namespace Info
         /// <summary>        /// 行走速度        /// </summary>
         public float walkSpeed = 5;
         public float rotateSpeed = 10;
+        /// <summary>  /// 近战攻击距离  /// </summary>
+        public float nearAttackDistance;
 
         /// <summary>        /// 判断角色是否死亡        /// </summary>
         public bool isDie => hp <= 0;

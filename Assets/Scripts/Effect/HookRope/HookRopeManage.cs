@@ -121,16 +121,6 @@ public class HookRopeManage : GPUDravinBase
         target = null;
     }
 
-    private void OnDisable()
-    {
-        if (isInsert)
-        {
-            GPUDravinDrawStack.Instance.RemoveRender(this);
-            isInsert = false;
-        }
-        poolingList?.RemoveAll();
-    }
-
     private void OnDestroy()
     {
         if (isInsert)
