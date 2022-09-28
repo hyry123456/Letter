@@ -37,6 +37,10 @@ namespace Motor
         private float xMouse;
         private float yMouse;
 
+        private void Start()
+        {
+            GetComponent<Camera>().cullingMask = ~(1 << 6);//关闭角色本体渲染
+        }
         private void Update()
         {
             xMouse = Input.GetAxis("Mouse X");
@@ -107,7 +111,7 @@ namespace Motor
 
 
         //以下内容是为了测试视角
-        public Text t1;
+/*        public Text t1;
         public Text t2;
         public Text t3;
         public void ChangeFOV(float newFOV)
@@ -124,7 +128,7 @@ namespace Motor
         {
             CameraHeight = newHeight;
             t3.text = newHeight.ToString();
-        }
+        }*/
     }
 }
 
