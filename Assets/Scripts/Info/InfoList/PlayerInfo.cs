@@ -1,4 +1,4 @@
-using System.Reflection;
+ï»¿using System.Reflection;
 using UnityEngine;
 
 namespace Info
@@ -7,7 +7,7 @@ namespace Info
     public class PlayerInfo : CharacterInfo
     {
         [SerializeField]
-        /// <summary>  /// Ö÷½ÇµÄÄ¬ÈÏ¼¼ÄÜ£¬¿ÉÒÔ²»¸³ÓèÖµ   /// </summary>
+        /// <summary>  /// ä¸»è§’çš„é»˜è®¤æŠ€èƒ½ï¼Œå¯ä»¥ä¸èµ‹äºˆå€¼   /// </summary>
         private string[] defaultSkill;
 
         [SerializeField]

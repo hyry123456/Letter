@@ -1,6 +1,7 @@
 struct ParticleNodeData
 {
     float3 beginPos;        //该组粒子运行初始位置
+    float3 endPos;          //方形物体的确认范围用到位置
     float3 beginSpeed;      //初始速度
     int3 initEnum;          //x:初始化的形状,y:是否使用重力，z:图片编号
     float2 sphereData;      //初始化球坐标需要的数据, x=角度, y=半径
@@ -71,7 +72,15 @@ void InitialFactory(ParticleNodeData origin, inout NoiseParticleData particle){
             break;
         case 2:
             offsetPos = GetCubeBeginPos(particle.random.xyz, origin.cubeRange);
-            particle.worldPos = origin.beginPos + offsetPos;
+            float3 dirOri = origin.endPos - origin.beginPos;
+            float3 dir = normalize(origin.endPos - origin.beginPos);
+            float3 radio = float3(dot(dir, float3(1, 0, 0)), dot(dir, float3(0, 1, 0)), dot(dir, float3(0, 0, 1)));
+
+            // float3 endOffset = origin.endPos + offsetPos * radio;
+            // float3 beginOffset = origin.beginPos + offsetPos * radio;
+
+            // particle.worldPos = lerp(origin.beginPos, origin.endPos, particle.random.yxz);
+            particle.worldPos = dirOri * particle.random.x + origin.beginPos + offsetPos * radio;
             break;
         default:
             particle.worldPos = origin.beginPos;
@@ -116,6 +125,8 @@ void UpdateFactory(inout NoiseParticleData particle){
 }
 
 AnimateUVData AnimateUV(float time_01, int2 uvCount) {
+    // uvCount = int2(8, 8);
+
     float sumTime = uvCount.x * uvCount.y;
     float midTime = time_01 * sumTime;
 

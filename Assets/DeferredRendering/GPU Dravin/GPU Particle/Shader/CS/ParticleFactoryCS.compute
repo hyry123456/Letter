@@ -35,20 +35,6 @@ void Particles_PerFrame(uint3 gid : SV_GroupID, uint index : SV_GroupIndex)
     else
         UpdateFactory(particle);     //更新时间以及速度
 
-    //不进行超时控制，控制颜色就行了
-    // if(particle.random.w >= particle.liveTime){     //超时关闭
-        // particle.index.y = 0;
-        // _ParticlesBuffer[allIndex] = particle;
-        // return;
-    // }
-
-    // if(group.lifeTimeRange.z >= _Time.x){
-    //     _ParticlesBuffer[allIndex].index.y = 1;
-    // }
-    // else{
-    //     _ParticlesBuffer[allIndex].index.y = 0;
-    // }
-    // return;
 
     //开始计算颜色等数据
     float time_01 = saturate( particle.random.w / particle.liveTime );

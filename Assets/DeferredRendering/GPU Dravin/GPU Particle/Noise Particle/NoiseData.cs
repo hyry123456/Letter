@@ -92,6 +92,7 @@ namespace DefferedRender
     public struct ParticleNodeData
     {
         public Vector3 beginPos;        //该组粒子运行初始位置
+        public Vector3 endPos;          //方形物体需要用到的结束位置
         public Vector3 beginSpeed;      //初始速度
         public Vector3Int initEnum;     //x:初始化的形状,y:是否使用重力，z:图片编号
         public Vector2 sphereData;      //初始化球坐标需要的数据, x=角度, y=半径
@@ -136,6 +137,8 @@ namespace DefferedRender
     {
         /// <summary>        /// 初始位置，会在该位置及其周围生成粒子        /// </summary>
         public Vector3 beginPos;
+        /// <summary>       /// 方形粒子需要赋值的方形终止位置       /// </summary>
+        public Vector3 endPos;
         /// <summary>        /// 初始速度，用来进行默认速度初始化        /// </summary>
         public Vector3 beginSpeed;
         /// <summary>        /// 速度模式，控制粒子释放的模式        /// </summary>
@@ -144,7 +147,7 @@ namespace DefferedRender
         public bool useGravity;
         /// <summary>        /// 粒子渲染是否要跟随速度，而不是朝向摄像机        /// </summary>
         public bool followSpeed;
-        /// <summary>        /// radius是角度，radian是弧度(0-3.14)，用来控制这个球渲染的范围        /// </summary>
+        /// <summary>        /// radius是角度，radian是弧度(0-6.28)，用来控制这个球渲染的范围        /// </summary>
         public float radius, radian;
         /// <summary>        /// 矩形生成粒子时确定这个矩形的大小，分别表示xyz的偏移值        /// </summary>
         public Vector3 cubeOffset;

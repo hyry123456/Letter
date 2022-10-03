@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (Player == null) return;
         playerPosition = Player.transform.position;//获取玩家坐标
         transform.GetChild(1).LookAt(playerPosition);//时刻看向玩家
         

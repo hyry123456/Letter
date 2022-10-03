@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,7 +8,7 @@ namespace DefferedRender
 
     public class ParticleNoiseFactory : GPUDravinBase
     {
-        /// <summary>        /// 粒子组的数量        /// </summary>
+        /// <summary>        /// 粒子组的数量，粒子组一个Pass只渲染1800组        /// </summary>
         const int particleGroupCount = 7200;
         /// <summary>        /// 粒子组        /// </summary>
         ParticleNodeData[] particleNodes;
@@ -304,6 +303,7 @@ namespace DefferedRender
         private void SetGroupData(int index, ParticleDrawData drawData)
         {
             particleNodes[index].beginPos = drawData.beginPos;
+            particleNodes[index].endPos = drawData.endPos;
             particleNodes[index].beginSpeed = drawData.beginSpeed;
             particleNodes[index].cubeRange = drawData.cubeOffset;
             particleNodes[index].sphereData = new Vector2(drawData.radian, drawData.radius);
@@ -323,12 +323,11 @@ namespace DefferedRender
         public override void DrawByCamera(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Camera camera)
         {
 
-            //material.SetBuffer(particlesBufferId, particlesBuffer);
             buffer.SetGlobalBuffer(particlesBufferId, particlesBuffer);
             buffer.SetGlobalBuffer(groupsBufferId, groupsBuffer);
             buffer.SetGlobalTexture("_Textures", textureArray);
             buffer.DrawProcedural(Matrix4x4.identity, material, 0, MeshTopology.Points,
-                1, particlesBuffer.count);
+                64, particleGroupCount);
             ExecuteBuffer(ref buffer, context);
             return;
         }

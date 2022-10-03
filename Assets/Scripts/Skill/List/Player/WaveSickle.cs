@@ -43,7 +43,6 @@ namespace Skill
             useObj.collsionEnter = (Collision collision) =>
             {
                 Info.CharacterInfo character = collision.gameObject.GetComponent<Info.CharacterInfo>();
-                Debug.Log("Attack");
                 if (character == null) return;
                 character.modifyHp(-10);
             };

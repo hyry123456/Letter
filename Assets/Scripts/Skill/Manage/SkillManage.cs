@@ -47,16 +47,19 @@ namespace Skill
             }
         }
 
-        /// <summary>        /// 检查并释放该技能        /// </summary>
+        /// <summary>   /// 检查并释放该技能    /// <summary>   
         /// <param name="skill">技能对象</param>
-        public void CheckAndRelase(SkillBase skill)
+        /// <returns>是否可以释放</returns>
+        public bool CheckAndRelase(SkillBase skill)
         {
-            if (skill == null) return;
+            if (skill == null) return false;
             if(skill.nowCoolTime <= 0)
             {
                 skill.nowCoolTime = skill.coolTime;
                 skill.OnSkillRelease(this);
+                return true;
             }
+            return false;
         }
 
         /// <summary>       /// 获得技能列表中的指定技能        /// </summary>
