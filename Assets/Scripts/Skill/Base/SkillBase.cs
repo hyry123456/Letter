@@ -11,6 +11,8 @@ namespace Skill
         public float nowCoolTime;
         /// <summary>        /// 技能冷却时间，冷却时间没有结束，不能停止技能        /// </summary>
         public float coolTime;
+        /// <summary>       /// 技能的释放时间，不会限制技能释放       /// </summary>
+        public float releaseTime;
         /// <summary>        /// 技能名称        /// </summary>
         public string skillName;
         /// <summary>        /// 技能类型，用来分类        /// </summary>
@@ -23,6 +25,7 @@ namespace Skill
         //{
         //    expendSP = 0;
         //    nowCoolTime = 0;
+        //    releaseTime = 0;
         //    coolTime = 0;
         //    skillName = "Skill Name;
         //    skillType = SkillType.TYPE;

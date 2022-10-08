@@ -18,6 +18,18 @@ namespace Skill
             }
         }
 
+        float endTime = 0;
+        /// <summary>   /// 用来判断技能是否释放中  /// </summary>
+        public bool IsReleasing
+        {
+            get
+            {
+                if (endTime > Time.time)
+                    return true;
+                return false;
+            }
+        }
+
         private Info.CharacterInfo characterInfo;
         /// <summary>        /// 技能释放者的技能信息基类        /// </summary>
         public Info.CharacterInfo CharacterInfo
@@ -57,6 +69,7 @@ namespace Skill
             {
                 skill.nowCoolTime = skill.coolTime;
                 skill.OnSkillRelease(this);
+                endTime = Time.time + skill.releaseTime;
                 return true;
             }
             return false;

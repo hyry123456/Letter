@@ -256,6 +256,7 @@ float3 ApplyBloomThreshold (float3 color) {
 
 float4 BloomPrefilterPassFragment (Varyings input) : SV_TARGET {
 	float3 color = ApplyBloomThreshold(GetSource(input.screenUV).rgb);
+	color = saturate(color);
 	return float4(color, 1.0);
 }
 
@@ -275,6 +276,7 @@ float4 BloomPrefilterFirefliesPassFragment (Varyings input) : SV_TARGET {
 		weightSum += w;
 	}
 	color /= weightSum;
+	color = saturate(color);
 	return float4(color, 1.0);
 }
 

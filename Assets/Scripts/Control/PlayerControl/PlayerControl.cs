@@ -12,6 +12,20 @@ namespace Control
         private PlayerSkillControl skillControl;
 
         public float dieY = -100;
+        /// <summary>     /// 判断是否启动控制      /// </summary>
+        bool useControl = true;
+        /// <summary>        /// 启动角色控制        /// </summary>
+        public void BeginControl()
+        {
+            Debug.Log("Begin");
+            useControl = true;
+        }
+        /// <summary>      /// 停止角色控制     /// </summary>
+        public void StopControl()
+        {
+            Debug.Log("Stop");
+            useControl = false;
+        }
         
 
         public static PlayerControl Instance {
@@ -56,6 +70,7 @@ namespace Control
         /// </summary>
         private void Update()
         {
+            if (!useControl) return;
             if (Input.GetMouseButtonDown(0))
                 skillControl?.ReleaseChooseSkill();
         }
@@ -65,6 +80,8 @@ namespace Control
         /// </summary>
         private void FixedUpdate()
         {
+            if (!useControl) return;
+
             //先获取这些，之后补充其他
             float vertical = MyInput.Instance.GetAsis(verticalName);
             float horizontal = MyInput.Instance.GetAsis(horizontalName);

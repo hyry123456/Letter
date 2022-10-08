@@ -353,9 +353,9 @@ namespace DefferedRender
 		bool DoBloom(int sourceId)
 		{
 			BloomSettings bloom = settings.Bloom;
-			int width = camera.pixelWidth / 2, height = camera.pixelHeight / 2;
+            int width = camera.pixelWidth / 2, height = camera.pixelHeight / 2;
 
-			if (
+            if (
 				bloom.maxIterations == 0 || bloom.intensity <= 0f ||
 				height < bloom.downscaleLimit * 2 || width < bloom.downscaleLimit * 2
 			)

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ControlObject
   - Enemy
+  - ControlObj_BeginClose
   layers:
   - Default
   - TransparentFX

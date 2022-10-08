@@ -10,6 +10,7 @@ namespace Skill
             expendSP = 0;
             nowCoolTime = 0;
             coolTime = 5f;
+            releaseTime = sustainTime + waitTime;
             skillName = "Skill Name";
             skillType = SkillType.LongDisAttack;
 

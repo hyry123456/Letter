@@ -250,7 +250,20 @@ namespace DefferedRender
 			fogDepthFallOff = 1,
 			fogPosYFallOff = 1,
 		};
-		public FogSetting Fog => fog;
+		public FogSetting Fog =>  fog;
+		public void BeginFog()
+        {
+			fog.useFog = true;
+		}
+		public void CloseFog()
+        {
+			fog.useFog = false;
+		}
+		public void SetMaxDepthFog(float value)
+        {
+			fog.fogMaxDepth = value;
+        }
+
 
 		/// <summary>		/// 三种抗锯齿模式		/// </summary>
 		public enum LuminanceMode { None, Green, Calculate }

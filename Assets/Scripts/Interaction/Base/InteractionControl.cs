@@ -22,12 +22,8 @@ namespace Interaction
         }
 
         private Control.PlayerControl playerControl;
-        /// <summary>        /// 交互检测射线的起始点        /// </summary>
-        //public Transform beginPos;
         /// <summary>        /// 当前可以触发的交互信息        /// </summary>
         public InteractionBase nowInteractionInfo;
-        /// <summary>        /// 是否正在交互中        /// </summary>
-        public bool isInteracting;
         /// <summary>        /// 射线检测的距离        /// </summary>
         public float interacteCheckDistance = 3f;
 
@@ -46,7 +42,6 @@ namespace Interaction
         private void Start()
         {
             playerControl = gameObject.GetComponent<Control.PlayerControl>();
-            isInteracting = false;
         }
 
         /// <summary>
@@ -54,11 +49,6 @@ namespace Interaction
         /// </summary>
         protected void FixedUpdate()
         {
-            //交互中就退出
-            if (isInteracting) 
-            {
-                return;
-            }
             RaycastHit hit;
             if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir() * 3, out hit, interacteCheckDistance))
             {
@@ -76,7 +66,6 @@ namespace Interaction
         /// <param name="interactionInfo">发生的交互事件</param>
         public void RunInteraction(InteractionBase interactionInfo)
         {
-            isInteracting = true;   //设置正在交互
             if (interactionInfo == null) { 
                 Debug.Log("交互对象空了");
             }
@@ -99,25 +88,6 @@ namespace Interaction
         {
             if (nowInteractionInfo == null) return;
             RunInteraction(nowInteractionInfo);
-        }
-
-        /// <summary>
-        /// 表示停止交互，该系统重新开始工作
-        /// </summary>
-        public void StopInteraction()
-        {
-            isInteracting = false;
-        }
-
-        /// <summary>        /// 开启交互        /// </summary>
-        public void StartInteraction()
-        {
-            isInteracting = true;
-        }
-
-        public bool GetInteraction()
-        {
-            return isInteracting;
         }
 
         /// <summary>

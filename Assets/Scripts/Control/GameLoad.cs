@@ -14,6 +14,7 @@ namespace Control
             SceneChangeControl changeControl = SceneChangeControl.Instance;
             Task.AsynTaskControl.Instance.ReLoadTask();
             Application.targetFrameRate = -1;
+            Common.SceneObjectMap objectMap = Common.SceneObjectMap.Instance;
         }
     }
 }

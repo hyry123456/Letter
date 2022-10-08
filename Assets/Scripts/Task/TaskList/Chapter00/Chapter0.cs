@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 
 namespace Task {
@@ -6,34 +6,34 @@ namespace Task {
     {
         public Chapter0()
         {
-            chapterName = "µÚÒ»ÕÂ£¬ĞÂÈËĞÅÊ¹";
-            chapterTitle = "´óÇåĞÅÏ¢£¬Ê¹Ãü±Ø´ï";
-            taskPartCount = 2;      //±íÊ¾ÓĞÁ½¸ö×ÓÈÎÎñ
+            chapterName = "ç¬¬ä¸€ç« ï¼Œåˆå…¥åº„å›­";
+            chapterTitle = "åˆšè¿›åº„å›­ï¼Œå°±å‡ºäº‹äº†?";
+            taskPartCount = 1;      //è¡¨ç¤ºæœ‰1ä¸ªå­ä»»åŠ¡
             chapterID = 0;
             chapterSavePath = Application.streamingAssetsPath + "/Task/Chapter/0.task";
-            runtimeScene = "SampleScene";
+            runtimeScene = "MainScene";
             targetPart += "Chapter0_Task";
         }
 
 
         public override void CheckAndLoadChapter()
         {
-            //µÚÒ»ÕÂÒ»µ©µ÷ÓÃ£¬¾ÍÊÇ¸Õ¿ªÊ¼ÓÎÏ·
-            Debug.Log("¿ªÊ¼µÚÒ»ÕÂ");
-            //½«ÈÎÎñ¼ÓÈëµ½ÈÎÎñ¹ÜÀíÖĞ£¬±íÊ¾¸ÃÈÎÎñ¿ªÊ¼ÔËĞĞ
-            //¶ÔÓÚÒ»Ğ©Ö§ÏßÈÎÎñ£¬¿ÉÒÔ²»ÒªÁ¢¿ÌÌí¼ÓÕÂ½Ú£¬¶øÊÇÔÚÄ³µØ½»»¥ºóÔÙÌí¼ÓÕÂ½Ú
+            //ç¬¬ä¸€ç« ä¸€æ—¦è°ƒç”¨ï¼Œå°±æ˜¯åˆšå¼€å§‹æ¸¸æˆ
+            Debug.Log("å¼€å§‹ç¬¬ä¸€ç« ");
+            //å°†ä»»åŠ¡åŠ å…¥åˆ°ä»»åŠ¡ç®¡ç†ä¸­ï¼Œè¡¨ç¤ºè¯¥ä»»åŠ¡å¼€å§‹è¿è¡Œ
+            //å¯¹äºä¸€äº›æ”¯çº¿ä»»åŠ¡ï¼Œå¯ä»¥ä¸è¦ç«‹åˆ»æ·»åŠ ç« èŠ‚ï¼Œè€Œæ˜¯åœ¨æŸåœ°äº¤äº’åå†æ·»åŠ ç« èŠ‚
             AsynTaskControl.Instance.AddChapter(chapterID);     
         }
 
         public override void CompleteChapter()
         {
-            Debug.Log("µÚÒ»ÕÂÒÑ¾­Íê³ÉÁË");
+            Debug.Log("ç¬¬ä¸€ç« å·²ç»å®Œæˆäº†");
         }
 
         public override void ExitChapter()
         {
-            Debug.Log("µÚÒ»ÕÂÍê³É");
-            //Ò»°ãÓĞÖ®ºóµÄÈÎÎñ¿ÉÒÔÖ±½ÓÔÚÕâÀï²åÈëÏÂÒ»ÕÂ
+            Debug.Log("ç¬¬ä¸€ç« å®Œæˆ");
+            //ä¸€èˆ¬æœ‰ä¹‹åçš„ä»»åŠ¡å¯ä»¥ç›´æ¥åœ¨è¿™é‡Œæ’å…¥ä¸‹ä¸€ç« 
             AsynTaskControl.Instance.AddChapter(1);
         }
     }

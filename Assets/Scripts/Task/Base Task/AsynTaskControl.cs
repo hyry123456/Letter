@@ -303,7 +303,7 @@ namespace Task
 
 
         /// <summary>
-        /// 添加章节函数，用于给添加任务类型的交互类型调用
+        /// 添加章节函数，用于创建一个新章节
         /// </summary>
         /// <param name="chapter">章节名称</param>
         /// <returns>是否添加成功</returns>

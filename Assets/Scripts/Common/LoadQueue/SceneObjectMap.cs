@@ -35,18 +35,26 @@ namespace Common
         private void OnDestroy()
         {
             instance = null;
-            objectMap.Clear();
+            objectMap?.Clear();
         }
 
         const string controlName = "ControlObject";
         Dictionary<string, GameObject> objectMap;
+        const string control_BeginClose = "ControlObj_BeginClose";
 
         void LoadAllObject()
         {
             GameObject[] objects = GameObject.FindGameObjectsWithTag(controlName);
-            objectMap = new Dictionary<string, GameObject>(objects.Length);
+            objectMap = new Dictionary<string, GameObject>();
             for(int i=0; i<objects.Length; i++)
             {
+                objectMap.Add(objects[i].name, objects[i]);
+            }
+
+            objects = GameObject.FindGameObjectsWithTag(control_BeginClose);
+            for(int i=0; i<objects.Length; i++)
+            {
+                objects[i].SetActive(false);        //一开始全部控制物体都光关闭
                 objectMap.Add(objects[i].name, objects[i]);
             }
         }

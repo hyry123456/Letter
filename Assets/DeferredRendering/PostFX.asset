@@ -15,19 +15,19 @@ MonoBehaviour:
   postFXShader: {fileID: 4800000, guid: 6c3a07466ffb3c7469bfd1e374913cbb, type: 3}
   colorLUTResolution: 32
   ssrSetting:
-    useSSR: 0
-    rayMarchingSetp: 256
-    marchSetpSize: 4
+    useSSR: 1
+    rayMarchingSetp: 48
+    marchSetpSize: 22
     maxMarchDistance: 500
     depthThickness: 1
   bulkLight:
-    useBulkLight: 0
+    useBulkLight: 1
     shrinkRadio: 100
-    circleCount: 64
+    circleCount: 36
     scatterRadio: 0.467
     checkDistance: 1000
   bloom:
-    maxIterations: 4
+    maxIterations: 6
     downscaleLimit: 30
     bicubicUpsampling: 0
     threshold: 1.2
@@ -53,17 +53,17 @@ MonoBehaviour:
     balance: 0
   fog:
     fogTex: {fileID: 0}
-    useFog: 0
-    fogMaxHeight: 1000
-    fogMinHeight: 100
-    fogMaxDepth: 0.077
+    useFog: 1
+    fogMaxHeight: 200
+    fogMinHeight: 0
+    fogMaxDepth: 0.07
     fogMinDepth: 0
-    fogDepthFallOff: 1.22
+    fogDepthFallOff: 3
     fogPosYFallOff: 3
     colors:
       serializedVersion: 2
-      key0: {r: 0, g: 0.21688865, b: 0.3301887, a: 1}
-      key1: {r: 0, g: 0.3892751, b: 0.5283019, a: 1}
+      key0: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+      key1: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
       key2: {r: 0, g: 0.5495522, b: 0.745283, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
+      ctime1: 65150
       ctime2: 65535
       ctime3: 0
       ctime4: 0
@@ -94,4 +94,4 @@ MonoBehaviour:
     contrastThreshold: 0.0312
     relativeThreshold: 0.063
     subpixelBlending: 1
-    lowQuality: 0
+    lowQuality: 1

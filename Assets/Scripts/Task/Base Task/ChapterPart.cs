@@ -9,6 +9,8 @@ namespace Task
     {
         public string partName;
         public string partDescribe;
+        /// <summary>/// 所属章节的赋值位置，太常用了，放在这里方便赋值/// </summary>
+        protected Chapter chapter;
 
         /// <summary>
         /// 进入一章任务的一部分，该方法是初始化方法，在任务时会调用，

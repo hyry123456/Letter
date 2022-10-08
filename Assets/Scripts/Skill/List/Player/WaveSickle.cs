@@ -37,7 +37,7 @@ namespace Skill
             manaTran = mana.transform;
 
             begin = mana.transform.position + (cam.transform.forward +
-                cam.transform.right + cam.transform.up) * character.nearAttackDistance;
+                cam.transform.right + cam.transform.up) * character.attackDistance;
             useObj = (Sphere_Pooling)Common.SceneObjectPool.Instance.GetObject(
                 "Sphere_Pooling", origin, begin, manaTran.position);        //朝向我们这边，方便碰撞检测
             useObj.collsionEnter = (Collision collision) =>
@@ -48,7 +48,7 @@ namespace Skill
             };
 
             end = mana.transform.position + (cam.transform.forward + 
-                -cam.transform.right + -cam.transform.up) * character.nearAttackDistance;
+                -cam.transform.right + -cam.transform.up) * character.attackDistance;
             nowRadio = 0;
             Common.SustainCoroutine.Instance.AddCoroutine(WaveSickleSustain);
         }
@@ -68,9 +68,9 @@ namespace Skill
             }
 
             begin = manaTran.position + (cam.transform.forward +
-                cam.transform.right + cam.transform.up) * character.nearAttackDistance;
+                cam.transform.right + cam.transform.up) * character.attackDistance;
             end = manaTran.position + (cam.transform.forward +
-                -cam.transform.right + -cam.transform.up) * character.nearAttackDistance;
+                -cam.transform.right + -cam.transform.up) * character.attackDistance;
 
             useObj.transform.position = Vector3.Lerp(begin, end, nowRadio);
             return false;

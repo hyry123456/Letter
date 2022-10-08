@@ -10,7 +10,13 @@ namespace Control
         Transform player;
         Motor.EnemyMotor motor;
         Info.EnemyInfo enemyInfo;
-        SkillManage manage;
+        SkillManage skillManage;
+        AnimateManage animate;
+        /// <summary>     
+        /// boss的行为，用来判断是移动，旋转还是攻击，这些是基本行为
+        /// </summary>
+        int actionState;
+
         /// <summary>   /// boss状态，用来执行不同的攻击方式   /// </summary>
         int bossState;
 
@@ -19,7 +25,8 @@ namespace Control
             player = PlayerControl.Instance.transform;
             motor = GetComponent<Motor.EnemyMotor>();
             enemyInfo = GetComponent<Info.EnemyInfo>();
-            manage = GetComponent<SkillManage>();
+            skillManage = GetComponent<SkillManage>();
+            animate = GetComponent<AnimateManage>();
             bossState = 0;
         }
 
@@ -29,6 +36,10 @@ namespace Control
         //同时Boss本身有阶段的区分，具体可以之后用一个switch来进行变化
         private void FixedUpdate()
         {
+
+
+
+
             switch (bossState)
             {
                 case 0:
@@ -42,13 +53,25 @@ namespace Control
         /// </summary>
         private void OnFirstState()
         {
-            List<SkillBase> skills = manage.GetCanUseSkillByType(SkillType.LongDisAttack);
+            List<SkillBase> skills = skillManage.GetCanUseSkillByType(SkillType.LongDisAttack);
             if (skills == null) return;
             for(int i=0; i<skills.Count; i++)
             {
-                if (manage.CheckAndRelase(skills[i]))
+                if (skillManage.CheckAndRelase(skills[i]))
                     break;
             }
+        }
+
+        private void SwitchActionState()
+        {
+            //switch (actionState)
+            //{
+            //    case 0:
+            //        Vector3 enemyDir = transform.forward;
+            //        Vector3 playerDir = (player.position - transform.position).normalized;
+            //        motor.Move(playerDir.z, playerDir.x);
+            //        animate.PlayAnimate(AnimateType.Move);
+            //}
         }
     }
 }

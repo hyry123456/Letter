@@ -24,9 +24,9 @@ MonoBehaviour:
     clusterLightSetting:
       clusterLightCS: {fileID: 7200000, guid: 566b904d724366c488883764d43495b7, type: 3}
       clusterCount: {x: 48, y: 32, z: 64}
-      isUse: 0
+      isUse: 1
   shadows:
-    maxDistance: 1000
+    maxDistance: 300
     distanceFade: 0.3
     directional:
       atlasSize: 8192
@@ -38,6 +38,6 @@ MonoBehaviour:
       cascadeFade: 0.7
       cascadeBlend: 1
     other:
-      atlasSize: 2048
+      atlasSize: 1024
       filter: 2
   postFXSetting: {fileID: 11400000, guid: c37d4c811b7c23842bf94550434951b9, type: 2}
