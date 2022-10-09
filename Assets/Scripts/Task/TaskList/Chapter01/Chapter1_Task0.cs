@@ -1,21 +1,21 @@
-using Interaction;
+ï»¿using Interaction;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Task
 {
     /// <summary>
-    /// ½øÈë¸®ÖĞµÄµÚÒ»¸öÈÎÎñ£¬´´½¨¼¸¸öNPC£¬¸³ÖµÒ»Ğ©¶Ô»°£¬ÌáÊ¾Ò»Ğ©×òÍí·¢ÉúµÄÊÂÇé£¬
-    /// È»ºó´´½¨Ò»¸öÉÙÒ¯£¬Õâ¸öÊÇÖ÷Òª¶Ô»°Õß
+    /// è¿›å…¥åºœä¸­çš„ç¬¬ä¸€ä¸ªä»»åŠ¡ï¼Œåˆ›å»ºå‡ ä¸ªNPCï¼Œèµ‹å€¼ä¸€äº›å¯¹è¯ï¼Œæç¤ºä¸€äº›æ˜¨æ™šå‘ç”Ÿçš„äº‹æƒ…ï¼Œ
+    /// ç„¶ååˆ›å»ºä¸€ä¸ªå°‘çˆ·ï¼Œè¿™ä¸ªæ˜¯ä¸»è¦å¯¹è¯è€…
     /// </summary>
     public class Chapter1_Task0 : ChapterPart
     {
-        //³õÊ¼»¯NPCµÄ±àºÅ£¬²»ÒªÒ»´ÎÈ«²¿¼ÓÔØ³öÀ´
+        //åˆå§‹åŒ–NPCçš„ç¼–å·ï¼Œä¸è¦ä¸€æ¬¡å…¨éƒ¨åŠ è½½å‡ºæ¥
         int index;
-        GameObject npc; //ÆÕÍ¨NPC
-        GameObject childe;  //ÉÙÒ¯
+        GameObject npc; //æ™®é€šNPC
+        GameObject childe;  //å°‘çˆ·
         Common.NPC_Pooling childeNPC;
-        List<Common.NPC_Pooling> npcs;  //ÆäËûNPC
+        List<Common.NPC_Pooling> npcs;  //å…¶ä»–NPC
 
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)
         {
@@ -24,16 +24,16 @@ namespace Task
             Common.SustainCoroutine.Instance.AddCoroutine(CreateNPC);
         }
 
-        /// <summary> /// ´´½¨ËùÓĞµÄNPC/// </summary>
+        /// <summary> /// åˆ›å»ºæ‰€æœ‰çš„NPC/// </summary>
         bool CreateNPC()
         {
             InteracteDelegate interacte;
-            //Îª¿ÕÊ±´´½¨Êı×é£¬´æ´¢È«²¿´´½¨¹ıµÄnpc
+            //ä¸ºç©ºæ—¶åˆ›å»ºæ•°ç»„ï¼Œå­˜å‚¨å…¨éƒ¨åˆ›å»ºè¿‡çš„npc
             if(npcs == null)
                 npcs = new List<Common.NPC_Pooling>();
             switch (index)
             {
-                case 0: //³õÊ¼»¯ÉÙÒ¯
+                case 0: //åˆå§‹åŒ–å°‘çˆ·
                     if(childe == null)
                     {
                         childe = Resources.Load<GameObject>("Prefab/Character/Childe");
@@ -53,11 +53,14 @@ namespace Task
                                     {
                                         data = "1_0"
                                     });
+                                interacte = childeNPC.GetComponent<InteracteDelegate>();
+                                //åˆ é™¤æ‰è¯¥äº¤äº’ï¼Œå› ä¸ºè¯¥å¯¹è¯ç»“æŸäº†
+                                GameObject.Destroy(interacte);
                             });
                     };
                     index++;
                     return false;
-                case 1:             //¼ÓÔØÊÌÅ®1
+                case 1:             //åŠ è½½ä¾å¥³1
                     if(npc == null)
                     {
                         npc = Resources.Load<GameObject>("Prefab/Character/NPC_Simple");
@@ -68,15 +71,15 @@ namespace Task
                         Quaternion.identity));
                     index++;
                     return false;
-                case 2:             //¼ÓÔØÊÌÅ®2
+                case 2:             //åŠ è½½ä¾å¥³2
                     npcs.Add((Common.NPC_Pooling)
                         Common.SceneObjectPool.Instance.GetObject("NPC_Simple", npc, new Vector3(155, 0.5f, 153),
                         Quaternion.identity));
                     Debug.Log(npcs.Count);
                     index++;
                     return false;
-                case 3:             //¼ÓÔØÊÌÅ®1Óë2µÄ¶Ô»°
-                    GameObject triger = new GameObject("TempTriger");   //´´½¨Ò»¸ö´¥·¢Æ÷
+                case 3:             //åŠ è½½ä¾å¥³1ä¸2çš„å¯¹è¯
+                    GameObject triger = new GameObject("TempTriger");   //åˆ›å»ºä¸€ä¸ªè§¦å‘å™¨
                     SphereCollider sphereCollider = triger.AddComponent<SphereCollider>();
                     triger.transform.position = new Vector3(155, 0.5f, 152.5f);
                     sphereCollider.radius = 10; sphereCollider.isTrigger = true;
@@ -102,11 +105,17 @@ namespace Task
 
         public override void ExitTaskEvent(Chapter chapter)
         {
+            ///æ¸…é™¤æ‰è¿™äº›è¿™äº›NPC
+            for(int i=0; i<npcs.Count; i++)
+            {
+                npcs[i].CloseObject();
+            }
+            npcs.Clear(); npcs = null;
         }
 
         public override bool IsCompleteTask(Chapter chapter, InteracteInfo info)
         {
-            return false;
+            return true;
         }
     }
 }

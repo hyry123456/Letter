@@ -12,19 +12,20 @@ namespace Info
         /// <summary>   /// 敌人死亡后播放爆炸特效   /// </summary>
         ParticleDrawData drawData;
 
+        /// <summary>   /// 死亡时执行的行为   /// </summary>
+        public Common.INonReturnAndNonParam dieBehavior;
+
         private void Start()
         {
             Vector2 sizeRange = new Vector2(0.4f, 1.5f);
             drawData = new ParticleDrawData
             {
-                //beginPos = transform.position,
                 beginSpeed = Vector3.up * 10,
                 speedMode = SpeedMode.VerticalVelocityOutside,
                 useGravity = false,
                 followSpeed = false,
                 radian = 3.14f,
                 radius = 1f,
-                //cubeOffset = new Vector3(0.1f, 0.1f, 0.1f),
                 lifeTime = 4,
                 showTime = 4f,
                 frequency = 1f,
@@ -53,6 +54,12 @@ namespace Info
         {
             drawData.beginPos = transform.position;
             ParticleNoiseFactory.Instance.DrawPos(drawData);
+            //执行死亡时的附加行为
+            if(dieBehavior != null)
+            {
+                dieBehavior();
+                dieBehavior = null;
+            }
             enemyControl.CloseObject();
         }
     }

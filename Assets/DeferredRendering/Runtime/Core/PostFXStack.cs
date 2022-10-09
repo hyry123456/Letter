@@ -89,7 +89,10 @@ namespace DefferedRender
 			fxaaTempTexId = Shader.PropertyToID("_FXAATempTexture"),
 			contrastThresholdId = Shader.PropertyToID("_ContrastThreshold"),
 			relativeThresholdId = Shader.PropertyToID("_RelativeThreshold"),
-			subpixelBlending = Shader.PropertyToID("_SubpixelBlending");
+			subpixelBlending = Shader.PropertyToID("_SubpixelBlending"),
+
+			detactiveViewTexId = Shader.PropertyToID("_DetactiveViewTexture"),	//临时目标纹理
+			detactiveViewRadio = Shader.PropertyToID("_DetactiveViewRadio");	//渲染的混合度
 
 
 
@@ -106,7 +109,8 @@ namespace DefferedRender
         PostFXSetting settings;
         int bloomPyramidId;
 		bool useHDR;
-        public bool IsActive => settings != null;
+		CullingResults cullingResults; int depthId;
+		public bool IsActive => settings != null;
 
 		public PostFXStack()
         {
@@ -120,14 +124,17 @@ namespace DefferedRender
         /// <summary>	/// 准备后处理前的数据准备	/// </summary>
         public void Setup(
             ScriptableRenderContext context, Camera camera, PostFXSetting settings,
-            bool useHDR
+            bool useHDR, CullingResults cullingResults, int depthId
         )
         {
             this.useHDR = useHDR;
             this.context = context;
             this.camera = camera;
             this.settings = settings;
-        }
+			this.cullingResults = cullingResults;
+			this.depthId = depthId;
+
+		}
 
 		/// <summary>
 		/// 对传入的纹理进行后处理
@@ -147,6 +154,12 @@ namespace DefferedRender
 			if (settings.Fog.useFog)
 			{
 				DrawFog(sourceId);
+			}
+
+            if (settings.DetectiveViewSetting.useDetective 
+				&& settings.Fog.fogMaxDepth < 0.1f)
+            {
+				DrawDetectiveView(sourceId);
 			}
 
 			if (settings.BulkLighting.useBulkLight)
@@ -511,6 +524,58 @@ namespace DefferedRender
 				buffer.ReleaseTemporaryRT(finalTempTexId);
 			}
 			buffer.ReleaseTemporaryRT(colorGradingLUTId);
+		}
+
+
+		static ShaderTagId
+			detactiveShaderTagId = new ShaderTagId("DetavtiveView");
+
+		/// <summary>/// 绘制侦探视觉，对特殊物体进行绘制/// </summary>
+		void DrawDetectiveView(int sourceId)
+        {
+			buffer.BeginSample("Draw DetectiveView");
+			RenderTextureFormat format = useHDR ?
+				RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+			buffer.GetTemporaryRT(detactiveViewTexId, camera.pixelWidth, camera.pixelHeight,
+				0, FilterMode.Bilinear, format);
+
+			//设置该摄像机的物体排序模式，目前是渲染普通物体，因此用一般排序方式
+			var sortingSettings = new SortingSettings(camera)
+			{
+				criteria = SortingCriteria.CommonOpaque
+			};
+			//第一次渲染只绘制GBuffer，且GBuffer仅渲染非透明
+			var drawingSettings = new DrawingSettings(
+				detactiveShaderTagId, sortingSettings
+			)
+			{
+				enableDynamicBatching = true,
+				enableInstancing = true,
+			};
+			var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
+
+			Draw(sourceId, detactiveViewTexId, Pass.Copy);
+
+			buffer.SetRenderTarget(detactiveViewTexId, RenderBufferLoadAction.Load, RenderBufferStoreAction.Store,
+				depthId, RenderBufferLoadAction.Load, RenderBufferStoreAction.Store);
+
+			float blendRadio = 1.0f - Mathf.Clamp01(settings.Fog.fogMaxDepth / 0.1f);
+
+			buffer.SetGlobalFloat("_BlendRadio", blendRadio);
+
+			ExecuteBuffer();
+
+			//进行渲染的执行方法
+			context.DrawRenderers(
+				cullingResults, ref drawingSettings, ref filteringSettings
+			);
+
+			//复制到真实纹理中
+			Draw(detactiveViewTexId, sourceId, Pass.Copy);
+			buffer.ReleaseTemporaryRT(detactiveViewTexId);
+
+			buffer.EndSample("Draw DetectiveView");
+
 		}
 
 

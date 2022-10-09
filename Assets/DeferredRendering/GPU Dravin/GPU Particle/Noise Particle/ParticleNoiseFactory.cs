@@ -72,7 +72,7 @@ namespace DefferedRender
             instance = this;
             DontDestroyOnLoad(gameObject);
             ParticleFactoryMenu factoryMenu = 
-                Resources.Load<ParticleFactoryMenu>("ParticleFactory/ParticleFactoryMenu");
+                Resources.Load<ParticleFactoryMenu>("Render/ParticleFactory/ParticleFactoryMenu");
             compute = factoryMenu.compue;
             material = factoryMenu.material;
             textureArray = factoryMenu.textureArray;

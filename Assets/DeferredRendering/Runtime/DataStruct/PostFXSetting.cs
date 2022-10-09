@@ -294,6 +294,30 @@ namespace DefferedRender
 		};
 		public FXAASetting FXAA => fXAA;
 
+		[Serializable]
+		/// <summary>
+		/// 侦探视觉结构体，用来看到特殊物体
+		/// </summary>
+		public struct DetectiveView
+        {
+			public bool useDetective;
+        };
+        [SerializeField]
+		DetectiveView detectiveView = new DetectiveView
+        {
+			useDetective = false,
+        };
+		public DetectiveView DetectiveViewSetting => detectiveView;
+
+		public void BeginDetective()
+        {
+			detectiveView.useDetective = true;
+        }
+		public void CloseDetective()
+        {
+			detectiveView.useDetective = false;
+		}
+
 		Material material;
 
 		public Material Material

@@ -9,37 +9,47 @@ namespace Control
     public class PlayerSkillControl : MonoBehaviour
     {
         private SkillManage skillManage;
+        private Common.ResetInput.MyInput myInput;
         /// <summary>    /// 当前主角选中的技能    /// </summary>
         public int nowSkill;
-        private Common.ResetInput.MyInput myInput;
+        /// <summary>    /// 所有技能的数量      /// </summary>
+        public int SkillCount
+        {
+            get
+            {
+                if (skillManage.Skills == null)
+                    return 0;
+                return skillManage.Skills.Count;
+            }
+        }
+        public SkillManage SkillManage => skillManage;
+
+
         private void Start()
         {
             skillManage = GetComponent<SkillManage>();
             myInput = Common.ResetInput.MyInput.Instance;
-            nowSkill = 0;
+            nowSkill = -1;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            string namePrefit = "Alpha";
-            int index = -1;
-            for (int i = 1; i <= 4; i++)
+            if (skillManage.Skills == null || skillManage.Skills.Count == 0) return;
+            if(nowSkill < 0) nowSkill = 0;
+            for(int i=0; i<skillManage.Skills.Count; i++)
             {
-                if( myInput.GetButtonDown(namePrefit + i.ToString()))
+                if(Input.GetKeyDown(KeyCode.Alpha1 + i))
                 {
-                    index = i - 1;
-                    break;
+                    nowSkill = i;
+                    return;
                 }
             }
-            if (index == -1) return;
-            nowSkill = (skillManage.Skills.Count > index) ? index : 0;
         }
 
         /// <summary>        /// 选择当前已经选择好的技能        /// </summary>
         public void ReleaseChooseSkill()
         {
-            if (skillManage == null || skillManage.Skills == null || skillManage.Skills.Count == 0)
-                return;
+            if(nowSkill < 0) return;
             skillManage.CheckAndRelase(skillManage.Skills[nowSkill]);
         }
     }

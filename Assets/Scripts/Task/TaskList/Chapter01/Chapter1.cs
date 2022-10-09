@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +8,8 @@ namespace Task
     {
         public Chapter1()
         {
-            chapterName = "ÎªºÎËÀ£¬ºÎÎªËÀ";
-            chapterTitle = "°ëÒ¹²Ò½Ğ£¬ĞÄÔàÖèÍ££¬ÎªºÎÈÏ¶¨ËûÉ±";
+            chapterName = "ä¸ºä½•æ­»ï¼Œä½•ä¸ºæ­»";
+            chapterTitle = "åŠå¤œæƒ¨å«ï¼Œå¿ƒè„éª¤åœï¼Œä¸ºä½•è®¤å®šä»–æ€";
             taskPartCount = 2;
             chapterID = 1;
 
@@ -29,7 +29,7 @@ namespace Task
 
         public override void CompleteChapter()
         {
-            Debug.Log("µÚ¶şÕÂÍê³É");
+            Debug.Log("ç¬¬äºŒç« å®Œæˆ");
             return;
         }
 

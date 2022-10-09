@@ -122,7 +122,8 @@ namespace DefferedRender
                 cullingResults, shadowSetting, camera, renderSetting.clusterLightSetting
             );
 
-            postFXStack.Setup(context, camera, postFXSetting, useHDR);
+            postFXStack.Setup(context, camera, postFXSetting, useHDR, cullingResults,
+                gBufferDepthId);
 
             buffer.EndSample(SampleName);
 
@@ -254,7 +255,6 @@ namespace DefferedRender
 
         void DrawGBuffer()
         {
-            PerObjectData lightsPerObjectFlags = PerObjectData.None;
             //设置该摄像机的物体排序模式，目前是渲染普通物体，因此用一般排序方式
             var sortingSettings = new SortingSettings(camera)
             {
@@ -273,8 +273,7 @@ namespace DefferedRender
                 PerObjectData.Lightmaps | PerObjectData.ShadowMask |
                 PerObjectData.LightProbe | PerObjectData.OcclusionProbe |
                 PerObjectData.LightProbeProxyVolume |
-                PerObjectData.OcclusionProbeProxyVolume |
-                lightsPerObjectFlags
+                PerObjectData.OcclusionProbeProxyVolume
             };
             var filteringSettings = new FilteringSettings(
                 RenderQueueRange.opaque, renderingLayerMask: (uint)renderSetting.renderingLayerMask

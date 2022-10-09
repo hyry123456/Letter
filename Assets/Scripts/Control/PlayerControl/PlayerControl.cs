@@ -37,6 +37,11 @@ namespace Control
             }
         }
 
+        public void AddSkill(Skill.SkillBase skill)
+        {
+            skillControl.SkillManage.AddSkill(skill);
+        }
+
         public string verticalName = "Vertical";
         public string horizontalName = "Horizontal";
         public string jumpName = "Jump";
