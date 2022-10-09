@@ -31,7 +31,7 @@ namespace Task
             npc = (Common.NPC_Pooling)Common.SceneObjectPool.Instance.GetObject(
                 "NPC_Simple", NPC, new Vector3(280, 0.5f, 180), Quaternion.identity);
             InteracteDelegate interacte = npc.gameObject.AddComponent<InteracteDelegate>();
-            interacte.nonReturnAndNonParam = () =>
+            interacte.interDelegate = () =>
             {
                 //首先开始对话，说一下发生的事情
                 UI.BigDialog.Instance.ShowBigdialog(chapter.GetDiglogText(1),

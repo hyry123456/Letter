@@ -9,7 +9,7 @@ namespace UI
         public static SmallDialog Instance => instance;
 
         /// <summary>        /// 每一个文字生成的等待时间        /// </summary>
-        public float perFontWaitTime = 0.5f;
+        public float perFontWaitTime = 0.08f;
         private float nowWaitTime = 0;
         /// <summary>        /// 小对话显示用的文本组件        /// </summary>
         Text smallDialog;
@@ -44,6 +44,7 @@ namespace UI
 
         protected override string ReadyOneLineString(string str)
         {
+            str = str.Trim();
             return str;
         }
 
@@ -55,6 +56,11 @@ namespace UI
         protected override void CloseUI()
         {
             gameObject.SetActive(false);
+            if(endBehavior != null)
+            {
+                endBehavior();
+                endBehavior = null;
+            }
             nowWaitTime = 0;
         }
 

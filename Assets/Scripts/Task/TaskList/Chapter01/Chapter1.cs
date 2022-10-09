@@ -15,7 +15,7 @@ namespace Task
 
             chapterSavePath = Application.streamingAssetsPath + "/Task/Chapter/1.task";
             targetPart = targetPart + "Chapter1_Task";
-            runtimeScene = "Chapter1_Task";
+            runtimeScene = "MainScene";
         }
 
         public override void CheckAndLoadChapter()

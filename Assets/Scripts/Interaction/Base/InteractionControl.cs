@@ -50,6 +50,7 @@ namespace Interaction
         protected void FixedUpdate()
         {
             RaycastHit hit;
+            Debug.DrawRay(playerControl.transform.position, playerControl.GetLookatDir() * 3);
             if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir() * 3, out hit, interacteCheckDistance))
             {
                 InteractionBase hitInfo = hit.transform.GetComponent<InteractionBase>();

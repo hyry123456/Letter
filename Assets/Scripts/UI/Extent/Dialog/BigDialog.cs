@@ -35,12 +35,13 @@ namespace UI
         {
             base.Update();
             //进行跳过
-            if(sb != null)
+            if(sb != null && nowIndex > 1)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     diglogText.text = sb.ToString();
                     sb = null;
+                    alphaChar = null;
                 }
             }
 
@@ -64,6 +65,10 @@ namespace UI
         {
             //使用|作为内容以及名称的区分值
             string[] strs = str.Split('|');
+            strs[0] = strs[0].Trim();
+            Debug.Log(strs[0]);
+            strs[1] = strs[1].Trim();
+            Debug.Log(strs[1]);
             nameText.text = strs[0];
             return strs[1];
         }

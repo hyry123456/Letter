@@ -6,12 +6,12 @@ namespace Interaction
     public class InteracteDelegate : InteractionBase
     {
         /// <summary>   /// 无参无返回值委托，传入需要执行的方法  /// </summary>
-        public Common.INonReturnAndNonParam nonReturnAndNonParam;
+        public Common.INonReturnAndNonParam interDelegate;
 
         public override void InteractionBehavior()
         {
-            if (nonReturnAndNonParam != null)
-                nonReturnAndNonParam();
+            if (interDelegate != null)
+                interDelegate();
         }
 
         protected override void OnEnable()

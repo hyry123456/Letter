@@ -336,6 +336,8 @@ namespace Task
         public bool AddChapter(int chapterId)
         {
             TaskInfo info = taskMap[chapterId];
+            //非本场景的任务，直接跳过
+            if (!info.isInRuntimeScene) return false;
             if (info.state != 0)
                 return false;
             info.state = TaskMode.Start;
