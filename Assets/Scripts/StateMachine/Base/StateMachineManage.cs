@@ -1,26 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace StateMachine
 {
     /// <summary>  
-    /// ×´Ì¬»ú¹ÜÀíÀà£¬ÓÃÀ´¿ØÖÆµĞÈËµÄ×´Ì¬£¬ÓµÓĞÁË×´Ì¬»úºóµĞÈË²»ÔÙĞèÒª¿ØÖÆÆ÷£¬
-    /// ÒòÎª±¾Éí×´Ì¬»ú¾ÍÊÇÒ»¸ö¿ØÖÆÆ÷£¬Ò»¸ö¸ü¼ÓÍêÉÆµÄ¿ØÖÆÆ÷
+    /// çŠ¶æ€æœºç®¡ç†ç±»ï¼Œç”¨æ¥æ§åˆ¶æ•Œäººçš„çŠ¶æ€ï¼Œæ‹¥æœ‰äº†çŠ¶æ€æœºåæ•Œäººä¸å†éœ€è¦æ§åˆ¶å™¨ï¼Œ
+    /// å› ä¸ºæœ¬èº«çŠ¶æ€æœºå°±æ˜¯ä¸€ä¸ªæ§åˆ¶å™¨ï¼Œä¸€ä¸ªæ›´åŠ å®Œå–„çš„æ§åˆ¶å™¨
     /// </summary>
     public class StateMachineManage : MonoBehaviour
     {
         /// <summary>    
-        /// ³õÊ¼×´Ì¬£¬ÓÃÀ´×÷Îª×´Ì¬»úµÄ³õÊ¼ĞĞÎª£¬ÒÔ¼°·½±ãÖ±½Ó»ØÍË
+        /// åˆå§‹çŠ¶æ€ï¼Œç”¨æ¥ä½œä¸ºçŠ¶æ€æœºçš„åˆå§‹è¡Œä¸ºï¼Œä»¥åŠæ–¹ä¾¿ç›´æ¥å›é€€
         /// </summary>
         public StateMachineBase beginState;
         [SerializeField]
-        /// <summary>    /// µ±Ç°×´Ì¬£¬ÓÃÀ´×÷ÎªÊµÊ±ĞĞÎª    /// </summary>
+        /// <summary>    /// å½“å‰çŠ¶æ€ï¼Œç”¨æ¥ä½œä¸ºå®æ—¶è¡Œä¸º    /// </summary>
         StateMachineBase nowState;
         private AnimateManage animate;
-        /// <summary>   /// ½ÇÉ«µÄ¶¯»­¹ÜÀíÀà    /// </summary>
+        /// <summary>   /// è§’è‰²çš„åŠ¨ç”»ç®¡ç†ç±»    /// </summary>
         public AnimateManage AnimateManage => animate;
 
         private Motor.EnemyMotor motor;
-        /// <summary>     /// µĞÈËµÄÔË¶¯ÒıÇæ     /// </summary>
+        /// <summary>     /// æ•Œäººçš„è¿åŠ¨å¼•æ“     /// </summary>
         public Motor.EnemyMotor EnemyMotor => motor;
 
         private Skill.SkillManage skillManage;
@@ -36,9 +36,10 @@ namespace StateMachine
             }
             animate = GetComponent<AnimateManage>();
             motor = GetComponent<Motor.EnemyMotor>();
+            skillManage = GetComponent<Skill.SkillManage>();
         }
 
-        /// <summary>    /// Öğ¹Ì¶¨Ö¡ÔËĞĞµ±Ç°×´Ì¬»úµÄĞĞÎª     /// </summary>
+        /// <summary>    /// é€å›ºå®šå¸§è¿è¡Œå½“å‰çŠ¶æ€æœºçš„è¡Œä¸º     /// </summary>
         private void FixedUpdate()
         {
             if (nowState == null)

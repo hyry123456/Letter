@@ -1,18 +1,18 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace StateMachine
 {
-    /// <summary> /// ×´Ì¬»úµÄ»ùÀà£¬ÓÃÀ´¶¨Òå×´Ì¬»úĞĞÎª  /// </summary>
+    /// <summary> /// çŠ¶æ€æœºçš„åŸºç±»ï¼Œç”¨æ¥å®šä¹‰çŠ¶æ€æœºè¡Œä¸º  /// </summary>
     public abstract class StateMachineBase : ScriptableObject
     {
-        /// <summary>     /// Öğ¹Ì¶¨Ö¡Ö´ĞĞµÄĞĞÎª      /// </summary>
+        /// <summary>     /// é€å›ºå®šå¸§æ‰§è¡Œçš„è¡Œä¸º      /// </summary>
         public abstract void OnFixedUpdate(StateMachineManage manage);
 
-        /// <summary>    /// ¼ì²é¸ÃÖ¡ĞĞÎª£¬ÅĞ¶ÏÊÇ·ñĞèÒªÇĞ»»×´Ì¬    /// </summary>
+        /// <summary>    /// æ£€æŸ¥è¯¥å¸§è¡Œä¸ºï¼Œåˆ¤æ–­æ˜¯å¦éœ€è¦åˆ‡æ¢çŠ¶æ€    /// </summary>
         public abstract StateMachineBase CheckState(StateMachineManage manage);
-        /// <summary>   /// ÍË³ö×´Ì¬µÄĞĞÎª     /// </summary>
+        /// <summary>   /// é€€å‡ºçŠ¶æ€çš„è¡Œä¸º     /// </summary>
         public abstract void ExitState(StateMachineManage manage);
-        /// <summary>   /// ½øÈë×´Ì¬µÄĞĞÎª     /// </summary>
+        /// <summary>   /// è¿›å…¥çŠ¶æ€çš„è¡Œä¸º     /// </summary>
         public abstract void EnterState(StateMachineManage manage);
     }
 }

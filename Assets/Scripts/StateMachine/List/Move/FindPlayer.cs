@@ -67,8 +67,6 @@ namespace StateMachine
             //播放移动动画
             manage.AnimateManage?.PlayAnimate(AnimateType.Move);
 
-
-
             RaycastHit hit;
             if(Physics.SphereCast(transform.position, CheckRadius, playerDir.normalized, out hit, 
                 playerDir.magnitude, shelter))
