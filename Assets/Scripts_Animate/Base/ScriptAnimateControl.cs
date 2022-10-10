@@ -19,18 +19,22 @@ namespace ScriptAnimate
         [SerializeField]
         private int nowIndex;
         private float nowRadio;
-
+        [SerializeField]
+        bool beginUse = true;
 
         private void Start()
         {
-            //没有动画直接销毁
-            if(points == null || points.Length == 0) Destroy(gameObject);
             nowIndex = 1; nowRadio = 0;
+            if (!beginUse) return;
             scripts[0]?.BeginAnimate(this);
         }
 
+
+
+
         private void Update()
         {
+            if (!beginUse) return;
             if (points == null || nowIndex >= points.Length) return;
             
             nowRadio += Time.deltaTime * (1.0f / times[0]);
@@ -75,6 +79,20 @@ namespace ScriptAnimate
                 Vector3 begin = points[i - 1] == null ? Vector3.zero : points[i - 1].position;
                 Vector3 end = points[i] == null ? Vector3.zero : points[i].position;
                 Gizmos.DrawLine(begin, end);
+            }
+        }
+
+        public void BeginUse()
+        {
+            beginUse = true;
+            scripts[0]?.BeginAnimate(this);
+        }
+
+        private void OnValidate()
+        {
+            if (beginUse)
+            {
+                BeginUse();
             }
         }
     }

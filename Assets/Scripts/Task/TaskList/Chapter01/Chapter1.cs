@@ -10,7 +10,7 @@ namespace Task
         {
             chapterName = "为何死，何为死";
             chapterTitle = "半夜惨叫，心脏骤停，为何认定他杀";
-            taskPartCount = 2;
+            taskPartCount = 3;
             chapterID = 1;
 
             chapterSavePath = Application.streamingAssetsPath + "/Task/Chapter/1.task";
@@ -20,7 +20,7 @@ namespace Task
 
         public override void CheckAndLoadChapter()
         {
-            if (AsynTaskControl.Instance.CheckTaskIsComplete(0))
+            if (AsynTaskControl.Instance.CheckChapterIsComplete(0))
             {
                 AsynTaskControl.Instance.AddChapter(this);
             }
@@ -30,7 +30,17 @@ namespace Task
         public override void CompleteChapter()
         {
             Debug.Log("第二章完成");
+            Common.SustainCoroutine.Instance.AddCoroutine(AddSkill);
             return;
+        }
+        //添加技能
+        bool AddSkill()
+        {
+            Control.PlayerControl.Instance.AddSkill("SingleBullet");
+            Control.PlayerControl.Instance.AddSkill("DetectiveView");
+            Control.PlayerControl.Instance.AddSkill("WaveSickle");
+
+            return true;
         }
 
         public override void ExitChapter()

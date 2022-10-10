@@ -90,7 +90,7 @@ public class Bullet_Pooling : ObjectPoolBase
         }
         transform.position += transform.forward * Time.deltaTime * moveSpeed;
         drawData.beginPos = transform.position;
-        drawData.beginSpeed = transform.forward * moveSpeed * 0.5f;
+        drawData.beginSpeed = transform.forward * moveSpeed;
         ParticleNoiseFactory.Instance.DrawPos(drawData);
     }
 
@@ -105,14 +105,17 @@ public class Bullet_Pooling : ObjectPoolBase
 
         drawData.groupCount = 30;
         drawData.beginPos = collision.contacts[0].point;
-        drawData.speedMode = SpeedMode.VerticalVelocityOutside;
-        drawData.beginSpeed = collision.contacts[0].normal * moveSpeed;
+        drawData.speedMode = SpeedMode.JustBeginSpeed;
+        Vector3 normal = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+        drawData.beginSpeed = normal * moveSpeed * 0.3f;
         drawData.lifeTime = 5; drawData.showTime = 5f;
+        drawData.intensity = 50;
 
         ParticleNoiseFactory.Instance.DrawPos(drawData);
 
         drawData.groupCount = 1;
         drawData.speedMode = SpeedMode.JustBeginSpeed;
+        drawData.intensity = 20;
 
         CloseObject();
 

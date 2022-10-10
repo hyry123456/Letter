@@ -221,7 +221,7 @@ namespace Task
         /// 因此这里只提供检查的方法
         /// </summary>
         /// <param name="taskId">任务的编号，注意该编号值要唯一</param>
-        public bool CheckTaskIsComplete(int taskId)
+        public bool CheckChapterIsComplete(int taskId)
         {
             return (taskMap[taskId].state & TaskMode.Finish) != 0;
         }

@@ -39,9 +39,8 @@ namespace ScriptAnimate
         {
             if(nowRadio <= 0)
             {
-                fXSetting.CloseFog();
-                //fXSetting.SetColorFilter(Color.white);
                 fXSetting.SetMaxDepthFog(begin);
+                Debug.Log("ChangeScene " + TargetSceneName);
                 Control.SceneChangeControl.Instance.ChangeScene(TargetSceneName);
                 return true;
             }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Skill;
+using System.Reflection;
 
 namespace Control
 {
@@ -51,6 +52,19 @@ namespace Control
         {
             if(nowSkill < 0) return;
             skillManage.CheckAndRelase(skillManage.Skills[nowSkill]);
+        }
+
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        /// <summary>
+        /// 根据名称添加技能，传入的技能名称是技能类的名称
+        /// </summary>
+        /// <param name="skillClassName">技能的类名称</param>
+        public void AddSkill(string skillClassName)
+        {
+            SkillBase skillBase = (Skill.SkillBase)
+                assembly.CreateInstance("Skill." + skillClassName);
+            skillManage.AddSkill(skillBase);
         }
     }
 }

@@ -77,7 +77,6 @@ namespace UI
                 Image image = transform.GetChild(nowIndex).GetComponentInChildren<Image>();
                 Color color = image.color; color.a = 0.3f;
                 image.color = color;
-                Debug.Log(skillControl.nowSkill);
                 image = transform.GetChild(skillControl.nowSkill).GetComponentInChildren<Image>();
                 color = image.color; color.a = 1;
                 image.color = color;

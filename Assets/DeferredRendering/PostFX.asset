@@ -53,7 +53,7 @@ MonoBehaviour:
     balance: 0
   fog:
     fogTex: {fileID: 0}
-    useFog: 1
+    useFog: 0
     fogMaxHeight: 200
     fogMinHeight: 0
     fogMaxDepth: 0.05

@@ -182,6 +182,8 @@ namespace DefferedRender
         HighlightAlphaToAlpha = 1,
         /// <summary>        /// 强光，前面不透明，后面透明        /// </summary>
         HighlightToAlpha = 2,
+        /// <summary>        /// 强光，从黄高光到蓝高光        /// </summary>
+        HighlightRedToBlue = 3,
     }
 
     public enum SizeCurveMode

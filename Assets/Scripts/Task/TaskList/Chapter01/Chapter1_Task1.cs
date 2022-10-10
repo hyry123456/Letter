@@ -1,5 +1,4 @@
-using Interaction;
-using System.Reflection;
+ï»¿using Interaction;
 using UnityEngine;
 
 namespace Task
@@ -8,12 +7,11 @@ namespace Task
     public class Chapter1_Task1 : ChapterPart
     {
         DefferedRender.PostFXSetting fXSetting;
-        Assembly assembly;
 
-        int index,      //ÓÃÀ´ÅĞ¶ÏÊÇ·ñÓĞÊ¹ÓÃ¼¼ÄÜ
-            enemyIndex, //ÓÃÀ´È·¶¨Éú³ÉµÄµĞÈËÎ»ÖÃ
-            dieCount;   //ÓÃÀ´È·¶¨µĞÈËÊÇ·ñËÀÍêÁË
-        //µĞÈËÔ¤ÖÆ¼ş
+        int index,      //ç”¨æ¥åˆ¤æ–­æ˜¯å¦æœ‰ä½¿ç”¨æŠ€èƒ½
+            enemyIndex, //ç”¨æ¥ç¡®å®šç”Ÿæˆçš„æ•Œäººä½ç½®
+            dieCount;   //ç”¨æ¥ç¡®å®šæ•Œäººæ˜¯å¦æ­»å®Œäº†
+        //æ•Œäººé¢„åˆ¶ä»¶
         GameObject origin;
 
         Vector3[] enemyPoss = new Vector3[8]
@@ -36,37 +34,34 @@ namespace Task
             Common.SustainCoroutine.Instance.AddCoroutine(CheckDetective);
         }
 
-        //ÓÃÀ´¼ì²éÖ÷½ÇÊÇ·ñÓĞÊ¹ÓÃÌØĞ§£¬ÇÒÌØĞ§ÒªÊ¹ÓÃºóÔÙ¹Ø±ÕÊ±ÈÎÎñ²Å½áÊø
+        //ç”¨æ¥æ£€æŸ¥ä¸»è§’æ˜¯å¦æœ‰ä½¿ç”¨ç‰¹æ•ˆï¼Œä¸”ç‰¹æ•ˆè¦ä½¿ç”¨åå†å…³é—­æ—¶ä»»åŠ¡æ‰ç»“æŸ
         bool CheckDetective()
         {
             if(fXSetting == null)
             {
-                assembly = Assembly.GetExecutingAssembly();
-                Skill.SkillBase skillBase = (Skill.SkillBase)
-                    assembly.CreateInstance("Skill.DetectiveView");
-                Control.PlayerControl.Instance.AddSkill(skillBase);
+                //ç»™ä¸»è§’æ·»åŠ ä¾¦æ¢è§†é‡æŠ€èƒ½
+                Control.PlayerControl.Instance.AddSkill("DetectiveView");
                 fXSetting = Resources.Load<DefferedRender.PostFXSetting>("Render/PostFX/PostFX");
                 return false;
             }
             switch (index)
             {
-                case 0:     //³õÊ¼×´Ì¬£¬ÅĞ¶ÏÊÇ·ñÓĞÊ¹ÓÃ
+                case 0:     //åˆå§‹çŠ¶æ€ï¼Œåˆ¤æ–­æ˜¯å¦æœ‰ä½¿ç”¨
                     if (fXSetting.Fog.fogMaxDepth < 0.085f)
                         index++;
                     return false;
-                case 1:     //Ê¹ÓÃºó¹Ø±ÕÁË
+                case 1:     //ä½¿ç”¨åå…³é—­äº†
                     if (fXSetting.Fog.fogMaxDepth > 0.085f)
                         index++;
                     return false;
-                default:    //¿ªÊ¼²¥·Å¶Ô»°
+                default:    //å¼€å§‹æ’­æ”¾å¯¹è¯
                     UI.SmallDialog.Instance.ShowSmallDialog(
                         chapter.GetDiglogText(3), () =>
                         {
                             Common.SustainCoroutine.Instance.AddCoroutine(CreateEnemy);
-                            Skill.SkillBase skillBase = (Skill.SkillBase)
-                                assembly.CreateInstance("Skill.SingleBullet");
-                            Control.PlayerControl.Instance.AddSkill(skillBase);
-
+                            //æ·»åŠ æ”»å‡»æŠ€èƒ½
+                            Control.PlayerControl.Instance.AddSkill("SingleBullet");
+                            Control.PlayerControl.Instance.AddSkill("WaveSickle");
                         });
                     return true;
             }
@@ -80,7 +75,7 @@ namespace Task
                 origin = Resources.Load<GameObject>("Prefab/Enemy");
                 return false;
             }
-            //Ñ­»·´´½¨ËùÓĞµÄµĞÈË
+            //å¾ªç¯åˆ›å»ºæ‰€æœ‰çš„æ•Œäºº
             for(; enemyIndex < enemyPoss.Length;)
             {
                 Control.EnemyControl enemy = (Control.EnemyControl)
@@ -94,7 +89,7 @@ namespace Task
             return true; 
         }
 
-        /// <summary>/// µĞÈËËÀÍöÊ±½øĞĞµÄĞĞÎª/// </summary>
+        /// <summary>/// æ•Œäººæ­»äº¡æ—¶è¿›è¡Œçš„è¡Œä¸º/// </summary>
         void EnemyDieBehavior()
         {
             AsynTaskControl.Instance.CheckChapter(chapter.chapterID,
@@ -106,10 +101,10 @@ namespace Task
 
         public override void ExitTaskEvent(Chapter chapter)
         {
-            Debug.Log("µĞÈËËÀÍêÁË");
+            Debug.Log("æ•Œäººæ­»å®Œäº†");
         }
 
-        //ÓÃÀ´ÅĞ¶ÏÊÇ·ñÈ«²¿µĞÈË¶¼ËÀÍêÁË£¬ËÀÍêÁË¾Í½øÈëÏÂÒ»¸öÈÎÎñ
+        //ç”¨æ¥åˆ¤æ–­æ˜¯å¦å…¨éƒ¨æ•Œäººéƒ½æ­»å®Œäº†ï¼Œæ­»å®Œäº†å°±è¿›å…¥ä¸‹ä¸€ä¸ªä»»åŠ¡
         public override bool IsCompleteTask(Chapter chapter, InteracteInfo info)
         {
             if(info.data == "1_1")

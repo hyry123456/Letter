@@ -66,6 +66,7 @@ namespace UI
 
         public void ShowSmallDialog(string strs, Common.INonReturnAndNonParam endBehavior)
         {
+            Debug.Log(strs);
             this.endBehavior = endBehavior;
             InsertDialog(strs);
             gameObject.SetActive(true);

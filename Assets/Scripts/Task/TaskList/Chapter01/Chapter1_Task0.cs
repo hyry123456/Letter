@@ -111,6 +111,7 @@ namespace Task
                 npcs[i].CloseObject();
             }
             npcs.Clear(); npcs = null;
+            childeNPC.CloseObject();        //少爷需要关闭，等待之后再生成
         }
 
         public override bool IsCompleteTask(Chapter chapter, InteracteInfo info)

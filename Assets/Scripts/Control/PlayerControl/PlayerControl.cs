@@ -17,7 +17,6 @@ namespace Control
         /// <summary>        /// 启动角色控制        /// </summary>
         public void BeginControl()
         {
-            Debug.Log("Begin");
             useControl = true;
         }
         /// <summary>      /// 停止角色控制     /// </summary>
@@ -37,9 +36,11 @@ namespace Control
             }
         }
 
-        public void AddSkill(Skill.SkillBase skill)
+        /// <summary>/// 传入技能类名，添加技能/// </summary>
+        /// <param name="skillName">类名</param>
+        public void AddSkill(string skillName)
         {
-            skillControl.SkillManage.AddSkill(skill);
+            skillControl.AddSkill(skillName);
         }
 
         public string verticalName = "Vertical";
