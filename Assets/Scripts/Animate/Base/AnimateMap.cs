@@ -5,6 +5,8 @@ public enum AnimateType
     Move = 1,           //移动
     RotateLeft = 2,     //左转
     RotateRight = 3,    //右转
+    Attack = 4,         //攻击
+    Die = 5,            //死亡
 }
 
 /// <summary>

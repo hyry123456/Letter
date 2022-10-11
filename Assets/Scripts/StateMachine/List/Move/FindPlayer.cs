@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SocialPlatforms;
 
 namespace StateMachine
 {
@@ -10,6 +12,7 @@ namespace StateMachine
     {
         private Motor.EnemyMotor enemyMotor;
         private Info.EnemyInfo enemyInfo;
+        private NavMeshAgent navMeshAgent;
         /// <summary> /// 检查球体的半径大小    /// </summary>
         public float CheckRadius = 2f;
 
@@ -41,6 +44,7 @@ namespace StateMachine
         {
             enemyMotor = manage.GetComponent<Motor.EnemyMotor>();
             enemyInfo = manage.GetComponent<Info.EnemyInfo>();
+            navMeshAgent = manage.GetComponent<NavMeshAgent>();
         }
 
         public override void ExitState(StateMachineManage manage)
@@ -54,9 +58,15 @@ namespace StateMachine
             //不判断Info，因为在前一个状态Info就已经判断过了
             if (Control.PlayerControl.Instance == null 
                 || enemyMotor == null) return;
+            //FindByDirection(manage);
+            FindByNavigator(manage);//使用Unity自动寻路
+
+            
+        }
+        private void FindByDirection(StateMachineManage manage)
+        {
             Transform player = Control.PlayerControl.Instance.transform;
             Transform transform = manage.transform;
-
             Vector3 playerDir = player.position - transform.position;
 
             transform.rotation = Quaternion.Lerp(transform.rotation,
@@ -68,7 +78,7 @@ namespace StateMachine
             manage.AnimateManage?.PlayAnimate(AnimateType.Move);
 
             RaycastHit hit;
-            if(Physics.SphereCast(transform.position, CheckRadius, playerDir.normalized, out hit, 
+            if (Physics.SphereCast(transform.position, CheckRadius, playerDir.normalized, out hit,
                 playerDir.magnitude, shelter))
             {
                 if (hit.collider.tag != "Player")
@@ -81,6 +91,13 @@ namespace StateMachine
             }
             enemyMotor.Move(moveDir.z, moveDir.x);
             return;
+        }
+        private void FindByNavigator(StateMachineManage manage)
+        {
+            Transform player = Control.PlayerControl.Instance.transform;
+            navMeshAgent.destination = player.position;//设置终点
+            manage.transform.LookAt(player);//时刻朝向玩家
+            manage.AnimateManage?.PlayAnimate(AnimateType.Move);
         }
     }
 }

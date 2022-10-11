@@ -1,7 +1,14 @@
-﻿using UnityEngine;
+﻿using Motor;
+using Skill;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace StateMachine
 {
+    [RequireComponent(typeof(AnimateManage))]
+    [RequireComponent(typeof(EnemyMotor))]
+    [RequireComponent(typeof(SkillManage))]
+    [RequireComponent(typeof(NavMeshAgent))]
     /// <summary>  
     /// 状态机管理类，用来控制敌人的状态，拥有了状态机后敌人不再需要控制器，
     /// 因为本身状态机就是一个控制器，一个更加完善的控制器
@@ -26,6 +33,9 @@ namespace StateMachine
         private Skill.SkillManage skillManage;
         public Skill.SkillManage SkillManage => skillManage;
 
+        /// <summary>///自动寻路组件 /// </summary>
+        private NavMeshAgent navMeshAgent;
+
 
         private void Start()
         {
@@ -37,6 +47,7 @@ namespace StateMachine
             animate = GetComponent<AnimateManage>();
             motor = GetComponent<Motor.EnemyMotor>();
             skillManage = GetComponent<Skill.SkillManage>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         /// <summary>    /// 逐固定帧运行当前状态机的行为     /// </summary>

@@ -157,7 +157,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &178101556
+--- !u!114 &178101558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,17 +166,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 178101553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf1e9171d6a7e374e8e4fef5f3cf2972, type: 3}
+  m_Script: {fileID: 11500000, guid: d48cbdca096605746992f38af0b316ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameter:
-    health: 100
-    speed: 10
-    target: {fileID: 0}
-    animator: {fileID: 0}
-    agent: {fileID: 0}
-    viewRange: 100
-    attackRange: 5
+  beginState: {fileID: 11400000, guid: 916c55247c73c3746a8c0d33022213b6, type: 2}
+  nowState: {fileID: 0}
 --- !u!195 &178101559
 NavMeshAgent:
   m_ObjectHideFlags: 0

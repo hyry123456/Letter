@@ -3,6 +3,7 @@
 /// <summary>
 /// 动画类基类，用来进行动画播放
 /// </summary>
+[RequireComponent(typeof(Animator))]
 public class AnimateManage : MonoBehaviour
 {
     /// <summary>  /// 动画控制类,用来切换主角动画  /// </summary>
@@ -41,6 +42,14 @@ public class AnimateManage : MonoBehaviour
                 animator.SetBool("Move", false);
                 //animator.SetBool("RotateLeft", false);
                 //animator.SetBool("RotateRight", true);
+                return;
+            case AnimateType.Attack:
+                animator.SetBool("Move", false);
+                animator.Play("攻击");
+                return;
+            case AnimateType.Die:
+                animator.SetBool("Move", false);
+                animator.Play("死亡");
                 return;
         }
     }
