@@ -219,6 +219,8 @@ namespace DefferedRender
                 RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
             );
             gBuffers[gBufferIds.Length - 1] = gBufferIds[gBufferIds.Length - 1];
+            //清除上一帧的数据
+            buffer.ClearRenderTarget(true, true, Color.clear);
 
             //设置渲染目标，传递所有的渲染目标
             buffer.SetRenderTarget(
@@ -398,6 +400,8 @@ namespace DefferedRender
             {
                 buffer.ReleaseTemporaryRT(gBufferIds[i]);
             }
+
+
 
             lighting.Cleanup();		//灯光数据清除
         }

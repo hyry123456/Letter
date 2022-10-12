@@ -22,7 +22,7 @@ Shader "Unlit/CameraRenderer"
 		Pass {
 			Name "Copy Depth"
 
-			ColorMask 0
+			// ColorMask 0
 			ZWrite On
 			
 			HLSLPROGRAM

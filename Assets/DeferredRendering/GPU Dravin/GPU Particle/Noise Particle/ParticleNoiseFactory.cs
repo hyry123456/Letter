@@ -327,7 +327,7 @@ namespace DefferedRender
             particleNodes[index].smoothRange = drawData.sizeRange;
             particleNodes[index].uvCount = new Vector2Int(uvCounts[drawData.textureIndex].rowCount,
                 uvCounts[drawData.textureIndex].columnCount);
-            particleNodes[index].drawData = new Vector2Int(drawData.colorIndex, drawData.sizeIndex);
+            particleNodes[index].drawData = new Vector2Int((int)drawData.colorIndex, (int)drawData.sizeIndex);
             particleNodes[index].outEnum.x = drawData.followSpeed ? 1 : 0;
             particleNodes[index].outEnum.y = (int)drawData.speedMode;
             groupsBuffer.SetData(particleNodes, index, index, 1);

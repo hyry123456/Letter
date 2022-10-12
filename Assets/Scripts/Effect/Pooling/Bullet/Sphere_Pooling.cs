@@ -35,8 +35,8 @@ public class Sphere_Pooling : ObjectPoolBase
             octave = 8,
             intensity = 20,
             sizeRange = sizeRange,
-            colorIndex = (int)ColorIndexMode.HighlightToAlpha,
-            sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
+            colorIndex = ColorIndexMode.HighlightToAlpha,
+            sizeIndex = SizeCurveMode.Small_Hight_Small,
             textureIndex = 0,
             groupCount = 1,
         };
@@ -62,8 +62,8 @@ public class Sphere_Pooling : ObjectPoolBase
             octave = 4,
             intensity = 20,
             sizeRange = sizeRange,
-            colorIndex = (int)ColorIndexMode.HighlightToAlpha,
-            sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
+            colorIndex = ColorIndexMode.HighlightToAlpha,
+            sizeIndex = SizeCurveMode.Small_Hight_Small,
             textureIndex = 0,
             groupCount = 1,
         };

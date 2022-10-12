@@ -21,8 +21,8 @@ namespace ScriptAnimate
             octave = 2,
             intensity = 1,
             sizeRange = new Vector2(1, 2),
-            colorIndex = (int)DefferedRender.ColorIndexMode.HighlightAlphaToAlpha,
-            sizeIndex = (int)DefferedRender.SizeCurveMode.SmallToBig_Subken,
+            colorIndex = DefferedRender.ColorIndexMode.HighlightAlphaToAlpha,
+            sizeIndex = DefferedRender.SizeCurveMode.SmallToBig_Subken,
             textureIndex = 1,
             groupCount = 1,
         };
@@ -82,7 +82,7 @@ namespace ScriptAnimate
                 drawData.beginSpeed = Vector3.up;
                 drawData.groupCount = 1; drawData.textureIndex = 1;
                 drawData.lifeTime = 6; drawData.showTime = 5;
-                drawData.colorIndex = (int)DefferedRender.ColorIndexMode.HighlightRedToBlue;
+                drawData.colorIndex = DefferedRender.ColorIndexMode.HighlightRedToBlue;
                 nowRadio = 0;
                 Common.SustainCoroutine.Instance.AddCoroutine(DeclineFiresSphere);
                 return true;

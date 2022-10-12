@@ -227,10 +227,8 @@ float4 TransferFrag(FragInput i) : SV_Target0
         color.rgb += lerp(water.rgb, reflect.rgb, water.a);
     #endif
 
-    float depthDelta = fragment.bufferDepth - fragment.depth;
-    color = lerp(_NearColor, color, saturate( (depthDelta - _NearDistance) / _NearRange ) );
-    // return saturate( (depthDelta - _NearDistance) / _NearRange );
-    // return float4(color * _NearColor, 1);
+    // float depthDelta = fragment.bufferDepth - fragment.depth;
+    // color = lerp(_NearColor * color, color, saturate( (depthDelta - _NearDistance) / _NearRange ) );
 
     return float4(color.rgb, 1);
 }

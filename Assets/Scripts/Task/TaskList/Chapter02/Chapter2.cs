@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Task
 {
     /// <summary>
-    /// µÚÈıÕÂ£¬»ñµÃÇ°ÍùÏÂÒ»¸ö³¡¾°µÄ»ú»á£¬Ò²¾ÍÊÇÖ»ÓĞÒ»¸ö¼¼ÄÜ
+    /// ç¬¬ä¸‰ç« ï¼Œè·å¾—å‰å¾€ä¸‹ä¸€ä¸ªåœºæ™¯çš„æœºä¼šï¼Œä¹Ÿå°±æ˜¯åªæœ‰ä¸€ä¸ªæŠ€èƒ½
     /// </summary>
     public class Chapter2 : AsynChapterBase
     {
 
         public Chapter2()
         {
-            chapterName = "ÃÎÓëÏÖÊµ£¬ÓÖÓĞºÎ²î";
-            chapterTitle = "ÉñÃØ¼ÀÌ³£¬ÃÕÖ®ĞÅ¼ş£¬µ½µ×ÓĞÊ²Ã´¹ØÁª";
+            chapterName = "æ¢¦ä¸ç°å®ï¼Œåˆæœ‰ä½•å·®";
+            chapterTitle = "ç¥ç§˜ç¥­å›ï¼Œè°œä¹‹ä¿¡ä»¶ï¼Œåˆ°åº•æœ‰ä»€ä¹ˆå…³è”";
             taskPartCount = 1;
             chapterID = 2;
 
@@ -29,11 +29,12 @@ namespace Task
 
         public override void CompleteChapter()
         {
-            Debug.Log("µÚÈıÕÂ½áÊø");
+            Debug.Log("ç¬¬ä¸‰ç« ç»“æŸ");
         }
 
         public override void ExitChapter()
         {
+            AsynTaskControl.Instance.AddChapter(3);
             return;
         }
     }

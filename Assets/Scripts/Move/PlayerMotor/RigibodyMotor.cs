@@ -104,8 +104,8 @@ namespace Motor
                 octave = 8,
                 intensity = 10,
                 sizeRange = Vector2.up * 0.5f,
-                colorIndex = (int)ColorIndexMode.HighlightToAlpha,
-                sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
+                colorIndex = ColorIndexMode.HighlightToAlpha,
+                sizeIndex = SizeCurveMode.Small_Hight_Small,
                 textureIndex = 0,
                 groupCount = 100,
             };

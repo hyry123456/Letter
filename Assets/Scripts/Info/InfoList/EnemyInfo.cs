@@ -32,8 +32,8 @@ namespace Info
                 octave = 4,
                 intensity = 20,
                 sizeRange = sizeRange,
-                colorIndex = (int)ColorIndexMode.AlphaToAlpha,
-                sizeIndex = (int)SizeCurveMode.SmallToBig_Subken,
+                colorIndex = ColorIndexMode.AlphaToAlpha,
+                sizeIndex = SizeCurveMode.SmallToBig_Subken,
                 textureIndex = 1,
                 groupCount = 10,
             };

@@ -28,8 +28,8 @@ namespace Skill
                 octave = 4,
                 intensity = 1,
                 sizeRange = new Vector2(0.2f, 0.4f),
-                colorIndex = (int)DefferedRender.ColorIndexMode.HighlightToAlpha,
-                sizeIndex = (int)DefferedRender.SizeCurveMode.Small_Hight_Small,
+                colorIndex = DefferedRender.ColorIndexMode.HighlightToAlpha,
+                sizeIndex = DefferedRender.SizeCurveMode.Small_Hight_Small,
                 textureIndex = 0,
                 groupCount = 5,
             };

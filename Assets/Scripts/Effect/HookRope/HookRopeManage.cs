@@ -83,11 +83,11 @@ public class HookRopeManage : GPUDravinBase
         Transform camTran = camera.transform;
         Vector4[] planes = GetFrustumPlane(camera);
         int minIndex = -1;
-        for(int i=0; i<poolingList.size; i++)
+        for(int i=0; i<poolingList.Count; i++)
         {
             for(int j=0; j < 6; j++)
             {
-                Vector3 oriPos = poolingList.list[i].transform.position;
+                Vector3 oriPos = poolingList.GetValue(i).transform.position;
                 //返回false，也就是在里面就退出
                 if (IsOutsideThePlane(planes[j], oriPos +
                     camTran.right * particleSize + camTran.up * -particleSize)
@@ -105,7 +105,7 @@ public class HookRopeManage : GPUDravinBase
                     if (newDis > maxHookDistance * maxHookDistance) continue;
                     if (minIndex == -1)
                         minIndex = i;
-                    else if(newDis < (poolingList.list[minIndex].transform.position
+                    else if(newDis < (poolingList.GetValue(minIndex).transform.position
                         - camera.transform.position).sqrMagnitude)
                     {
                         minIndex = i;
@@ -115,7 +115,7 @@ public class HookRopeManage : GPUDravinBase
         }
         if(minIndex != -1)
         {
-            target = poolingList.list[minIndex];
+            target = poolingList.GetValue(minIndex);
             return;
         }
         target = null;

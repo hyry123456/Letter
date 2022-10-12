@@ -21,8 +21,8 @@ public class WeaponParticle : MonoBehaviour
             octave = 4,
             intensity = 1,
             sizeRange = Vector2.up * 0.3f,
-            colorIndex = (int)DefferedRender.ColorIndexMode.HighlightToAlpha,
-            sizeIndex = (int)DefferedRender.SizeCurveMode.Small_Hight_Small,
+            colorIndex = DefferedRender.ColorIndexMode.HighlightToAlpha,
+            sizeIndex = DefferedRender.SizeCurveMode.Small_Hight_Small,
             textureIndex = 0,
             groupCount = 1,
         };

@@ -14,6 +14,7 @@ namespace Control
         public float dieY = -100;
         /// <summary>     /// 判断是否启动控制      /// </summary>
         bool useControl = true;
+        public bool UseControl => useControl;
         /// <summary>        /// 启动角色控制        /// </summary>
         public void BeginControl()
         {

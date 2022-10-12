@@ -45,6 +45,7 @@ namespace Task
 
         public override void ExitChapter()
         {
+            AsynTaskControl.Instance.AddChapter(2);
             return;
         }
     }

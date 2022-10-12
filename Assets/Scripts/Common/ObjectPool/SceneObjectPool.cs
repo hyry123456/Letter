@@ -83,7 +83,7 @@ namespace Common
                 list = new PoolingList<ObjectPoolBase>();
                 objectPools.Add(name, list);
             }
-            if (list.size == 0)     //池中为空，创建一个
+            if (list.Count == 0)     //池中为空，创建一个
             {
                 //创建一个新对象，作为返回值
                 GameObject gameObject = GameObject.Instantiate(origin);
@@ -100,7 +100,7 @@ namespace Common
                 return poolBase;
             }
             //从池中取出一个对象
-            ObjectPoolBase objectPool = list.list[0];
+            ObjectPoolBase objectPool = list.GetValue(0);
             list.Remove(0);         //从池中移除该对象
             return objectPool;
         }

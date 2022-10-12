@@ -10,11 +10,11 @@ namespace Task
     public enum TaskMode
     {
         /// <summary>   /// 任务未开始   /// </summary>
-        NotStart = 1,
+        NotStart = 0,
         /// <summary>   /// 任务开始中   /// </summary>
-        Start = 2,
+        Start = 1,
         /// <summary>   /// 任务完成     /// </summary>
-        Finish = 4,
+        Finish = 2,
     }
 
     struct TaskInfo
@@ -128,7 +128,7 @@ namespace Task
                 //生成所有章节的映射关系，章节编号：章节信息
                 taskMap.Add(chapterTask.chapterID, new TaskInfo {
                     Name = allTasks[i].Trim(), 
-                    state = 0,
+                    state = TaskMode.NotStart,
                     //判断该任务是否要在该场景运行
                     isInRuntimeScene = (nowSceneName == chapterTask.runtimeScene), 
                 });
@@ -188,11 +188,11 @@ namespace Task
                         if (int.TryParse(comTasks[i], out value))
                         {
                             TaskInfo task = taskMap[value];
-                            task.state ^= TaskMode.Finish;     //表示完成
+                            task.state = TaskMode.Finish;     //表示完成
+                            taskMap[value] = task;
 
                             //非运行在本场景，标识为完成后跳过
                             if (!task.isInRuntimeScene) continue;
-                            taskMap[value] = task;
 
                             Chapter chapterTask = GetChapter(chapterPrefix + task.Name);
                             chapterTask.CompleteChapter();      //调用任务完成的方法
@@ -209,7 +209,7 @@ namespace Task
             foreach(TaskInfo info in taskMap.Values)
             {
                 //未开始的任务就调用检查方法看看是否要开始该任务
-                if (info.state != 0 || !info.isInRuntimeScene)
+                if (info.state != TaskMode.NotStart || !info.isInRuntimeScene)
                     continue;
                 Chapter chapterTask = GetChapter(chapterPrefix + info.Name);
                 chapterTask.CheckAndLoadChapter();
@@ -223,7 +223,7 @@ namespace Task
         /// <param name="taskId">任务的编号，注意该编号值要唯一</param>
         public bool CheckChapterIsComplete(int taskId)
         {
-            return (taskMap[taskId].state & TaskMode.Finish) != 0;
+            return taskMap[taskId].state == TaskMode.Finish;
         }
 
         /// <summary>        /// 任务完成的通用行为，将该任务退出，然后保存文件        /// </summary>

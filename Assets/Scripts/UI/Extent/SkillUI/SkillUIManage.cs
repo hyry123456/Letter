@@ -1,19 +1,23 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
 {
     /// <summary>
-    /// ½ÇÉ«µÄ¼¼ÄÜUIÏÔÊ¾µÄ¹ÜÀíÀà£¬ÓÃÀ´ÏÔÊ¾µ±Ç°µÄ¼¼ÄÜ
+    /// è§’è‰²çš„æŠ€èƒ½UIæ˜¾ç¤ºçš„ç®¡ç†ç±»ï¼Œç”¨æ¥æ˜¾ç¤ºå½“å‰çš„æŠ€èƒ½
     /// </summary>
     public class SkillUIManage : MonoBehaviour
     {
-        /// <summary>/// Ã¿Ò»¸ö¼¼ÄÜÍ¼±êÏÔÊ¾ÓÃµÄÔ¤ÖÆ¼ş/// </summary>
+        /// <summary>/// æ¯ä¸€ä¸ªæŠ€èƒ½å›¾æ ‡æ˜¾ç¤ºç”¨çš„é¢„åˆ¶ä»¶/// </summary>
         GameObject node;
         Control.PlayerSkillControl skillControl;
         TextureDictionaries textDiction;
+        Common.PoolingList<Image> images;
 
-        int nowIndex;
+        ///// <summary>  
+        ///// æ˜¯å¦åœ¨äº¤äº’ä¸­ï¼Œç”¨æ¥åœ¨äº¤äº’ä¸­æ—¶åˆ¤æ–­æ˜¯å¦éœ€è¦å…³é—­æŠ€èƒ½æç¤º   
+        ///// </summary>
+        //bool isNoneControl;
 
         void Start()
         {
@@ -21,67 +25,83 @@ namespace UI
             textDiction = Resources.Load<TextureDictionaries>("UI/TextureDictionaries");
             textDiction.LoadTextureDictionarie();
             skillControl = Control.PlayerControl.Instance.GetComponent<Control.PlayerSkillControl>();
-            nowIndex = 0;
+            images = new Common.PoolingList<Image>();
         }
 
         private void FixedUpdate()
         {
-            int skillCount = skillControl.SkillCount;
-            if (skillCount <= 0) return;
-            int nowSkillCount = transform.childCount;
-            if (skillCount == 0)
+            Control.PlayerControl player = Control.PlayerControl.Instance;
+            if (player == null)
+                return;
+            if (!player.UseControl)
             {
-                if(nowSkillCount <= 0) return;
-                else        //¹Ø±ÕÕıÔÚÏÔÊ¾ÖĞµÄÎïÌå
+                if(images.Count > 0)
                 {
-                    for(int i=0; i<transform.childCount; i++)
-                        transform.GetChild(i).gameObject.SetActive(false);
-                    nowSkillCount = 0;
-                    return;
-                }
-            }
-            if(nowSkillCount != skillCount)     //ÊıÁ¿·¢Éú¸Ä±ä
-            {
-                int i;
-                if (nowSkillCount < skillCount) //ÊıÁ¿²»¹»¾Í²¹³ä
-                {
-                    for(i = nowSkillCount; i<skillCount; i++)
+                    while(images.Count > 0)
                     {
-                        GameObject newNode = GameObject.Instantiate(node);
-                        newNode.transform.parent = transform;
-                        nowSkillCount++;
+                        RemoveOne();
                     }
                 }
-                //ÇĞ»»Í¼Æ¬ÒÔ¼°ÌùÍ¼
-                i = 0;
-                for (; i< nowSkillCount && i < skillCount; i++)
+                return;
+            }
+
+            int skillCount = skillControl.SkillCount;
+            if(skillCount > images.Count)       //æ·»åŠ 
+            {
+                while(images.Count < skillCount)
                 {
-                    Image image = transform.GetChild(i).GetComponentInChildren<Image>();
-                    image.gameObject.SetActive(true);
-                    Color color = image.color; color.a = 0.3f;
-                    image.color = color;
-                    image.sprite = textDiction.GetTexture(skillControl.SkillManage.Skills[i].skillName);
+                    GetOne();
                 }
-                nowIndex = 0;  //Ä¬ÈÏ³õÊ¼»¯0
-                Image tempIma = transform.GetChild(0).GetComponentInChildren<Image>();
-                Color tempCol = tempIma.color; tempCol.a = 1f;
-                tempIma.color = tempCol;
-                for (; i<nowSkillCount; i++)
+            }
+            else            //ç§»é™¤
+            {
+                while(images.Count > skillCount)
                 {
-                    transform.GetChild(i).gameObject.SetActive(false);
+                    RemoveOne();
                 }
             }
 
-            if(nowIndex != skillControl.nowSkill && skillControl.nowSkill >= 0)
+            int nowChose = skillControl.nowSkill;
+            //åœ¨è¿™é‡Œæ‰æ£€æŸ¥æ˜¯å¦ä¸ºç©ºæ˜¯ä¿è¯æŠ€èƒ½éƒ½è¢«ç§»é™¤æ—¶èƒ½å¤ŸæŠŠæ˜¾ç¤ºçš„éƒ½å…³é—­äº†
+            if (skillCount == 0 || nowChose < 0)
+                return;
+
+            string str = "";
+
+            if (images.GetValue(nowChose).color.a < 1)      //ä½†å‰é€‰ä¸­åˆ‡æ¢äº†
             {
-                Image image = transform.GetChild(nowIndex).GetComponentInChildren<Image>();
-                Color color = image.color; color.a = 0.3f;
+                Color color; Image image;
+                for (int i=0; i<images.Count; i++)
+                {
+                    image = images.GetValue(i);
+                    image.sprite = textDiction.GetTexture(skillControl.SkillManage.Skills[i].skillName);
+                    str += skillControl.SkillManage.Skills[i].skillName + " ";
+                    color = image.color; color.a = 0.3f;
+                    image.color = color;
+                }
+                image = images.GetValue(nowChose);
+                color = image.color; color.a = 1f;
                 image.color = color;
-                image = transform.GetChild(skillControl.nowSkill).GetComponentInChildren<Image>();
-                color = image.color; color.a = 1;
-                image.color = color;
-                nowIndex = skillControl.nowSkill;
             }
+        }
+
+        void RemoveOne()
+        {
+            Image image = images.GetValue(0);
+            image.gameObject.SetActive(false);
+            Color color = image.color; color.a = 0.3f;
+            image.color = color;
+            images.Remove(0);
+        }
+
+        void GetOne()
+        {
+            GameObject newNode = GameObject.Instantiate(node);
+            newNode.transform.parent = transform; newNode.SetActive(true);
+            Image image = newNode.GetComponent<Image>();
+            Color color = image.color; color.a = 0.3f;
+            image.color = color;
+            images.Add(image);
         }
     }
 }

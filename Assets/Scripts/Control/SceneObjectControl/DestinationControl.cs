@@ -43,8 +43,8 @@ public class DestinationControl : MonoBehaviour
             octave = 1,
             intensity = 0.1f,
             sizeRange = Vector2.up * 0.1f,
-            colorIndex = (int)ColorIndexMode.HighlightToAlpha,
-            sizeIndex = (int)SizeCurveMode.Small_Hight_Small,
+            colorIndex = ColorIndexMode.HighlightToAlpha,
+            sizeIndex = SizeCurveMode.Small_Hight_Small,
             textureIndex = 0,
             groupCount = 5,
         };

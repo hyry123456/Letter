@@ -68,8 +68,8 @@ namespace ScriptAnimate
             octave = 2,
             intensity = 1,
             sizeRange = new Vector2(0.1f, 0.4f),
-            colorIndex = (int)DefferedRender.ColorIndexMode.HighlightAlphaToAlpha,
-            sizeIndex = (int)DefferedRender.SizeCurveMode.SmallToBig_Subken,
+            colorIndex = DefferedRender.ColorIndexMode.HighlightAlphaToAlpha,
+            sizeIndex = DefferedRender.SizeCurveMode.SmallToBig_Subken,
             textureIndex = 1,
             groupCount = 1,
         };

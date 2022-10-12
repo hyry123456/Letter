@@ -1,4 +1,4 @@
-
+ï»¿
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +7,9 @@ namespace Skill
     public class SkillManage : MonoBehaviour
     {
         [SerializeField]
-        /// <summary>        /// ¼¼ÄÜÊÍ·ÅÕßµÄ¼¼ÄÜÁĞ±í        /// </summary>
+        /// <summary>        /// æŠ€èƒ½é‡Šæ”¾è€…çš„æŠ€èƒ½åˆ—è¡¨        /// </summary>
         protected List<SkillBase> skills;
-        /// <summary>        /// ¹«¿ª¼¼ÄÜÊÍ·ÅÕßµÄËùÓĞ¼¼ÄÜ£¬µ«ÊÇ²»ÔÊĞíĞŞ¸Ä        /// </summary>
+        /// <summary>        /// å…¬å¼€æŠ€èƒ½é‡Šæ”¾è€…çš„æ‰€æœ‰æŠ€èƒ½ï¼Œä½†æ˜¯ä¸å…è®¸ä¿®æ”¹        /// </summary>
         public List<SkillBase> Skills
         {
             get
@@ -19,7 +19,7 @@ namespace Skill
         }
 
         float endTime = 0;
-        /// <summary>   /// ÓÃÀ´ÅĞ¶Ï¼¼ÄÜÊÇ·ñÊÍ·ÅÖĞ  /// </summary>
+        /// <summary>   /// ç”¨æ¥åˆ¤æ–­æŠ€èƒ½æ˜¯å¦é‡Šæ”¾ä¸­  /// </summary>
         public bool IsReleasing
         {
             get
@@ -31,7 +31,7 @@ namespace Skill
         }
 
         private Info.CharacterInfo characterInfo;
-        /// <summary>        /// ¼¼ÄÜÊÍ·ÅÕßµÄ¼¼ÄÜĞÅÏ¢»ùÀà        /// </summary>
+        /// <summary>        /// æŠ€èƒ½é‡Šæ”¾è€…çš„æŠ€èƒ½ä¿¡æ¯åŸºç±»        /// </summary>
         public Info.CharacterInfo CharacterInfo
         {
             get
@@ -59,9 +59,9 @@ namespace Skill
             }
         }
 
-        /// <summary>   /// ¼ì²é²¢ÊÍ·Å¸Ã¼¼ÄÜ    /// <summary>   
-        /// <param name="skill">¼¼ÄÜ¶ÔÏó</param>
-        /// <returns>ÊÇ·ñ¿ÉÒÔÊÍ·Å</returns>
+        /// <summary>   /// æ£€æŸ¥å¹¶é‡Šæ”¾è¯¥æŠ€èƒ½    /// <summary>   
+        /// <param name="skill">æŠ€èƒ½å¯¹è±¡</param>
+        /// <returns>æ˜¯å¦å¯ä»¥é‡Šæ”¾</returns>
         public bool CheckAndRelase(SkillBase skill)
         {
             if (skill == null) return false;
@@ -75,9 +75,9 @@ namespace Skill
             return false;
         }
 
-        /// <summary>       /// »ñµÃ¼¼ÄÜÁĞ±íÖĞµÄÖ¸¶¨¼¼ÄÜ        /// </summary>
-        /// <param name="index">¼¼ÄÜ±àºÅ</param>
-        /// <returns>¼¼ÄÜ¶ÔÏó</returns>
+        /// <summary>       /// è·å¾—æŠ€èƒ½åˆ—è¡¨ä¸­çš„æŒ‡å®šæŠ€èƒ½        /// </summary>
+        /// <param name="index">æŠ€èƒ½ç¼–å·</param>
+        /// <returns>æŠ€èƒ½å¯¹è±¡</returns>
         public SkillBase GetSkillByIndex(int index)
         {
             if(index > 0 && skills != null && skills.Count > index)
@@ -88,8 +88,8 @@ namespace Skill
             return null;
         }
 
-        /// <summary>        /// »ñµÃËùÓĞ¿ÉÒÔÊ¹ÓÃµÄ¼¼ÄÜ        /// </summary>
-        /// <returns>¼¼ÄÜÁĞ±í</returns>
+        /// <summary>        /// è·å¾—æ‰€æœ‰å¯ä»¥ä½¿ç”¨çš„æŠ€èƒ½        /// </summary>
+        /// <returns>æŠ€èƒ½åˆ—è¡¨</returns>
         public List<SkillBase> GetCanUseSkill()
         {
             if (skills == null) return null;
@@ -105,11 +105,11 @@ namespace Skill
         }
 
         /// <summary>
-        /// »ñµÃ¿ÉÒÔÊ¹ÓÃµÄ¼¼ÄÜ£¬ÇÒ¼¼ÄÜÀàĞÍÓë´«ÈëÀàĞÍ¶ÔÓ¦£¬ĞèÒª×¢ÒâµÄÊÇÖ§³Ö¶àÆ¥Åä£¬
-        /// Ò²¾ÍÊÇÍ¨¹ı°´Î»Óë¿ÉÒÔÆ¥Åä¶àÖÖ¼¼ÄÜÀàĞÍ
+        /// è·å¾—å¯ä»¥ä½¿ç”¨çš„æŠ€èƒ½ï¼Œä¸”æŠ€èƒ½ç±»å‹ä¸ä¼ å…¥ç±»å‹å¯¹åº”ï¼Œéœ€è¦æ³¨æ„çš„æ˜¯æ”¯æŒå¤šåŒ¹é…ï¼Œ
+        /// ä¹Ÿå°±æ˜¯é€šè¿‡æŒ‰ä½ä¸å¯ä»¥åŒ¹é…å¤šç§æŠ€èƒ½ç±»å‹
         /// </summary>
-        /// <param name="type">¼¼ÄÜÀàĞÍ</param>
-        /// <returns>¿ÉÒÔÊ¹ÓÃµÄ¼¼ÄÜÁĞ±í£¬×¢ÒâÎª¿ÕµÄÇé¿ö</returns>
+        /// <param name="type">æŠ€èƒ½ç±»å‹</param>
+        /// <returns>å¯ä»¥ä½¿ç”¨çš„æŠ€èƒ½åˆ—è¡¨ï¼Œæ³¨æ„ä¸ºç©ºçš„æƒ…å†µ</returns>
         public List<SkillBase> GetCanUseSkillByType(SkillType type)
         {
             if (skills == null) return null;
@@ -124,7 +124,7 @@ namespace Skill
             return canUse;
         }
 
-        /// <summary> /// Ìí¼Ó¼¼ÄÜ£¬¸ù¾İÃû³Æ½øĞĞ¼¼ÄÜÌŞ³ı£¬±ÜÃâÖØ¸´Ìí¼Ó   /// </summary>
+        /// <summary> /// æ·»åŠ æŠ€èƒ½ï¼Œæ ¹æ®åç§°è¿›è¡ŒæŠ€èƒ½å‰”é™¤ï¼Œé¿å…é‡å¤æ·»åŠ    /// </summary>
         public void AddSkill(SkillBase skill)
         {
             if(skills == null)

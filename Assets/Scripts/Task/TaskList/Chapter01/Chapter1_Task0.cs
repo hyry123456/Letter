@@ -89,6 +89,7 @@ namespace Task
                         UI.SmallDialog.Instance.ShowSmallDialog(chapter.GetDiglogText(1),
                             () =>
                             {
+                                if (npcs == null) return;
                                 interacte = npcs[0].gameObject.AddComponent<InteracteDelegate>();
                                 interacte.interDelegate = () =>
                                 {

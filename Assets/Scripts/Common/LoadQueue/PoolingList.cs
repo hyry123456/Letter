@@ -5,8 +5,16 @@ namespace Common
     /// </summary>
     public class PoolingList<T>
     {
-        public T[] list = new T[1];
-        public int size = 0;
+        private T[] list = new T[1];
+        private int size = 0;
+        public int Count => size;
+        /// <summary>
+        /// 获取数值中的第index个元素
+        /// </summary>
+        public T GetValue(int index)
+        {
+            return list[index];
+        }
 
         public void Add(T node)
         {

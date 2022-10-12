@@ -164,9 +164,9 @@ namespace DefferedRender
         /// <summary>        /// 粒子的大小范围，size曲线的结果会映射到该数据中        /// </summary>
         public Vector2 sizeRange;
         /// <summary>        /// 颜色编号，用来确定粒子的颜色以及透明度        /// </summary>
-        public int colorIndex;
+        public ColorIndexMode colorIndex;
         /// <summary>        /// 选择的大小曲线编号        /// </summary>
-        public int sizeIndex;
+        public SizeCurveMode sizeIndex;
         /// <summary>        /// 选择的图片编号        /// </summary>
         public int textureIndex;
         /// <summary>        /// 粒子组数量，也就是要生成的粒子数量，一组有64个粒子        /// </summary>
