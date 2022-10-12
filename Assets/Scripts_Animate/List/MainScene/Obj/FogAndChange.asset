@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fXSetting: {fileID: 11400000, guid: cd4dd73ad2664444885dfbd39a692807, type: 2}
   time: 5
-  TargetSceneName: 
+  TargetSceneName: AmongRemain
