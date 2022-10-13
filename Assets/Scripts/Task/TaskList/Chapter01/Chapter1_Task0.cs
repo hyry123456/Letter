@@ -19,7 +19,6 @@ namespace Task
 
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)
         {
-            Debug.Log("1");
             this.chapter = chapter;
             Common.SustainCoroutine.Instance.AddCoroutine(CreateNPC);
         }
@@ -75,7 +74,6 @@ namespace Task
                     npcs.Add((Common.NPC_Pooling)
                         Common.SceneObjectPool.Instance.GetObject("NPC_Simple", npc, new Vector3(155, 0.5f, 153),
                         Quaternion.identity));
-                    Debug.Log(npcs.Count);
                     index++;
                     return false;
                 case 3:             //加载侍女1与2的对话

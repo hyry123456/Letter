@@ -1,19 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Package;
+锘縰sing Package;
 using Common;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI
 {
     /// <summary>
-    /// 显示单个Item用的池化类，用来显示图片以及点击事件
+    /// 鏄剧ず鍗曚釜Item鐢ㄧ殑姹犲寲绫伙紝鐢ㄦ潵鏄剧ず鍥剧墖浠ュ強鐐瑰嚮浜嬩欢
     /// </summary>
-    public class UIPackageItem : ObjectPoolBase
+    public class UIPackageItem : ObjectPoolBase, IPointerClickHandler
     {
+        /// <summary>  /// 璇ョ墿浣撶殑鍥剧墖缁勪欢    /// </summary>
+        Image image;
+        //鍚嶇О浠ュ強鎻忚堪
+        string itemName, itemDescript;
+        UIPackage uiPackage;
+
+        public string ItemName => itemName;
+        public string ItemDescript => itemDescript;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            uiPackage.ChangeItemInfo(this);
+        }
+
+        public void SetImage(PackageItemBase packageItem, UIPackage uiPackage)
+        {
+            this.uiPackage = uiPackage;
+            image.sprite = TextureDictionaries.Instance.GetTexture(packageItem.ImageName);
+            itemName = packageItem.ItemName;
+            itemDescript = packageItem.ItemDescription;
+        }
+
+        //鑾峰彇鍥剧墖
         protected override void OnEnable()
         {
-
+            if(image == null)
+                image = GetComponent<Image>();
         }
+
     }
 }

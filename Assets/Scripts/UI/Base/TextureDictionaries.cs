@@ -7,12 +7,27 @@ namespace UI
     /// <summary> /// ÌùÍ¼×Öµä£¬¸ù¾ÝÃû³Æ²éÕÒÍ¼Æ¬  /// </summary>
     public class TextureDictionaries : ScriptableObject
     {
+        private static TextureDictionaries instance;
+        public static TextureDictionaries Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance =
+                        Resources.Load<TextureDictionaries>("UI/TextureDictionaries");
+                    instance.LoadTextureDictionarie();
+                }
+                return instance;
+            }
+        }
+
         [SerializeField]
         Sprite[] textures;
 
         Dictionary<string, Sprite> texturesDictionary;
 
-        public void LoadTextureDictionarie()
+        private void LoadTextureDictionarie()
         {
             texturesDictionary = new Dictionary<string, Sprite>(textures.Length);
             for(int i=0; i<textures.Length; i++)

@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowInteractionInfo: {fileID: 0}
-  isInteracting: 0
   interacteCheckDistance: 3
 --- !u!114 &7675198840180452842
 MonoBehaviour:

@@ -22,6 +22,7 @@ namespace Task
         {
             //单单显示下对话，不需要什么额外操作
             UI.BigDialog.Instance.ShowBigdialog(chapter.GetDiglogText(0), null);
+            Package.PackageSimple.Instance.AddItem("Letter");
             return true;
         }
 

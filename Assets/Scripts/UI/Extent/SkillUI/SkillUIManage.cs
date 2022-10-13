@@ -11,7 +11,6 @@ namespace UI
         /// <summary>/// 每一个技能图标显示用的预制件/// </summary>
         GameObject node;
         Control.PlayerSkillControl skillControl;
-        TextureDictionaries textDiction;
         Common.PoolingList<Image> images;
 
         ///// <summary>  
@@ -22,8 +21,6 @@ namespace UI
         void Start()
         {
             node = Resources.Load<GameObject>("UI/Node");
-            textDiction = Resources.Load<TextureDictionaries>("UI/TextureDictionaries");
-            textDiction.LoadTextureDictionarie();
             skillControl = Control.PlayerControl.Instance.GetComponent<Control.PlayerSkillControl>();
             images = new Common.PoolingList<Image>();
         }
@@ -74,7 +71,7 @@ namespace UI
                 for (int i=0; i<images.Count; i++)
                 {
                     image = images.GetValue(i);
-                    image.sprite = textDiction.GetTexture(skillControl.SkillManage.Skills[i].skillName);
+                    image.sprite = TextureDictionaries.Instance.GetTexture(skillControl.SkillManage.Skills[i].skillName);
                     str += skillControl.SkillManage.Skills[i].skillName + " ";
                     color = image.color; color.a = 0.3f;
                     image.color = color;

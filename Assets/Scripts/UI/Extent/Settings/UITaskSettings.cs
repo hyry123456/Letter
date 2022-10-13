@@ -54,8 +54,8 @@ namespace UI
             {
                 UITaskButton button = (UITaskButton)SceneObjectPool.Instance.GetObject(
                     "TaskButton", origin, Vector3.zero, Quaternion.identity);
-                Debug.Log(i);
                 button.transform.parent = context;
+                button.transform.localScale = Vector3.one;
                 button.SetChapterIndex(i, this);
                 buttons.Add(button);
             }

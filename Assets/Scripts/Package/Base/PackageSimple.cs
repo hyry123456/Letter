@@ -7,24 +7,29 @@ namespace Package
     /// <summary>
     /// 一个临时的背包类，用来显示获取的物体
     /// </summary>
-    public class PackageSimple : MonoBehaviour
+    public class PackageSimple
     {
-        private PackageSimple instance;
-        public PackageSimple Instance => instance;
-
-        private List<PackageItemBase> allItems;
-
-        private void Awake()
+        private static PackageSimple instance;
+        public static PackageSimple Instance
         {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new PackageSimple();
+                }
+                return instance;
+            }
+        }
+
+        private PackageSimple() {
             instance = this;
             allItems = new List<PackageItemBase>();
         }
 
-        private void OnDestory()
-        {
-            instance = null;
-            allItems.Clear();
-        }
+        private List<PackageItemBase> allItems;
+
+        public List<PackageItemBase> Items => allItems;
 
         /// <summary>   /// 添加一个物体到背包中     /// </summary>
         public void AddItem(PackageItemBase item)

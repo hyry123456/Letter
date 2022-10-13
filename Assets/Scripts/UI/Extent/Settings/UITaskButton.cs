@@ -1,4 +1,4 @@
-using Task;
+ï»¿using Task;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 namespace UI
 {
     /// <summary>
-    /// UIµÄµ¥¸öÕÂ½ÚµÄÏÔÊ¾°´¼ü£¬µ±µã»÷¸Ã°´¼üºó»á½øĞĞ
+    /// UIçš„å•ä¸ªç« èŠ‚çš„æ˜¾ç¤ºæŒ‰é”®ï¼Œå½“ç‚¹å‡»è¯¥æŒ‰é”®åä¼šè¿›è¡Œ
     /// </summary>
     public class UITaskButton : Common.ObjectPoolBase, IPointerClickHandler
     {
@@ -19,7 +19,7 @@ namespace UI
         public string PartDescription => partDescription;
 
         /// <summary>
-        /// µã»÷ÊÂ¼ş£¬µ±µã»÷ºóÇĞ»»ÈÎÎñ
+        /// ç‚¹å‡»äº‹ä»¶ï¼Œå½“ç‚¹å‡»ååˆ‡æ¢ä»»åŠ¡
         /// </summary>
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -30,7 +30,7 @@ namespace UI
         {
         }
 
-        /// <summary>   /// È·¶¨¸Ä°´Å¥¶ÔÓ¦µÄÕÂ½Ú     /// </summary>
+        /// <summary>   /// ç¡®å®šæ”¹æŒ‰é’®å¯¹åº”çš„ç« èŠ‚     /// </summary>
         /// <param name="index"></param>
         public void SetChapterIndex(int index, UITaskSettings settings)
         {

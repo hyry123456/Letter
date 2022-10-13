@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -83,7 +81,7 @@ namespace UI
             if (index == nowIndex) return;
             controls[nowIndex].SetActive(false);
             Image image = buttons[nowIndex].gameObject.GetComponent<Image>();
-            Color color = image.color; color.a = 1f; image.color = color;
+            Color color = image.color; color.a = 0.5f; image.color = color;
 
             controls[index].SetActive(true);
             image = buttons[index].gameObject.GetComponent<Image>();

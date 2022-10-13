@@ -17,6 +17,8 @@ namespace Package
         public string ItemName => itemName;
         public string ItemDescription => itemDescription;
 
+        public string ImageName => imageName;
+
         //public PackageItemBase()
         //{
         //    itemName = "Name";

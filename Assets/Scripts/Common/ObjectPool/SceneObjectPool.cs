@@ -40,6 +40,7 @@ namespace Common
         private void OnDestroy()
         {
             instance = null;
+            if (objectPools == null) return;
             objectPools.Clear();
         }
 

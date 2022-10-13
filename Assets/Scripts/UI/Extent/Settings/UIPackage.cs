@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Package;
@@ -8,18 +8,65 @@ using UnityEngine.UI;
 namespace UI
 {
     /// <summary>
-    /// UIµÄ±³°üÏÔÊ¾»ùÀà£¬ÓÃÀ´ÏÔÊ¾ÓµÓĞµÄÎïÌå
+    /// UIçš„èƒŒåŒ…æ˜¾ç¤ºåŸºç±»ï¼Œç”¨æ¥æ˜¾ç¤ºæ‹¥æœ‰çš„ç‰©ä½“
     /// </summary>
     public class UIPackage : MonoBehaviour
     {
-        Text itemName,          //µ±Ç°ÏÔÊ¾µÄÎïÌåÃû³Æ
-            itemDescription;    //µ±Ç°ÏÔÊ¾µÄÎïÌåÃèÊö
+        [SerializeField]
+        Text itemName,          //å½“å‰æ˜¾ç¤ºçš„ç‰©ä½“åç§°
+            itemDescription;    //å½“å‰æ˜¾ç¤ºçš„ç‰©ä½“æè¿°
 
-        private PoolingList<UIPackageItem> items;
+        private PoolingList<UIPackageItem> uiItems = new PoolingList<UIPackageItem>();
+
+        public GameObject origin;
+        /// <summary>   /// åˆ›å»ºçš„æ‰€æœ‰ç‰©ä½“å­˜å‚¨çš„ä½ç½®   /// </summary>
+        public RectTransform context;
+        public int columnHeight = 35,   //æ¯ä¸€è¡Œçš„é«˜åº¦
+            perColumnSize = 5;          //æ¯ä¸€è¡Œçš„æ•°é‡
 
         private void OnEnable()
         {
-            //´´½¨ËùÓĞµÄitems
+            //åˆ›å»ºæ‰€æœ‰çš„items
+            SustainCoroutine.Instance.AddCoroutine(LaterLoadItem);
+        }
+
+        private void OnDisable()
+        {
+            while(uiItems.Count > 0)
+            {
+                uiItems.GetValue(0).CloseObject();
+                uiItems.Remove(0);
+            }
+        }
+
+        /// <summary>/// å»¶è¿ŸåŠ è½½å…¨éƒ¨çš„èƒŒåŒ…å†…å®¹ /// </summary>
+        bool LaterLoadItem()
+        {
+            if (!gameObject.activeSelf) return true;
+            List<PackageItemBase> items = PackageSimple.Instance.Items;
+            if (items == null || items.Count == 0) return true;
+
+            int column = items.Count / perColumnSize + 1;
+            //ç¼©æ”¾å¤§å°
+            context.sizeDelta = new Vector2(0, columnHeight * column);
+
+            for (int i=0; i<items.Count; i++)
+            {
+                UIPackageItem item = (UIPackageItem)SceneObjectPool.Instance.GetObject(
+                    "PackageItem", origin, Vector3.zero, Quaternion.identity);
+                item.SetImage(items[i], this);
+                item.transform.parent = context;
+                item.transform.localScale = Vector3.one;
+                uiItems.Add(item);
+            }
+            ChangeItemInfo(uiItems.GetValue(0));
+            return true;
+        }
+
+        public void ChangeItemInfo(UIPackageItem item)
+        {
+            itemName.text = item.ItemName;
+            itemDescription.text = item.ItemDescript;
         }
     }
 }

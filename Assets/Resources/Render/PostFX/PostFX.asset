@@ -15,7 +15,7 @@ MonoBehaviour:
   postFXShader: {fileID: 4800000, guid: 6c3a07466ffb3c7469bfd1e374913cbb, type: 3}
   colorLUTResolution: 32
   ssrSetting:
-    useSSR: 0
+    useSSR: 1
     rayMarchingSetp: 48
     marchSetpSize: 22
     maxMarchDistance: 500
@@ -53,10 +53,10 @@ MonoBehaviour:
     balance: 0
   fog:
     fogTex: {fileID: 0}
-    useFog: 0
+    useFog: 1
     fogMaxHeight: 200
     fogMinHeight: 0
-    fogMaxDepth: 1
+    fogMaxDepth: 0.1
     fogMinDepth: 0
     fogDepthFallOff: 3
     fogPosYFallOff: 3
