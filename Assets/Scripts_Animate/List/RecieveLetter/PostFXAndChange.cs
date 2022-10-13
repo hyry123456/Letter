@@ -29,9 +29,11 @@ namespace ScriptAnimate
             {
                 nowRadio = 0;
                 fXSetting.SetMaxDepthFog(Mathf.Lerp(0, begin, nowRadio));
+                fXSetting.SetColorFilter(Color.black);
                 return true;
             }
             fXSetting.SetMaxDepthFog(Mathf.Lerp(0, begin, nowRadio));
+            fXSetting.SetColorFilter(Color.Lerp(Color.black,  Color.white, nowRadio));
             return false;
         }
 
@@ -40,8 +42,10 @@ namespace ScriptAnimate
             if(nowRadio <= 0)
             {
                 fXSetting.SetMaxDepthFog(begin);
+                fXSetting.SetColorFilter(Color.white);
                 Debug.Log("ChangeScene " + TargetSceneName);
                 Control.SceneChangeControl.Instance.ChangeScene(TargetSceneName);
+
                 return true;
             }
             return false;

@@ -35,6 +35,19 @@ namespace Common
             coroutines[removeIndex] = coroutines[size - 1];
             size--;
         }
+
+        /// <summary>   /// 判断是否在协程栈中已经存在此物体     /// </summary>
+        /// <param name="find">判断的对象</param>
+        /// <returns>true是存在，false是不存在</returns>
+        public bool IsHave(T find)
+        {
+            for(int i=0; i<size; i++)
+            {
+                if (find.Equals(coroutines[i]))
+                    return true;
+            }
+            return false;
+        }
     }
 
 
@@ -76,7 +89,7 @@ namespace Common
             while (isRunning)
             {
                 if (sustainList.size == 0)
-                    yield return new WaitForSeconds(0.3f);
+                    yield return new WaitForSeconds(0.2f);
 
                 for (int i = sustainList.size - 1; i >= 0; i--)
                 {
@@ -98,6 +111,8 @@ namespace Common
         /// <param name="canWait">是否可以等待，false时会立刻执行</param>
         public void AddCoroutine(CoroutinesAction action, bool canWait = true)
         {
+            if (sustainList.IsHave(action))
+                return;
             sustainList.Add(action);
             if (canWait) return;
             StopAllCoroutines();

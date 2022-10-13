@@ -1,6 +1,5 @@
 
 
-using System;
 using UnityEngine;
 
 namespace Task
@@ -8,7 +7,7 @@ namespace Task
     public abstract class ChapterPart
     {
         public string partName;
-        public string partDescribe;
+        public string partDescription;
         /// <summary>/// 所属章节的赋值位置，太常用了，放在这里方便赋值/// </summary>
         protected Chapter chapter;
 

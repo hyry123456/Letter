@@ -85,6 +85,8 @@ namespace UI
             }
         }
 
+
+        //错误的写法，之后需要改
         void RemoveOne()
         {
             Image image = images.GetValue(0);

@@ -44,9 +44,7 @@ namespace Interaction
             playerControl = gameObject.GetComponent<Control.PlayerControl>();
         }
 
-        /// <summary>
-        /// 检查是否有可以交互的对象
-        /// </summary>
+        /// <summary> /// 检查是否有可以交互的对象  /// </summary>
         protected void FixedUpdate()
         {
             RaycastHit hit;
@@ -54,13 +52,19 @@ namespace Interaction
             if (Physics.Raycast(playerControl.transform.position, playerControl.GetLookatDir() * 3, out hit, interacteCheckDistance))
             {
                 InteractionBase hitInfo = hit.transform.GetComponent<InteractionBase>();
-                if (hitInfo != null)
+                if (hitInfo != null && !hit.collider.isTrigger)
                 {
                     nowInteractionInfo = hitInfo;
-                    return;
                 }
-                nowInteractionInfo = null;
+                else
+                    nowInteractionInfo = null;
             }
+            else
+                nowInteractionInfo = null;
+            if(nowInteractionInfo == null)
+                UI.InteractionUI.Instance.CloseInteracte();
+            else
+                UI.InteractionUI.Instance.ShowInteracte();
         }
 
         /// <summary>        /// 运行交互事件        /// </summary>
@@ -75,29 +79,12 @@ namespace Interaction
         }
 
         /// <summary>
-        /// 有任务系统的UI显示结束后调用，表示交互的UI结束了，准备接下来的操作吧
-        /// </summary>
-        public void ReRunInteraction()
-        {
-            RunInteraction(nowInteractionInfo);
-        }
-
-        /// <summary>
         /// 运行当前正在交互的交互事件
         /// </summary>
         public void RunInteraction()
         {
             if (nowInteractionInfo == null) return;
             RunInteraction(nowInteractionInfo);
-        }
-
-        /// <summary>
-        /// 添加交互信息，由于当交互事件不是射线点击时触发时需要添加交互就需要手动添加了
-        /// </summary>
-        /// <param name="interaction">添加的交互信息</param>
-        public void AddInteractionInfo(InteractionBase interaction)
-        {
-            nowInteractionInfo = interaction;
         }
     }
 }

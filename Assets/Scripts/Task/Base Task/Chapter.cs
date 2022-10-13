@@ -1,89 +1,89 @@
-
+О╩©
 using System.Collections.Generic;
 using Interaction;
 
 namespace Task
 {
     /// <summary>
-    /// уб╫зюЮё╛р╡╬мйгхннЯо╣мЁ╣дц©р╩о╣апхннЯ╣джВюЮ
+    /// Г╚═Х┼┌Г╠╩О╪▄Д╧÷Е╟╠Ф≤╞Д╩╩Е┼║ГЁ╩Г╩÷Г └Ф╞▐Д╦─ГЁ╩Е┬≈Д╩╩Е┼║Г └Д╦╩Г╠╩
     /// </summary>
     public abstract class Chapter
     {
-        /// <summary>        /// уб╫зцШЁфё╛╥╫й╫й╠пХр╙сц╣╫        /// </summary>
+        /// <summary>        /// Г╚═Х┼┌Е░█Г╖╟       /// </summary>
         public string chapterName;
-        /// <summary>        /// уб╫з╠ЙлБё╛уБ╦Ж╡ейгсно╥жпсцсзотй╬╣дхннЯцШЁф        /// </summary>
-        public string chapterTitle;
-        /// <summary>        /// всуб╫зйЩа©        /// </summary>
+        /// <summary>        /// Г╚═Х┼┌Ф▐▐Х©╟        /// </summary>
+        public string chapterDescription;
+        /// <summary>        /// Е╜░Г╚═Х┼┌Ф∙╟И┤▐        /// </summary>
         public int taskPartCount;
-        /// <summary>        /// ╣╠г╟всуб╫з        /// </summary>
+        /// <summary>        /// Е╫⌠Е┴█Е╜░Г╚═Х┼┌        /// </summary>
         protected ChapterPart part;
-        /// <summary>        /// уб╫з╠Ю╨е        /// </summary>
+        /// <summary>        /// Г╚═Х┼┌Г╪√Е▐╥        /// </summary>
         public int chapterID;
-        /// <summary>        /// ╣╠г╟мЙЁи╣двсуб╫з╠Ю╨е        /// </summary>
+        /// <summary>        /// Е╫⌠Е┴█Е╝▄Ф┬░Г └Е╜░Г╚═Х┼┌Г╪√Е▐╥        /// </summary>
         public int nowCompletePartId;
         /// <summary>        
-        /// хГ╧ШхннЯпХр╙нд╠╬нд╪Чё╛сц╦цб╥╬╤╢Ф╢╒нд╪Чё╛уШ╦Жуб╫з╣днд╠╬╤╪╪с╣╫фДжпё╛╥╫╠Цр╩м╛╤ах║
+        /// Е╕┌Ф·°Д╩╩Е┼║И°─Х╕│Ф√┤Ф°╛Ф√┤Д╩╤О╪▄Г■╗Х╞╔Х╥╞Е╬└Е╜≤Е┌╗Ф√┤Д╩╤О╪▄Ф∙╢Д╦╙Г╚═Х┼┌Г └Ф√┤Ф°╛И┐╫Е┼═Е┬╟Е┘╤Д╦╜О╪▄Ф√╧Д╬©Д╦─Е░▄Х╞╩Е▐√
         /// </summary>
         public string chapterSavePath;
-        /// <summary>        /// нд╠╬╤ах║╨С╣д╢Ф╢╒н╩жц        /// </summary>
+        /// <summary>        /// Ф√┤Ф°╛Х╞╩Е▐√Е░▌Г └Е╜≤Е┌╗Д╫█Г╫╝        /// </summary>
         private List<string> readData;
-        /// <summary>        /// ╢Фтз╣дЁ║╬╟ё╛сцю╢еп╤о╦цхннЯйг╥Яткпптз╦цЁ║╬╟        /// </summary>
+        /// <summary>        /// Е╜≤Е°╗Г └Е°╨Ф≥╞О╪▄Г■╗Ф²╔Е┬╓Ф√╜Х╞╔Д╩╩Е┼║Ф≤╞Е░╕Х©░Х║▄Е°╗Х╞╔Е°╨Ф≥╞        /// </summary>
         public string runtimeScene;
 
         /// <summary>
-        /// ╪Л╡Ип║╫змЙЁигИ©Жё╛сцсзхннЯ╣дй╠й╠╪Л╡Иё╛еп╤ойг╥Я©ирт╫ЬхКобр╩╦ЖхннЯв╢л╛
+        /// Фё─Ф÷╔Е╟▐Х┼┌Е╝▄Ф┬░Ф┐┘Е├╣О╪▄Г■╗Д╨▌Д╩╩Е┼║Г └Ф≈╤Ф≈╤Фё─Ф÷╔О╪▄Е┬╓Ф√╜Ф≤╞Е░╕Е▐╞Д╩╔Х©⌡Е┘╔Д╦▀Д╦─Д╦╙Д╩╩Е┼║Г┼╤Ф─│
         /// </summary>
-        /// <param name="info">╫╩╩╔пео╒</param>
+        /// <param name="info">Д╨╓Д╨▓Д©║Ф│╞</param>
         public abstract void CheckTask(InteracteInfo info);
         /// <summary>
-        /// ╪Л╡И╦цуб╫зйг╥Я©иртфТ╤╞ё╛©иртй╠╣Всц╪сть╥╫╥╗ё╛
-        /// тз╪стьй╠╩Атзн╢фТсцй╠╣Всцё╛╥ЯтР©идэтздЁ╦ЖхннЯмЙЁи╨Сеп╤ойг╥ЯбЗвЦфТсцр╙гС
+        /// Фё─Ф÷╔Х╞╔Г╚═Х┼┌Ф≤╞Е░╕Е▐╞Д╩╔Е░╞Е┼╗О╪▄Е▐╞Д╩╔Ф≈╤Х╟┐Г■╗Е┼═Х╫╫Ф√╧ФЁ∙О╪▄
+        /// Е°╗Е┼═Х╫╫Ф≈╤Д╪ Е°╗Ф°╙Е░╞Г■╗Ф≈╤Х╟┐Г■╗О╪▄Е░╕Е┬≥Е▐╞Х┐╫Е°╗Ф÷░Д╦╙Д╩╩Е┼║Е╝▄Ф┬░Е░▌Е┬╓Ф√╜Ф≤╞Е░╕Ф╩║Х╤ЁЕ░╞Г■╗Х╕│Ф╠┌
         /// </summary>
         public abstract void CheckAndLoadChapter();
 
         /// <summary>
-        /// ╦д╠ДхннЯп║╫зй╠╣Всц
+        /// Ф■╧Е▐≤Д╩╩Е┼║Е╟▐Х┼┌Ф≈╤Х╟┐Г■╗
         /// </summary>
         public abstract void ChangeTask();
 
         /// <summary>
-        /// ╣╠уб╫з©╙фТй╠╣Всц╣д╥╫╥╗ё╛р╡╬мйгуб╫з╣дв╪╠╦╥╫╥╗ё╛╣╠╦цхннЯ©ирт╢╔╥╒й╠╣Всц
+        /// Е╫⌠Г╚═Х┼┌Е╪─Е░╞Ф≈╤Х╟┐Г■╗Г └Ф√╧ФЁ∙О╪▄Д╧÷Е╟╠Ф≤╞Г╚═Х┼┌Г └Е┤├Е╓┤Ф√╧ФЁ∙О╪▄Е╫⌠Х╞╔Д╩╩Е┼║Е▐╞Д╩╔Х╖╕Е▐▒Ф≈╤Х╟┐Г■╗
         /// </summary>
         public abstract void BeginChapter();
 
-        /// <summary>        /// иХжцхннЯп║уб╫з╣дм╛й╠╪стьхннЯуб╫з        /// </summary>
+        /// <summary>        /// Х╝╬Г╫╝Д╩╩Е┼║Е╟▐Г╚═Х┼┌Г └Е░▄Ф≈╤Е┼═Х╫╫Д╩╩Е┼║Г╚═Х┼┌        /// </summary>
         public abstract void SetNowTaskPart(int nowPart);
 
         /// <summary>
-        /// мкЁЖуб╫зй╠╪Дё╛хГ╧ШпХр╙╫Ьппр╩о╣ап╣дмкЁЖппн╙ё╛
-        /// ©ирт╫╚╥╫╥╗╡И╣╫п╜Ёл©ьжфюЮиоё╛╤Ь╡╩йгвт╪╨╣Всцп╜Ёл
+        /// И──Е┤╨Г╚═Х┼┌Ф≈╤И≈╢О╪▄Е╕┌Ф·°И°─Х╕│Х©⌡Х║▄Д╦─ГЁ╩Е┬≈Г └И──Е┤╨Х║▄Д╦╨О╪▄
+        /// Е▐╞Д╩╔Е╟├Ф√╧ФЁ∙Ф÷╔Е┬╟Е█▐Г╗▀Ф▌╖Е┬╤Г╠╩Д╦┼О╪▄Х─▄Д╦█Ф≤╞Х┤╙Е╥╠Х╟┐Г■╗Е█▐Г╗▀
         /// </summary>
         public abstract void ExitChapter();
 
         /// <summary>
-        /// ╣╠уб╫змЙЁиакё╛тзжьпб©╙й╪сно╥й╠╩Аткпп╦ц╥╫╥╗ё╛
-        /// сцю╢╪сть║╒и╬ЁЩЁ║╬╟ж╝юЮ╣дё╛ж╝╨Ссп╦Э╨ц╣д╪сть╥╫й╫©ирт╡╩сц╦ц╥╫╥╗
+        /// Е╫⌠Г╚═Х┼┌Е╝▄Ф┬░Д╨├О╪▄Е°╗И┤█Ф√╟Е╪─Е╖▀Ф╦╦Ф┬▐Ф≈╤Д╪ Х©░Х║▄Х╞╔Ф√╧ФЁ∙О╪▄
+        /// Г■╗Ф²╔Е┼═Х╫╫Ц─│Е┬═И≥╓Е°╨Ф≥╞Д╧▀Г╠╩Г └О╪▄Д╧▀Е░▌Ф°┴Ф⌡╢Е╔╫Г └Е┼═Х╫╫Ф√╧Е╪▐Е▐╞Д╩╔Д╦█Г■╗Х╞╔Ф√╧ФЁ∙
         /// </summary>
         public abstract void CompleteChapter();
 
-        /// <summary>        /// ╩Я╣цвсуб╫зцШЁф        /// </summary>
+        /// <summary>        /// Х▌╥Е╬≈Е╜░Г╚═Х┼┌Е░█Г╖╟        /// </summary>
         public virtual string GetPartName()
         {
             return part.partName;
         }
 
-        /// <summary>        /// ╩Я╣цвсуб╫зцХйЖ        /// </summary>
+        /// <summary>        /// Х▌╥Е╬≈Е╜░Г╚═Х┼┌Ф▐▐Х©╟        /// </summary>
         public virtual string GetPartDescribe()
         {
-            return part.partDescribe;
+            return part.partDescription;
         }
 
         /// <summary>
-        /// ╪сть╤т╩╟ё╛╦Ы╬щнд╠╬б╥╬╤╤ах║дзхщё╛╢Ф╢╒╣╫йЩвИжпё╛
-        /// ╡╒грнд╠╬╫Ж╤ах║р╩╢н
+        /// Е┼═Х╫╫Е╞╧Х╞²О╪▄Ф═╧Ф█╝Ф√┤Ф°╛Х╥╞Е╬└Х╞╩Е▐√Е├┘Е╝╧О╪▄Е╜≤Е┌╗Е┬╟Ф∙╟Г╩└Д╦╜О╪▄
+        /// Е╧╤Д╦■Ф√┤Ф°╛Д╩┘Х╞╩Е▐√Д╦─Ф╛║
         /// </summary>
-        /// <param name="part">╤ах║╣з╪╦╡©╥ж</param>
-        /// <returns>╦ц╡©╥ж╣днд╠╬</returns>
+        /// <param name="part">Х╞╩Е▐√Г╛╛Е┤═И┐╗Е┬├</param>
+        /// <returns>Х╞╔И┐╗Е┬├Г └Ф√┤Ф°╛</returns>
         public string GetDiglogText(int part)
         {
             if(readData == null)

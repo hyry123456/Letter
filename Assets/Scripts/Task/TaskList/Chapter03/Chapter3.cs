@@ -8,7 +8,7 @@ namespace Task
         public Chapter3()
         {
             chapterName = "探索遗迹";
-            chapterTitle = "破败的遗迹，幻梦般的场景，鲲家的秘密";
+            chapterDescription = "破败的遗迹，幻梦般的场景，鲲家的秘密";
             taskPartCount = 3;
             chapterID = 3;
             chapterSavePath = Application.streamingAssetsPath +

@@ -49,7 +49,7 @@ namespace Task
         const string chapterPrefix = "Task.";
 
         /// <summary>        /// 进行中的任务        /// </summary>
-        private List<Chapter> exectuteTasks;
+        private List<Chapter> exectuteTasks = new List<Chapter>();
 
         /// <summary>        /// 所有任务的映射容器，<编号，名称>        /// </summary>
         private Dictionary<int, TaskInfo> taskMap;
@@ -71,16 +71,11 @@ namespace Task
             AsyncLoad.Instance.AddAction(LoadTask);
         }
 
-        private bool FindTaskName()
-        {
-            nowSceneName = Control.SceneChangeControl.Instance.GetRuntimeSceneName();
-            return true;
-        }
 
         private void LoadTask()
         {
-            nowSceneName = null;
-            Common.SustainCoroutine.Instance.AddCoroutine(FindTaskName);
+            //Common.SustainCoroutine.Instance.AddCoroutine(FindTaskName);
+            nowSceneName = Common.GameLoad.Instance.SceneName;
             while(nowSceneName == null)
             {
                 Thread.Sleep(TimeSpan.FromSeconds(1));  //休眠该线程，等待场景名称获取
@@ -105,7 +100,7 @@ namespace Task
         private void LoadAllTask()
         {
             string allTaskStr = Common.FileReadAndWrite.DirectReadFile(allTaskPath);
-            string[] allTasks = null;
+            string[] allTasks;
             if (allTaskStr != null && !allTaskStr.Equals(""))
             {
                 allTasks = allTaskStr.Split('\n');
@@ -141,7 +136,6 @@ namespace Task
         /// </summary>
         private void LoadObtainTask()
         {
-            exectuteTasks = new List<Chapter>();
             List<string> task = Common.FileReadAndWrite.ReadFileByAngleBrackets(obtainTaskPath);
             if (task != null && task.Count > 0)
             {

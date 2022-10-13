@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Control
+namespace Common
 {
     /// <summary>    
     /// 加载类，用来调用全部的加载方法，为了保证加载，每一个类场景都放一个，
@@ -8,13 +8,25 @@ namespace Control
     /// </summary>
     public class GameLoad : MonoBehaviour
     {
+        private static GameLoad instance;
+        public static GameLoad Instance => instance;
+        private string sceneName;
+        public string SceneName => sceneName;
+
         private void Awake()
         {
-            Common.SustainCoroutine sustain = Common.SustainCoroutine.Instance; //加载协程
-            SceneChangeControl changeControl = SceneChangeControl.Instance;
+            instance = this;
+            sceneName = Control.SceneChangeControl.Instance.GetRuntimeSceneName();
+
+            SustainCoroutine sustain = SustainCoroutine.Instance; //加载协程
             Task.AsynTaskControl.Instance.ReLoadTask();
             Application.targetFrameRate = -1;
-            Common.SceneObjectMap objectMap = Common.SceneObjectMap.Instance;
+            SceneObjectMap objectMap = SceneObjectMap.Instance;
+        }
+
+        private void OnDestroy()
+        {
+            instance = null;
         }
     }
 }

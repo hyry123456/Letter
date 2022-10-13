@@ -17,7 +17,7 @@ namespace UI
         /// <summary> /// 待添加的字符在当前显示的文本的编号   /// </summary>
         protected int nowIndex;
         /// <summary>   /// 每一个字符显示时需要的时间   /// </summary>
-        float perCharWaitTime = 0.1f;
+        float perCharWaitTime = 0.05f;
         /// <summary>  /// 当前显示的字符   /// </summary>
         protected StringBuilder nowShowString;
 

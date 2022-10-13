@@ -1351,8 +1351,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501319545}
-  m_LocalRotation: {x: -0.09635548, y: 0.56663656, z: -0.06696208, w: -0.81557024}
-  m_LocalPosition: {x: -11.568495, y: 15.234297, z: 43.26186}
+  m_LocalRotation: {x: 0.020004198, y: -0.25828543, z: 0.00535335, w: 0.96584666}
+  m_LocalPosition: {x: -5.5560226, y: 14.93919, z: 50.502792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3575,8 +3575,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.39167598, y: 0.193}
   m_AnchorMax: {x: 0.6088874, y: 0.814}
-  m_AnchoredPosition: {x: 0, y: -1.5337524}
-  m_SizeDelta: {x: 33.9606, y: 37.583893}
+  m_AnchoredPosition: {x: -0.0000076293945, y: -1.1544037}
+  m_SizeDelta: {x: 27.4991, y: 27.8916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1655637838
 MonoBehaviour:
@@ -3600,18 +3600,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 12
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 14
-    m_MaxSize: 40
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 64
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u81F3\u6469\u65AF\u798F\u5C14 Kun\n\n\u4EB2\u7231\u7684\u6469\u65AF\u798F\u5C14\u2014\u2014Kun\uFF0C\u6211\u8001\u7238\u516B\u5341\u5C81\u5927\u5BFF\uFF0C\u5E0C\u671B\u60A8\u80FD\u6765\u5230\u672C\u4EBA\u5BB6\u4E2D\u6765\uFF0C\u4E86\u89E3\u4E3A\u7236\u591A\u5E74\u7684\u5FC3\u613F\u3002"
+  m_Text: "\n\u81F3\u6469\u65AF\u798F\u5C14 Kun\n\n\u4EB2\u7231\u7684\u6469\u65AF\u798F\u5C14\u2014\u2014Kun\uFF0C\u6211\u8001\u7238\u516B\u5341\u5C81\u5927\u5BFF\uFF0C\u5E0C\u671B\u60A8\u80FD\u6765\u5230\u672C\u4EBA\u5BB6\u4E2D\u6765\uFF0C\u4E86\u89E3\u4E3A\u7236\u591A\u5E74\u7684\u5FC3\u613F\u3002\n\n\n\n\n\n\n\n\n\n\n\u6309\u4E0B\u56DE\u8F66\u952E\u9000\u51FA"
 --- !u!222 &1655637839
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4493,7 +4493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Detective/ReceiveLetter.unity
-    guid: 5077ed3e445eea348ade6552d02367b6
+    path: Assets/Scenes/Detective/AmongRemain.unity
+    guid: eac7e9d30c570b54999af1914d46795d
   - enabled: 1
     path: Assets/Scenes/Detective/MainScene.unity
     guid: 49fb8c4af60624247b1f805f1b381500
   - enabled: 1
-    path: Assets/Scenes/Detective/AmongRemain.unity
-    guid: eac7e9d30c570b54999af1914d46795d
+    path: Assets/Scenes/Detective/ReceiveLetter.unity
+    guid: 5077ed3e445eea348ade6552d02367b6
   m_configObjects: {}

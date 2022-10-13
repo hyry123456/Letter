@@ -9,7 +9,7 @@ namespace Task
         public Chapter1()
         {
             chapterName = "为何死，何为死";
-            chapterTitle = "半夜惨叫，心脏骤停，为何认定他杀";
+            chapterDescription = "半夜惨叫，心脏骤停，为何认定他杀";
             taskPartCount = 3;
             chapterID = 1;
 

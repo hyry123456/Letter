@@ -17,19 +17,19 @@ MonoBehaviour:
     useDynamicBatching: 1
     useGPUInstancing: 1
     useSRPBatcher: 1
-    maskLight: 1
+    maskLight: 0
     renderScale: 1
     renderingLayerMask: -1
     cameraShader: {fileID: 4800000, guid: f6039a3f5da7b864696492421b8527b1, type: 3}
     clusterLightSetting:
       clusterLightCS: {fileID: 7200000, guid: 566b904d724366c488883764d43495b7, type: 3}
       clusterCount: {x: 48, y: 32, z: 64}
-      isUse: 0
+      isUse: 1
   shadows:
-    maxDistance: 300
+    maxDistance: 100
     distanceFade: 0.3
     directional:
-      atlasSize: 4096
+      atlasSize: 2048
       filter: 2
       cascadeCount: 4
       cascadeRatio1: 0.15
@@ -38,6 +38,6 @@ MonoBehaviour:
       cascadeFade: 0.7
       cascadeBlend: 1
     other:
-      atlasSize: 1024
+      atlasSize: 2048
       filter: 2
   postFXSetting: {fileID: 11400000, guid: c37d4c811b7c23842bf94550434951b9, type: 2}

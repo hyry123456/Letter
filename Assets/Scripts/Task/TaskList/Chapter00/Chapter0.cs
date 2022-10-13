@@ -7,7 +7,7 @@ namespace Task {
         public Chapter0()
         {
             chapterName = "第一章，初入庄园";
-            chapterTitle = "刚进庄园，就出事了?";
+            chapterDescription = "刚进庄园，就出事了?";
             taskPartCount = 1;      //表示有1个子任务
             chapterID = 0;
             chapterSavePath = Application.streamingAssetsPath + "/Task/Chapter/0.task";

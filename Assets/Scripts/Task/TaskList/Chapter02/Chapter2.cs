@@ -11,7 +11,7 @@ namespace Task
         public Chapter2()
         {
             chapterName = "梦与现实，又有何差";
-            chapterTitle = "神秘祭坛，谜之信件，到底有什么关联";
+            chapterDescription = "神秘祭坛，谜之信件，到底有什么关联";
             taskPartCount = 1;
             chapterID = 2;
 

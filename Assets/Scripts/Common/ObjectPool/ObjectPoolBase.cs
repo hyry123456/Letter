@@ -5,6 +5,7 @@ namespace Common
     /// <summary> /// 对象池基类，用来定义对象池使用格式以及封装入池以及出池操作  /// </summary>
     public abstract class ObjectPoolBase : MonoBehaviour
     {
+        [System.NonSerialized]
         /// <summary>  /// 对象名称，用来判断这个对象的所属池  /// </summary>
         public string objectName;
 
@@ -30,7 +31,7 @@ namespace Common
         }
 
         /// <summary>
-        /// 初始化时的补充方法，由Unity调用，每一次Get后就会调用
+        /// 初始化时的统一补充方法，由Unity调用，每一次Get后就会调用
         /// </summary>
         protected abstract void OnEnable();
     }

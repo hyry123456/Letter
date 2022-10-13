@@ -25,6 +25,7 @@ namespace Control
         {
             Debug.Log("Stop");
             useControl = false;
+            motor.Move(0, 0);
         }
         
 
@@ -80,6 +81,11 @@ namespace Control
             if (!useControl) return;
             if (Input.GetMouseButtonDown(0))
                 skillControl?.ReleaseChooseSkill();
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UI.UISettings.Instance.ShowOrCloseUISettings();
+            }
         }
 
         /// <summary>
