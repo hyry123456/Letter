@@ -20,7 +20,7 @@ namespace Info
         public float walkSpeed = 5;
         public float rotateSpeed = 10;
         /// <summary>  /// 近战攻击距离  /// </summary>
-        public float attackDistance = 1;
+        public float attackDistance = 5;
 
         /// <summary>        /// 判断角色是否死亡        /// </summary>
         public bool isDie => hp <= 0;

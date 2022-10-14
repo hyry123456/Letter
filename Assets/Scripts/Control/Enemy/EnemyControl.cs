@@ -65,9 +65,12 @@ namespace Control
                 if (hit.collider.tag != "Player")
                 {
                     //Debug.DrawRay(transform.position, playerDir.normalized * hit.distance);
-                    playerDir += hit.normal * 1.5f;
+                    playerDir += hit.normal * 1.1f;
+                    playerDir.Normalize();
                     motor.Move(playerDir.z, playerDir.x);
                     time = 0;
+                    Debug.DrawRay(transform.position, playerDir * 10);
+
                     return;
                 }
             }
@@ -84,7 +87,7 @@ namespace Control
             {
                 time = 0;
                 Bullet_Pooling bullet_Pooling = (Bullet_Pooling)Common.SceneObjectPool.Instance.GetObject("Pooling_Bullet", originBullet,
-                    transform.position + playerDir * 2, player.position);
+                    transform.position + playerDir * enemyInfo.attackDistance, player.position);
                 bullet_Pooling.attackTargetTag = "Player";
             }
         }

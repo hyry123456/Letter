@@ -9,18 +9,18 @@ namespace Task
         GameObject origin;
         Control.EnemyControl[] enemys;
 
-        Vector3[] poss = new Vector3[10]
+        Vector3[] poss = new Vector3[1]
         {
             new Vector3(-75, 54, 251),
-            new Vector3(-65, 54, 253),
-            new Vector3(-65, 54, 300),
-            new Vector3(-76, 54, 304),
-            new Vector3(-140, 54, 230),
-            new Vector3(-120, 54, 278f),
-            new Vector3(-120, 54, 270f),
-            new Vector3(-198, 54, 230f),
-            new Vector3(-178, 54, 288f),
-            new Vector3(-190, 54, 313f),
+            //new Vector3(-65, 54, 253),
+            //new Vector3(-65, 54, 300),
+            //new Vector3(-76, 54, 304),
+            //new Vector3(-140, 54, 230),
+            //new Vector3(-120, 54, 278f),
+            //new Vector3(-120, 54, 270f),
+            //new Vector3(-198, 54, 230f),
+            //new Vector3(-178, 54, 288f),
+            //new Vector3(-190, 54, 313f),
         };
 
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)
@@ -62,6 +62,8 @@ namespace Task
                 enemys[i] = (Control.EnemyControl)Common.SceneObjectPool.Instance.GetObject(
                     "Enemy", origin, poss[i], Quaternion.identity);
                 enemys[i].transform.localScale = Vector3.one * 4;
+                Info.CharacterInfo character = enemys[i].GetComponent<Info.CharacterInfo>();
+                character.attackDistance = 10;
             }
             return true;
         }

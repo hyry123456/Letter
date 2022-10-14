@@ -1,27 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Interaction
 {
     /// <summary>
-    /// ´¥·¢Ê½½»»¥ÊÂ¼ş£¬½¨Òé·ÅÔÚÒ»¸ö¿ÕÎïÌåÉÏ£¬ÒòÎª´¥·¢ºó»áÁ¢¿ÌÏú»Ù£¬
-    /// ÇÒÖ»»á±»Ö÷½Ç¸ø´¥·¢
+    /// è§¦å‘å¼äº¤äº’äº‹ä»¶ï¼Œå»ºè®®æ”¾åœ¨ä¸€ä¸ªç©ºç‰©ä½“ä¸Šï¼Œå› ä¸ºè§¦å‘åä¼šç«‹åˆ»é”€æ¯ï¼Œ
+    /// ä¸”åªä¼šè¢«ä¸»è§’ç»™è§¦å‘
     /// </summary>
     public class TrigerInteracteDelegate : InteractionBase
     {
-        /// <summary>        /// ´¥·¢Ê±Ö´ĞĞµÄĞĞÎª        /// </summary>
+        /// <summary>        /// è§¦å‘æ—¶æ‰§è¡Œçš„è¡Œä¸º        /// </summary>
         public Common.INonReturnAndNonParam trigerDelegate;
         public override void InteractionBehavior()
         {
         }
 
         /// <summary>   
-        /// µ±´¥·¢·¢ÉúÊ±Ö´ĞĞµÄ·½·¨£¬ÓÃÀ´Ö´ĞĞ½»»¥£¬µ±´¥·¢½áÊøºóÁ¢¿Ì½áÊø¸Ã½»»¥
+        /// å½“è§¦å‘å‘ç”Ÿæ—¶æ‰§è¡Œçš„æ–¹æ³•ï¼Œç”¨æ¥æ‰§è¡Œäº¤äº’ï¼Œå½“è§¦å‘ç»“æŸåç«‹åˆ»ç»“æŸè¯¥äº¤äº’
         /// </summary>
         private void OnTriggerEnter(Collider other)
         {
-            //Ö»´¥·¢Ö÷½Ç
+            //åªè§¦å‘ä¸»è§’
             if(other.tag == "Player")
             {
                 if(trigerDelegate != null)
@@ -29,7 +27,7 @@ namespace Interaction
                     trigerDelegate();
                     trigerDelegate = null;
                 }
-                //É¾³ı×ÔÉí
+                //åˆ é™¤è‡ªèº«
                 Destroy(gameObject);
             }
         }

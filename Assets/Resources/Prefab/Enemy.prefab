@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a42181238f9b174684a4b34cc1aaf94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
   shelterMask:
     serializedVersion: 2
     m_Bits: 8
@@ -130,12 +129,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 
+  hp: 10
   maxHP: 10
   sp: 10
   maxSP: 10
   runSpeed: 5
   walkSpeed: 5
   rotateSpeed: 10
+  attackDistance: 1
   seeDistance: 50
 --- !u!54 &7521287714545964052
 Rigidbody:
