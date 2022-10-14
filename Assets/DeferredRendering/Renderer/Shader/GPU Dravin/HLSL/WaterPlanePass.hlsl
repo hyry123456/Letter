@@ -176,13 +176,15 @@ void geom(point ToGeom IN[1], inout TriangleStream<FragInput> tristream)
 }
 
 void frag(FragInput i,
-    // out float4 _GBufferColorTex : SV_Target0,
+    out float4 _GBufferColorTex : SV_Target0,
     out float4 _GBufferNormalTex : SV_Target1)
 {
     float4 map0 = SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, i.bumpUV0); float3 bump0 = DecodeNormal(map0, 1);
     float4 map1 = SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, i.bumpUV1); float3 bump1 = DecodeNormal(map1, 1);
     float3 bump = (bump0 + bump1) * 0.5;
     float3 normal = normalize( BlendNormalRNM(i.normal, bump) ) * 0.5 + 0.5;
+
+    _GBufferColorTex = float4(1, 0, 0, 0.3);
 
     _GBufferNormalTex = float4(normal, 1);
 }

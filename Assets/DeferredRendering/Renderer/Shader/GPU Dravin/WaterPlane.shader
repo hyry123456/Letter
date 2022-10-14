@@ -9,8 +9,8 @@ Shader "Unlit/WaterPlane"
         _WaveDir1("Direction1", Vector) = (1, 2, 3, -1)
 
 	    _WaveScale ("Wave scale", Range (0.02,0.15)) = 0.063
-        _RefrDistort ("Refraction distort", Range (0,1.5)) = 0.40
-        _RefrColor ("Refraction color", COLOR)  = ( .34, .85, .92, 1)
+        // _RefrDistort ("Refraction distort", Range (0,1.5)) = 0.40
+        // _RefrColor ("Refraction color", COLOR)  = ( .34, .85, .92, 1)
         _SpecularColor ("Specular Color", COLOR) = (1, 1, 1, 1)
         _NearColor ("Near Side Color", Color) = (1, 1, 1, 1)
         [NoScaleOffset] _BumpMap ("Normalmap ", 2D) = "bump" {}
@@ -22,9 +22,9 @@ Shader "Unlit/WaterPlane"
         _NearDistance("Near Distance", Range(0.0, 10.0)) = 0.01
         _NearRange ("Near Range", Range(0.01, 10.0)) = 1
 
-		[Toggle(_IS_REFR)] _Is_Refr ("Use Refrect Color", Float) = 0
-		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 1
-		[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 0
+		// [Toggle(_IS_REFR)] _Is_Refr ("Use Refrect Color", Float) = 0
+		// [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 1
+		// [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 0
     }
     SubShader
     {
@@ -32,6 +32,7 @@ Shader "Unlit/WaterPlane"
         //但是实际上的颜色不进行改变
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
             ZWrite Off
             Cull Off
             HLSLPROGRAM
@@ -50,25 +51,25 @@ Shader "Unlit/WaterPlane"
         }
 
         //不在渲染该Pass
-        Pass
-        {
-            Blend [_SrcBlend] [_DstBlend]
-			ZWrite Off
-            Cull Off
-            HLSLPROGRAM
+        // Pass
+        // {
+        //     Blend [_SrcBlend] [_DstBlend]
+		// 	ZWrite Off
+        //     Cull Off
+        //     HLSLPROGRAM
 
-            #pragma target 4.6
+        //     #pragma target 4.6
 
-            #pragma vertex vert
-            #pragma fragment TransferFrag
-            #pragma require geometry
-            #pragma geometry geom
-			#pragma shader_feature _IS_REFR
+        //     #pragma vertex vert
+        //     #pragma fragment TransferFrag
+        //     #pragma require geometry
+        //     #pragma geometry geom
+		// 	#pragma shader_feature _IS_REFR
 
-            #include "HLSL/WaterPlanePass.hlsl"
+        //     #include "HLSL/WaterPlanePass.hlsl"
 
 
-            ENDHLSL
-        }
+        //     ENDHLSL
+        // }
     }
 }
