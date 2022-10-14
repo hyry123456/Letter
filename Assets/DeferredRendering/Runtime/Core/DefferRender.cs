@@ -35,13 +35,13 @@ namespace DefferedRender
         //存储一般的id
         static int
             colorAttachmentId = Shader.PropertyToID("_CameraColorAttachment"),
-            cameraColorTexId = Shader.PropertyToID("_CameraColorTexture"),
-            cameraDepthTexId = Shader.PropertyToID("_CameraDepthTexture"),
-            cameraNormalTexId = Shader.PropertyToID("_CameraNormalTexture"),
+            //cameraColorTexId = Shader.PropertyToID("_CameraColorTexture"),
+            //cameraDepthTexId = Shader.PropertyToID("_CameraDepthTexture"),
+            //cameraNormalTexId = Shader.PropertyToID("_CameraNormalTexture"),
             gBufferDepthId = Shader.PropertyToID("_GBufferDepthTex"),
             frustumCornersRayId = Shader.PropertyToID("_FrustumCornersRay"),
             inverseVPMatrixId = Shader.PropertyToID("_InverseVPMatrix"),
-            tempRenderTexId = Shader.PropertyToID("_TempRenderTexture"),
+            //tempRenderTexId = Shader.PropertyToID("_TempRenderTexture"),
             sourceTextureId = Shader.PropertyToID("_SourceTexture"),
             inverseProjectionMatrix = Shader.PropertyToID("_InverseProjectionMatrix"),
             viewToScreenMatrixId = Shader.PropertyToID("_ViewToScreenMatrix"),
@@ -137,7 +137,8 @@ namespace DefferedRender
 
             if (postFXStack.IsActive)
             {
-                SavePreFrameTex(postFXSetting);
+                //保存颜色贴图
+                SavePreFrameTex();
                 postFXStack.Render(colorAttachmentId);
             }
             else
@@ -196,11 +197,11 @@ namespace DefferedRender
                 32, FilterMode.Point, RenderTextureFormat.Depth
             );
 
-            buffer.GetTemporaryRT(
-                tempRenderTexId, camera.pixelWidth, camera.pixelHeight,
-                0, FilterMode.Bilinear, useHDR ?
-                RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
-            );
+            //buffer.GetTemporaryRT(
+            //    tempRenderTexId, camera.pixelWidth, camera.pixelHeight,
+            //    0, FilterMode.Bilinear, useHDR ?
+            //    RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
+            //);
 
             gBuffers = new RenderTargetIdentifier[gBufferIds.Length];
 
@@ -292,12 +293,14 @@ namespace DefferedRender
             //绘制天空盒
             context.DrawSkybox(camera);
 
-            buffer.GetTemporaryRT(cameraDepthTexId, camera.pixelWidth, camera.pixelHeight,
-                32, FilterMode.Point, RenderTextureFormat.Depth);
-            buffer.GetTemporaryRT(cameraNormalTexId, camera.pixelWidth, camera.pixelHeight,
-                0, FilterMode.Bilinear, RenderTextureFormat.Default);
-            Draw(gBufferDepthId, cameraDepthTexId, CameraRenderMode._CopyDepth);    //Save Depth
-            Draw(gBufferIds[1], cameraNormalTexId, CameraRenderMode._CopyBilt);     //Save Normal
+            //buffer.GetTemporaryRT(cameraDepthTexId, camera.pixelWidth, camera.pixelHeight,
+            //    32, FilterMode.Point, RenderTextureFormat.Depth);
+            //buffer.GetTemporaryRT(cameraNormalTexId, camera.pixelWidth, camera.pixelHeight,
+            //    0, FilterMode.Bilinear, RenderTextureFormat.Default);
+            //Draw(gBufferDepthId, cameraDepthTexId, CameraRenderMode._CopyDepth);    //Save Depth
+            //Draw(gBufferIds[1], cameraNormalTexId, CameraRenderMode._CopyBilt);     //Save Normal
+            //用上一帧的颜色值作为当前的颜色贴图
+            buffer.SetGlobalTexture("PerFrameFinalTexture", preFrameFinalTex);
 
             //设置渲染目标，传递所有的渲染目标
             buffer.SetRenderTarget(
@@ -311,11 +314,11 @@ namespace DefferedRender
 
             DrawGBufferFinal();         //BRDF
 
-            buffer.GetTemporaryRT(cameraColorTexId, camera.pixelWidth, camera.pixelHeight,
-                0, FilterMode.Bilinear, useHDR ?
-                RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+            //buffer.GetTemporaryRT(cameraColorTexId, camera.pixelWidth, camera.pixelHeight,
+            //    0, FilterMode.Bilinear, useHDR ?
+            //    RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
 
-            Draw(colorAttachmentId, cameraColorTexId, CameraRenderMode._CopyBilt);
+            //Draw(colorAttachmentId, cameraColorTexId, CameraRenderMode._CopyBilt);
 
             buffer.SetRenderTarget(
                 colorAttachmentId, RenderBufferLoadAction.Load, RenderBufferStoreAction.Store,
@@ -369,7 +372,7 @@ namespace DefferedRender
             ExecuteBuffer();
         }
 
-        void SavePreFrameTex(PostFXSetting postFXSetting)
+        void SavePreFrameTex()
         {
             if (camera.cameraType != CameraType.Game)
                 return;
@@ -377,13 +380,13 @@ namespace DefferedRender
             //提前存储，不要后处理后再存储
             if (preFrameFinalTex != null)
                 RenderTexture.ReleaseTemporary(preFrameFinalTex);
-            if (postFXSetting.ssr.useSSR)
-            {
+            //if (postFXSetting.ssr.useSSR)
+            //{
                 preFrameFinalTex = RenderTexture.GetTemporary(camera.pixelWidth, camera.pixelHeight,
                     0, RenderTextureFormat.Default);
                 preFrameFinalTex.name = "PerFrameFinalTexture";
                 Draw(colorAttachmentId, preFrameFinalTex, CameraRenderMode._CopyBilt);
-            }
+            //}
             ExecuteBuffer();
         }
 
@@ -392,10 +395,10 @@ namespace DefferedRender
         {
             buffer.ReleaseTemporaryRT(colorAttachmentId);
             buffer.ReleaseTemporaryRT(gBufferDepthId);
-            buffer.ReleaseTemporaryRT(tempRenderTexId);
-            buffer.ReleaseTemporaryRT(cameraColorTexId);
-            buffer.ReleaseTemporaryRT(cameraDepthTexId);
-            buffer.ReleaseTemporaryRT(cameraNormalTexId);
+            //buffer.ReleaseTemporaryRT(tempRenderTexId);
+            //buffer.ReleaseTemporaryRT(cameraColorTexId);
+            //buffer.ReleaseTemporaryRT(cameraDepthTexId);
+            //buffer.ReleaseTemporaryRT(cameraNormalTexId);
             for(int i=0; i<gBufferIds.Length; i++)
             {
                 buffer.ReleaseTemporaryRT(gBufferIds[i]);

@@ -183,7 +183,6 @@ void frag(FragInput i,
     float4 map1 = SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, i.bumpUV1); float3 bump1 = DecodeNormal(map1, 1);
     float3 bump = (bump0 + bump1) * 0.5;
     float3 normal = normalize( BlendNormalRNM(i.normal, bump) ) * 0.5 + 0.5;
-    // float3 normal = normalize( BlendNormalRNM(i.normal, bump) ) * 0.5 + 0.5;
 
     _GBufferNormalTex = float4(normal, 1);
 }
@@ -220,12 +219,12 @@ float4 TransferFrag(FragInput i) : SV_Target0
     DiffuseData diffuse = GetLightingDiffuse(surface, i.positionCS);
 
     float3 color = diffuse.specularCol * _SpecularColor;
-    #ifdef _IS_REFR
+    // #ifdef _IS_REFR
         color += lerp(finalRefrCol, reflect, fresnelFac);
-    #else
-        float4 water = SAMPLE_TEXTURE2D(_ReflectiveColor, sampler_ReflectiveColor, float2(fresnelFac, fresnelFac)) * _HorizonColor;
-        color.rgb += lerp(water.rgb, reflect.rgb, water.a);
-    #endif
+    // #else
+        // float4 water = SAMPLE_TEXTURE2D(_ReflectiveColor, sampler_ReflectiveColor, float2(fresnelFac, fresnelFac)) * _HorizonColor;
+        // color.rgb += lerp(water.rgb, reflect.rgb, water.a);
+    // #endif
 
     // float depthDelta = fragment.bufferDepth - fragment.depth;
     // color = lerp(_NearColor * color, color, saturate( (depthDelta - _NearDistance) / _NearRange ) );

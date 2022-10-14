@@ -3,9 +3,11 @@
 #define FRAGMENT_INCLUDED
 
 //非透明物体的颜色图
-TEXTURE2D(_CameraColorTexture);
+// TEXTURE2D(_CameraColorTexture);
+TEXTURE2D(PerFrameFinalTexture);
 //非透明物体的深度图
-TEXTURE2D(_CameraDepthTexture);
+// TEXTURE2D(_CameraDepthTexture);
+TEXTURE2D(_GBufferDepthTex);
 
 struct Fragment {
 	float2 positionSS;	//裁剪空间xy值
@@ -23,7 +25,7 @@ Fragment GetFragment (float4 positionSS) {
 		OrthographicDepthBufferToLinear(positionSS.z) : positionSS.w;
 	//采样buffer深度，目前并不是视角空间的深度
 	f.bufferDepth =
-		SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, f.screenUV, 0);
+		SAMPLE_DEPTH_TEXTURE_LOD(_GBufferDepthTex, sampler_point_clamp, f.screenUV, 0);
 	//计算真正的视角空间深度，buffer的深度
 	f.bufferDepth = IsOrthographicCamera() ?
 		OrthographicDepthBufferToLinear(f.bufferDepth) :
@@ -34,13 +36,13 @@ Fragment GetFragment (float4 positionSS) {
 //获得目前渲染的非透明物体的颜色值
 float4 GetBufferColor (Fragment fragment, float2 uvOffset = float2(0.0, 0.0)) {
 	float2 uv = fragment.screenUV + uvOffset;
-	return SAMPLE_TEXTURE2D_LOD(_CameraColorTexture, sampler_linear_clamp, uv, 0);
+	return SAMPLE_TEXTURE2D_LOD(PerFrameFinalTexture, sampler_linear_clamp, uv, 0);
 }
 
 float GetBufferDepth(Fragment fragment, float2 uvOffset = float2(0.0, 0.0)){
 	float2 uv = fragment.screenUV + uvOffset;
 	float bufferDepth =
-		SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, uv, 0);
+		SAMPLE_DEPTH_TEXTURE_LOD(_GBufferDepthTex, sampler_point_clamp, uv, 0);
 	//计算真正的视角空间深度，buffer的深度
 	bufferDepth = IsOrthographicCamera() ?
 		OrthographicDepthBufferToLinear(bufferDepth) :

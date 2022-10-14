@@ -28,6 +28,8 @@ Shader "Unlit/WaterPlane"
     }
     SubShader
     {
+        //使用PRDF的方式来渲染水，也就是修改水的法线贴图，其他的都不变，让平面上的物体添加上一层水的方式，
+        //但是实际上的颜色不进行改变
         Pass
         {
             ZWrite Off
@@ -47,6 +49,7 @@ Shader "Unlit/WaterPlane"
             ENDHLSL
         }
 
+        //不在渲染该Pass
         Pass
         {
             Blend [_SrcBlend] [_DstBlend]

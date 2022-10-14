@@ -74,14 +74,14 @@ namespace DefferedRender
 
         public override void DrawByCamera(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Camera camera)
         {
-            Material useMat = (debug) ? copyMat : ShowMat;
-            useMat.SetBuffer(pointsBufferId, planePointBuffer);
-            useMat.SetInt(pointsSizeXId, pointCount.x + 2);
-            useMat.SetInt(pointsSizeYId, pointCount.y + 2);
-            useMat.SetMatrix(objToWorldMatrix, transform.localToWorldMatrix);
-            int count = (pointCount.x + 1) * (pointCount.y + 1);
-            buffer.DrawProcedural(Matrix4x4.identity, useMat, 1, MeshTopology.Points, 1, count);
-            ExecuteBuffer(ref buffer, context);
+            //Material useMat = (debug) ? copyMat : ShowMat;
+            //useMat.SetBuffer(pointsBufferId, planePointBuffer);
+            //useMat.SetInt(pointsSizeXId, pointCount.x + 2);
+            //useMat.SetInt(pointsSizeYId, pointCount.y + 2);
+            //useMat.SetMatrix(objToWorldMatrix, transform.localToWorldMatrix);
+            //int count = (pointCount.x + 1) * (pointCount.y + 1);
+            //buffer.DrawProcedural(Matrix4x4.identity, useMat, 1, MeshTopology.Points, 1, count);
+            //ExecuteBuffer(ref buffer, context);
         }
 
         public override void DrawByProjectMatrix(ScriptableRenderContext context, CommandBuffer buffer, ClustDrawType drawType, Matrix4x4 projectMatrix)

@@ -7,14 +7,14 @@ SAMPLER(sampler_PostFXSource);
 TEXTURE2D(_PostFXSource);
 TEXTURE2D(_PostFXSource2);
 
-TEXTURE2D(_CameraNormalTexture);
-SAMPLER(sampler_CameraNormalTexture);
+// TEXTURE2D(_CameraNormalTexture);
+// SAMPLER(sampler_CameraNormalTexture);
 
 TEXTURE2D(_GBufferColorTex);
 SAMPLER(sampler_GBufferColorTex);
 TEXTURE2D(_GBufferNormalTex);
 SAMPLER(sampler_GBufferNormalTex);
-TEXTURE2D(_GBufferDepthTex);
+//TEXTURE2D(_GBufferDepthTex);
 TEXTURE2D(_GBufferSpecularTex);
 TEXTURE2D(_GBufferBakeTex);
 

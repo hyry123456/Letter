@@ -11,7 +11,7 @@ SAMPLER(sampler_BaseMap);
 TEXTURE2D(_DetailMap);
 TEXTURE2D(_DetailNormalMap);
 SAMPLER(sampler_DetailMap);
-TEXTURE2D(_GBufferDepthTex);
+//TEXTURE2D(_GBufferDepthTex);
 
 UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
 

@@ -107,14 +107,14 @@ float4 SSS_Fragment(Varyings i) : SV_Target{
 
 float4 DrawGBufferColorFragment(Varyings i) : SV_Target
 {
-    float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, i.screenUV, 0);
+    float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_GBufferDepthTex, sampler_point_clamp, i.screenUV, 0);
 	float depth01 = Linear01Depth(bufferDepth, _ZBufferParams);
     bufferDepth = IsOrthographicCamera() ? OrthographicDepthBufferToLinear(bufferDepth)
 		: LinearEyeDepth(bufferDepth, _ZBufferParams);
     Surface surface;
     surface.position = _WorldSpaceCameraPos + bufferDepth * i.interpolatedRay.xyz;
 
-	float4 baseNormal = SAMPLE_TEXTURE2D(_CameraNormalTexture, sampler_CameraNormalTexture, i.screenUV);
+	float4 baseNormal = SAMPLE_TEXTURE2D(_GBufferNormalTex, sampler_GBufferNormalTex, i.screenUV);
 
     surface.normal = baseNormal.xyz * 2.0 - 1.0;     //法线
 
@@ -155,7 +155,7 @@ float4 DrawGBufferColorFragment(Varyings i) : SV_Target
 }
 
 float4 BulkLightFragment(Varyings input) : SV_TARGET{
-    float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, input.screenUV, 0);
+    float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_GBufferDepthTex, sampler_point_clamp, input.screenUV, 0);
 	float3 bulkLight = GetBulkLight(bufferDepth, input.screenUV, input.interpolatedRay.xyz);
 
 	return float4(bulkLight, 1);
@@ -431,7 +431,7 @@ float4 FinalPassFragment (Varyings input) : SV_TARGET {
 
 
 float4 FogPassFragment (Varyings input) : SV_TARGET {
-	float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_point_clamp, input.screenUV, 0);
+	float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_GBufferDepthTex, sampler_point_clamp, input.screenUV, 0);
 	float lineardDepth = Linear01Depth(bufferDepth, _ZBufferParams);
 	bufferDepth = IsOrthographicCamera() ? OrthographicDepthBufferToLinear(bufferDepth)
 		: LinearEyeDepth(bufferDepth, _ZBufferParams);
