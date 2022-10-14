@@ -27,7 +27,7 @@ namespace Task
             return;
         }
 
-        public override void CompleteChapter()
+        public override void CompleteChapter(bool isInThisScene)
         {
             Debug.Log("第二章完成");
             Common.SustainCoroutine.Instance.AddCoroutine(AddSkill);

@@ -25,11 +25,9 @@ namespace Task
             }
         }
 
-        public override void CompleteChapter()
+        public override void CompleteChapter(bool isInThisScene)
         {
             Debug.Log("第4章完成");
-            //添加下一章，最后一章
-            //AsynTaskControl.Instance.AddChapter(4);
         }
 
         public override void ExitChapter()

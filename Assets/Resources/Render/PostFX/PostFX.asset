@@ -17,7 +17,7 @@ MonoBehaviour:
   ssrSetting:
     useSSR: 1
     rayMarchingSetp: 48
-    marchSetpSize: 22
+    marchSetpSize: 36
     maxMarchDistance: 500
     depthThickness: 1
   bulkLight:
@@ -41,7 +41,7 @@ MonoBehaviour:
   colorAdjustments:
     postExposure: 0
     contrast: 0
-    colorFilter: {r: 1, g: 1, b: 1, a: 1}
+    colorFilter: {r: 1, g: 0.86602926, b: 0.86602926, a: 1}
     hueShift: 0
     saturation: 0
   whiteBalance:
@@ -90,7 +90,7 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
   fXAA:
-    luminanceMode: 2
+    luminanceMode: 1
     contrastThreshold: 0.0312
     relativeThreshold: 0.063
     subpixelBlending: 1

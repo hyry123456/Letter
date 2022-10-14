@@ -9,18 +9,18 @@ namespace Task
         GameObject origin;
         Control.EnemyControl[] enemys;
 
-        Vector3[] poss = new Vector3[1]
+        Vector3[] poss = new Vector3[10]
         {
             new Vector3(-75, 54, 251),
-            //new Vector3(-65, 54, 253),
-            //new Vector3(-65, 54, 300),
-            //new Vector3(-76, 54, 304),
-            //new Vector3(-140, 54, 230),
-            //new Vector3(-120, 54, 278f),
-            //new Vector3(-120, 54, 270f),
-            //new Vector3(-198, 54, 230f),
-            //new Vector3(-178, 54, 288f),
-            //new Vector3(-190, 54, 313f),
+            new Vector3(-65, 54, 253),
+            new Vector3(-65, 54, 300),
+            new Vector3(-76, 54, 304),
+            new Vector3(-140, 54, 230),
+            new Vector3(-120, 54, 278f),
+            new Vector3(-120, 54, 270f),
+            new Vector3(-198, 54, 230f),
+            new Vector3(-178, 54, 288f),
+            new Vector3(-190, 54, 313f),
         };
 
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)

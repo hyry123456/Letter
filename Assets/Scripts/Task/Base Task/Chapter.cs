@@ -62,9 +62,11 @@ namespace Task
 
         /// <summary>
         /// 当章节完成了，在重新开始游戏时会运行该方法，
-        /// 用来加载、删除场景之类的，之后有更好的加载方式可以不用该方法
+        /// 用来加载、删除场景之类的，之后有更好的加载方式可以不用该方法，
+        /// 传入参数表示是否是当前场景的任务
         /// </summary>
-        public abstract void CompleteChapter();
+        /// <param name="isInThisScene">是否是当前场景的任务，是为true</param>
+        public abstract void CompleteChapter(bool isInThisScene);
 
         /// <summary>        /// 获得子章节名称        /// </summary>
         public virtual string GetPartName()

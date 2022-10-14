@@ -27,7 +27,7 @@ namespace Task
             return;
         }
 
-        public override void CompleteChapter()
+        public override void CompleteChapter(bool isInThisScene)
         {
             Debug.Log("第三章结束");
         }

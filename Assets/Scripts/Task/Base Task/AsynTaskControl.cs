@@ -1,4 +1,4 @@
-
+ï»¿
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,11 +9,11 @@ namespace Task
 {
     public enum TaskMode
     {
-        /// <summary>   /// ÈÎÎñÎ´¿ªÊ¼   /// </summary>
+        /// <summary>   /// ä»»åŠ¡æœªå¼€å§‹   /// </summary>
         NotStart = 0,
-        /// <summary>   /// ÈÎÎñ¿ªÊ¼ÖĞ   /// </summary>
+        /// <summary>   /// ä»»åŠ¡å¼€å§‹ä¸­   /// </summary>
         Start = 1,
-        /// <summary>   /// ÈÎÎñÍê³É     /// </summary>
+        /// <summary>   /// ä»»åŠ¡å®Œæˆ     /// </summary>
         Finish = 2,
     }
 
@@ -21,7 +21,7 @@ namespace Task
     {
         public string Name;
         public TaskMode state;
-        /// <summary>        /// ÊÇ·ñÊôÓÚµ±Ç°ÕıÔÚÔËĞĞµÄ³¡¾°        /// </summary>
+        /// <summary>        /// æ˜¯å¦å±äºå½“å‰æ­£åœ¨è¿è¡Œçš„åœºæ™¯        /// </summary>
         public bool isInRuntimeScene;
     }
     public class AsynTaskControl
@@ -39,26 +39,26 @@ namespace Task
             }
         }
 
-        /// <summary>        /// ËùÓĞÈÎÎñ        /// </summary>
+        /// <summary>        /// æ‰€æœ‰ä»»åŠ¡        /// </summary>
         private static string allTaskPath = Application.streamingAssetsPath + "/Task/AllTask.task";
-        /// <summary>        /// Íê³ÉµÄÈÎÎñ        /// </summary>
+        /// <summary>        /// å®Œæˆçš„ä»»åŠ¡        /// </summary>
         private static string completeTaskPath = Application.streamingAssetsPath + "/Task/CompleteTask.task";
-        /// <summary>        /// ½øĞĞÖĞµÄÈÎÎñµÄ´æ´¢ÎÄ¼ş        /// </summary>
+        /// <summary>        /// è¿›è¡Œä¸­çš„ä»»åŠ¡çš„å­˜å‚¨æ–‡ä»¶        /// </summary>
         private static string obtainTaskPath = Application.streamingAssetsPath + "/Task/ObtainTask.task";
-        /// <summary>        /// ½øĞĞ·´Éä²éÕÒÀàµÄÃû³ÆÇ°×º        /// </summary>
+        /// <summary>        /// è¿›è¡Œåå°„æŸ¥æ‰¾ç±»çš„åç§°å‰ç¼€        /// </summary>
         const string chapterPrefix = "Task.";
 
-        /// <summary>        /// ½øĞĞÖĞµÄÈÎÎñ        /// </summary>
+        /// <summary>        /// è¿›è¡Œä¸­çš„ä»»åŠ¡        /// </summary>
         private List<Chapter> exectuteTasks = new List<Chapter>();
 
-        /// <summary>        /// ËùÓĞÈÎÎñµÄÓ³ÉäÈİÆ÷£¬<±àºÅ£¬Ãû³Æ>        /// </summary>
+        /// <summary>        /// æ‰€æœ‰ä»»åŠ¡çš„æ˜ å°„å®¹å™¨ï¼Œ<ç¼–å·ï¼Œåç§°>        /// </summary>
         private Dictionary<int, TaskInfo> taskMap;
         /// <summary>
-        /// µ±Ç°ÔËĞĞµÄ³¡¾°Ãû³Æ£¬ÒòÎªÈÎÎñÊÇÔÚ×ÓÏß³ÌÖĞ¼ÓÔØµÄ£¬Òò´ËĞèÒªÔÚĞ­³ÌÖĞ½øĞĞÃû³Æ»ñÈ¡
+        /// å½“å‰è¿è¡Œçš„åœºæ™¯åç§°ï¼Œå› ä¸ºä»»åŠ¡æ˜¯åœ¨å­çº¿ç¨‹ä¸­åŠ è½½çš„ï¼Œå› æ­¤éœ€è¦åœ¨åç¨‹ä¸­è¿›è¡Œåç§°è·å–
         /// </summary>
         string nowSceneName;
 
-        /// <summary>        /// ·µ»Ø¿ªÊ¼×´Ì¬£¬ÖØÖÃËùÓĞÈÎÎñ        /// </summary>
+        /// <summary>        /// è¿”å›å¼€å§‹çŠ¶æ€ï¼Œé‡ç½®æ‰€æœ‰ä»»åŠ¡        /// </summary>
         public static void ClearData()
         {
             Common.FileReadAndWrite.WriteFile(completeTaskPath, "");
@@ -67,7 +67,7 @@ namespace Task
 
         private AsynTaskControl()
         {
-            //¶àÏß³Ì¼ÓÔØ
+            //å¤šçº¿ç¨‹åŠ è½½
             AsyncLoad.Instance.AddAction(LoadTask);
         }
 
@@ -78,25 +78,25 @@ namespace Task
             nowSceneName = Common.GameLoad.Instance.SceneName;
             while(nowSceneName == null)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(1));  //ĞİÃß¸ÃÏß³Ì£¬µÈ´ı³¡¾°Ãû³Æ»ñÈ¡
+                Thread.Sleep(TimeSpan.FromSeconds(1));  //ä¼‘çœ è¯¥çº¿ç¨‹ï¼Œç­‰å¾…åœºæ™¯åç§°è·å–
             }
 
-            LoadAllTask();          //¼ÓÔØËùÓĞµÄÈÎÎñ
-            LoadObtainTask();       //¼ÓÔØËùÓĞ³ÖÓĞµÄÈÎÎñ
-            LoadCompleteTask();     //È·¶¨Íê³ÉµÄÈÎÎñ
-            ReadyTask();            //¿ªÊ¼Ö´ĞĞÈÎÎñ¼ì²â
+            LoadAllTask();          //åŠ è½½æ‰€æœ‰çš„ä»»åŠ¡
+            LoadObtainTask();       //åŠ è½½æ‰€æœ‰æŒæœ‰çš„ä»»åŠ¡
+            LoadCompleteTask();     //ç¡®å®šå®Œæˆçš„ä»»åŠ¡
+            ReadyTask();            //å¼€å§‹æ‰§è¡Œä»»åŠ¡æ£€æµ‹
         }
 
         Assembly assembly = Assembly.GetExecutingAssembly();
 
-        /// <summary>        /// Í¨¹ı·´Éä´´½¨ÕÂ½Ú¶ÔÏó        /// </summary>
-        /// <param name="chapterName">ÕÂ½ÚÃû³Æ</param>
+        /// <summary>        /// é€šè¿‡åå°„åˆ›å»ºç« èŠ‚å¯¹è±¡        /// </summary>
+        /// <param name="chapterName">ç« èŠ‚åç§°</param>
         private Chapter GetChapter(string chapterName)
         {
             return (Chapter)assembly.CreateInstance(chapterName);
         }
 
-        /// <summary>        /// Éú³ÉËùÓĞÈÎÎñµÄÓ³Éä¹ØÏµ±í        /// </summary>
+        /// <summary>        /// ç”Ÿæˆæ‰€æœ‰ä»»åŠ¡çš„æ˜ å°„å…³ç³»è¡¨        /// </summary>
         private void LoadAllTask()
         {
             string allTaskStr = Common.FileReadAndWrite.DirectReadFile(allTaskPath);
@@ -120,19 +120,19 @@ namespace Task
                 {
                     Debug.Log(target);
                 }
-                //Éú³ÉËùÓĞÕÂ½ÚµÄÓ³Éä¹ØÏµ£¬ÕÂ½Ú±àºÅ£ºÕÂ½ÚĞÅÏ¢
+                //ç”Ÿæˆæ‰€æœ‰ç« èŠ‚çš„æ˜ å°„å…³ç³»ï¼Œç« èŠ‚ç¼–å·ï¼šç« èŠ‚ä¿¡æ¯
                 taskMap.Add(chapterTask.chapterID, new TaskInfo {
                     Name = allTasks[i].Trim(), 
                     state = TaskMode.NotStart,
-                    //ÅĞ¶Ï¸ÃÈÎÎñÊÇ·ñÒªÔÚ¸Ã³¡¾°ÔËĞĞ
+                    //åˆ¤æ–­è¯¥ä»»åŠ¡æ˜¯å¦è¦åœ¨è¯¥åœºæ™¯è¿è¡Œ
                     isInRuntimeScene = (nowSceneName == chapterTask.runtimeScene), 
                 });
             }
         }
 
         /// <summary>
-        /// ¼ÓÔØ»ñÈ¡ÁËµÄÈÎÎñµÄÎÄ¼ş
-        /// ÈÎÎñ´æ´¢¸ñÊ½£º<ChapterId nowPartIndex>£¬ÕÂ½Ú±àºÅ+µ±Ç°×ÓÈÎÎñµÄ±àºÅ
+        /// åŠ è½½è·å–äº†çš„ä»»åŠ¡çš„æ–‡ä»¶
+        /// ä»»åŠ¡å­˜å‚¨æ ¼å¼ï¼š<ChapterId nowPartIndex>ï¼Œç« èŠ‚ç¼–å·+å½“å‰å­ä»»åŠ¡çš„ç¼–å·
         /// </summary>
         private void LoadObtainTask()
         {
@@ -144,16 +144,16 @@ namespace Task
                     string[] tremps = task[i].Split(' ');
                     int index = int.Parse(tremps[0]);
                     TaskInfo taskInfo = taskMap[index];
-                    //·Ç±¾³¡¾°µÄÈÎÎñ£¬Ö±½ÓÌø¹ı
+                    //éæœ¬åœºæ™¯çš„ä»»åŠ¡ï¼Œç›´æ¥è·³è¿‡
                     if (!taskInfo.isInRuntimeScene) continue;
 
-                    taskInfo.state = TaskMode.Start;     //ÔËĞĞÖĞ
+                    taskInfo.state = TaskMode.Start;     //è¿è¡Œä¸­
                     Chapter chapterTask = GetChapter(chapterPrefix + taskInfo.Name);
                     taskMap[index] = taskInfo;
 
-                    //²åÈëµ½ÕıÔÚÔËĞĞµÄÈÎÎñÊı×éÖĞ
+                    //æ’å…¥åˆ°æ­£åœ¨è¿è¡Œçš„ä»»åŠ¡æ•°ç»„ä¸­
                     exectuteTasks.Add(chapterTask);
-                    //ÉèÖÃÍ¬Ê±Æô¶¯
+                    //è®¾ç½®åŒæ—¶å¯åŠ¨
                     chapterTask.SetNowTaskPart(int.Parse(tremps[1]));
                 }
                 task.Clear();
@@ -166,11 +166,11 @@ namespace Task
 
         }
 
-        /// <summary>        /// ¼ÓÔØËùÓĞÍê³ÉÁËµÄÈÎÎñ        /// </summary>
+        /// <summary>        /// åŠ è½½æ‰€æœ‰å®Œæˆäº†çš„ä»»åŠ¡        /// </summary>
         private void LoadCompleteTask()
         {
             string completeTask = Common.FileReadAndWrite.DirectReadFile(completeTaskPath);
-            //¸³ÖµÍê³ÉµÄÈÎÎñÁĞ±í
+            //èµ‹å€¼å®Œæˆçš„ä»»åŠ¡åˆ—è¡¨
             if (completeTask != null && !completeTask.Equals(""))
             {
                 string[] comTasks = completeTask.Split('\n');
@@ -182,27 +182,27 @@ namespace Task
                         if (int.TryParse(comTasks[i], out value))
                         {
                             TaskInfo task = taskMap[value];
-                            task.state = TaskMode.Finish;     //±íÊ¾Íê³É
+                            task.state = TaskMode.Finish;     //è¡¨ç¤ºå®Œæˆ
                             taskMap[value] = task;
 
-                            //·ÇÔËĞĞÔÚ±¾³¡¾°£¬±êÊ¶ÎªÍê³ÉºóÌø¹ı
-                            if (!task.isInRuntimeScene) continue;
+                            //éè¿è¡Œåœ¨æœ¬åœºæ™¯ï¼Œæ ‡è¯†ä¸ºå®Œæˆåè·³è¿‡
+                            //if (!task.isInRuntimeScene) continue;
 
                             Chapter chapterTask = GetChapter(chapterPrefix + task.Name);
-                            chapterTask.CompleteChapter();      //µ÷ÓÃÈÎÎñÍê³ÉµÄ·½·¨
+                            chapterTask.CompleteChapter(task.isInRuntimeScene);      //è°ƒç”¨ä»»åŠ¡å®Œæˆçš„æ–¹æ³•
                         }
                     }
                 }
             }
         }
 
-        /// <summary>        /// ÔËĞĞÈÎÎñ        /// </summary>
+        /// <summary>        /// è¿è¡Œä»»åŠ¡        /// </summary>
         private void ReadyTask()
         {
             if (taskMap == null) return;
             foreach(TaskInfo info in taskMap.Values)
             {
-                //Î´¿ªÊ¼µÄÈÎÎñ¾Íµ÷ÓÃ¼ì²é·½·¨¿´¿´ÊÇ·ñÒª¿ªÊ¼¸ÃÈÎÎñ
+                //æœªå¼€å§‹çš„ä»»åŠ¡å°±è°ƒç”¨æ£€æŸ¥æ–¹æ³•çœ‹çœ‹æ˜¯å¦è¦å¼€å§‹è¯¥ä»»åŠ¡
                 if (info.state != TaskMode.NotStart || !info.isInRuntimeScene)
                     continue;
                 Chapter chapterTask = GetChapter(chapterPrefix + info.Name);
@@ -211,24 +211,24 @@ namespace Task
         }
 
         /// <summary>
-        /// ¼ì²éÈÎÎñÊÇ·ñÍê³É£¬ÈÎÎñ¼ÓÔØÊÇÒÔ·ÖÖ§Îª¸ù¾İµÄ£¬ËùÒÔÖ»ĞèÒª¼ì²éÇ°ÃæÊÇ·ñÒÑ¾­Íê³É¾Í¹»ÁË£¬
-        /// Òò´ËÕâÀïÖ»Ìá¹©¼ì²éµÄ·½·¨
+        /// æ£€æŸ¥ä»»åŠ¡æ˜¯å¦å®Œæˆï¼Œä»»åŠ¡åŠ è½½æ˜¯ä»¥åˆ†æ”¯ä¸ºæ ¹æ®çš„ï¼Œæ‰€ä»¥åªéœ€è¦æ£€æŸ¥å‰é¢æ˜¯å¦å·²ç»å®Œæˆå°±å¤Ÿäº†ï¼Œ
+        /// å› æ­¤è¿™é‡Œåªæä¾›æ£€æŸ¥çš„æ–¹æ³•
         /// </summary>
-        /// <param name="taskId">ÈÎÎñµÄ±àºÅ£¬×¢Òâ¸Ã±àºÅÖµÒªÎ¨Ò»</param>
+        /// <param name="taskId">ä»»åŠ¡çš„ç¼–å·ï¼Œæ³¨æ„è¯¥ç¼–å·å€¼è¦å”¯ä¸€</param>
         public bool CheckChapterIsComplete(int taskId)
         {
             return taskMap[taskId].state == TaskMode.Finish;
         }
 
-        /// <summary>        /// ÈÎÎñÍê³ÉµÄÍ¨ÓÃĞĞÎª£¬½«¸ÃÈÎÎñÍË³ö£¬È»ºó±£´æÎÄ¼ş        /// </summary>
-        /// <param name="chapter">ÒªÍê³ÉµÄÈÎÎñ</param>
+        /// <summary>        /// ä»»åŠ¡å®Œæˆçš„é€šç”¨è¡Œä¸ºï¼Œå°†è¯¥ä»»åŠ¡é€€å‡ºï¼Œç„¶åä¿å­˜æ–‡ä»¶        /// </summary>
+        /// <param name="chapter">è¦å®Œæˆçš„ä»»åŠ¡</param>
         public void CompleteChapter(Chapter chapter)
         {
             exectuteTasks.Remove(chapter);
-            //µ÷ÓÃÍË³öº¯Êı
+            //è°ƒç”¨é€€å‡ºå‡½æ•°
             chapter.ExitChapter();
             TaskInfo info = taskMap[chapter.chapterID];
-            info.state = TaskMode.Finish;         //Íê³ÉÈÎÎñ
+            info.state = TaskMode.Finish;         //å®Œæˆä»»åŠ¡
             taskMap[chapter.chapterID] = info;
 
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("");
@@ -244,7 +244,7 @@ namespace Task
             stringBuilder.Clear();
         }
 
-        /// <summary>        /// ±£´æÄ¿Ç°ÔËĞĞµÄÈÎÎñ        /// </summary>
+        /// <summary>        /// ä¿å­˜ç›®å‰è¿è¡Œçš„ä»»åŠ¡        /// </summary>
         public void SaveObtainChapter()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("");
@@ -252,7 +252,7 @@ namespace Task
             for (int i = 0; i < exectuteTasks.Count; i++)
             {
                 if (exectuteTasks[i].taskPartCount <= exectuteTasks[i].nowCompletePartId)
-                    Debug.LogError("³¬ÁË");
+                    Debug.LogError("è¶…äº†");
                 stringBuilder.Append("<" 
                     + exectuteTasks[i].chapterID.ToString() + ' ' 
                     + exectuteTasks[i].nowCompletePartId.ToString() + ">");
@@ -262,27 +262,27 @@ namespace Task
             stringBuilder.Clear();
         }
 
-        /// <summary>        /// »ñÈ¡Ä¿Ç°ÕıÔÚÔËĞĞµÄËùÓĞÈÎÎñ        /// </summary>
+        /// <summary>        /// è·å–ç›®å‰æ­£åœ¨è¿è¡Œçš„æ‰€æœ‰ä»»åŠ¡        /// </summary>
         public List<Chapter> GetExecuteChapter()
         {
             return exectuteTasks;
         }
 
         /// <summary>
-        /// ÖØĞÂ¼ÓÔØÒ»´ÎÈÎÎñ£¬¿ÉÔÚÇĞ»»³¡¾°ºóµ÷ÓÃ£¬ÓÃÀ´ÅĞ¶ÏÕâ¸ö³¡¾°ÖĞµÄÈÎÎñ
+        /// é‡æ–°åŠ è½½ä¸€æ¬¡ä»»åŠ¡ï¼Œå¯åœ¨åˆ‡æ¢åœºæ™¯åè°ƒç”¨ï¼Œç”¨æ¥åˆ¤æ–­è¿™ä¸ªåœºæ™¯ä¸­çš„ä»»åŠ¡
         /// </summary>
         public void ReLoadTask()
         {
             AsyncLoad.Instance.AddAction(LoadTask);
         }
 
-        /// <summary>        /// »ñÈ¡µ¥¸öÕæÕıÔËĞĞµÄÈÎÎñ        /// </summary>
+        /// <summary>        /// è·å–å•ä¸ªçœŸæ­£è¿è¡Œçš„ä»»åŠ¡        /// </summary>
         public Chapter GetExecuteChapterByIndex(int index)
         {
             return exectuteTasks[index];
         }
 
-        /// <summary>        /// ¼ì²éÈÎÎñµÄµ÷ÓÃº¯Êı        /// </summary>
+        /// <summary>        /// æ£€æŸ¥ä»»åŠ¡çš„è°ƒç”¨å‡½æ•°        /// </summary>
         public void CheckChapter(int chaptherId, Interaction.InteracteInfo data)
         {
             for (int i = 0; i < exectuteTasks.Count; i++)
@@ -297,10 +297,10 @@ namespace Task
 
 
         /// <summary>
-        /// Ìí¼ÓÕÂ½Úº¯Êı£¬ÓÃÓÚ´´½¨Ò»¸öĞÂÕÂ½Ú
+        /// æ·»åŠ ç« èŠ‚å‡½æ•°ï¼Œç”¨äºåˆ›å»ºä¸€ä¸ªæ–°ç« èŠ‚
         /// </summary>
-        /// <param name="chapter">ÕÂ½ÚÃû³Æ</param>
-        /// <returns>ÊÇ·ñÌí¼Ó³É¹¦</returns>
+        /// <param name="chapter">ç« èŠ‚åç§°</param>
+        /// <returns>æ˜¯å¦æ·»åŠ æˆåŠŸ</returns>
         public bool AddChapter(Chapter chapter)
         {
             if (exectuteTasks == null)
@@ -316,7 +316,7 @@ namespace Task
                 {
                     if (exectuteTasks[i].chapterID == chapter.chapterID)
                     {
-                        Debug.Log("³öÏÖÖØ¸´ÈÎÎñ");
+                        Debug.Log("å‡ºç°é‡å¤ä»»åŠ¡");
                         return false;
                     }
                 }
@@ -330,7 +330,7 @@ namespace Task
         public bool AddChapter(int chapterId)
         {
             TaskInfo info = taskMap[chapterId];
-            //·Ç±¾³¡¾°µÄÈÎÎñ£¬Ö±½ÓÌø¹ı
+            //éæœ¬åœºæ™¯çš„ä»»åŠ¡ï¼Œç›´æ¥è·³è¿‡
             if (!info.isInRuntimeScene) return false;
             if (info.state != 0)
                 return false;
@@ -354,8 +354,8 @@ namespace Task
 
         }
 
-        /// <summary>        /// ×¼±¸ÕÂ½Ú£¬¿ÉÒÔ×÷ÎªÕÂ½ÚµÄÆô¶¯·½·¨        /// </summary>
-        /// <param name="chapterId">ÕÂ½Ú±àºÅ</param>
+        /// <summary>        /// å‡†å¤‡ç« èŠ‚ï¼Œå¯ä»¥ä½œä¸ºç« èŠ‚çš„å¯åŠ¨æ–¹æ³•        /// </summary>
+        /// <param name="chapterId">ç« èŠ‚ç¼–å·</param>
         public void ReadyChapter(int chapterId)
         {
             TaskInfo taskInfo = taskMap[chapterId];

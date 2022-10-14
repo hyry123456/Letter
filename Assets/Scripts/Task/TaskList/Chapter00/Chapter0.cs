@@ -25,7 +25,7 @@ namespace Task {
             AsynTaskControl.Instance.AddChapter(chapterID);     
         }
 
-        public override void CompleteChapter()
+        public override void CompleteChapter(bool isInThisScene)
         {
             Debug.Log("第一章已经完成了");
         }

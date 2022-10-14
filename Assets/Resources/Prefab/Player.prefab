@@ -200,7 +200,7 @@ MonoBehaviour:
   runSpeed: 10
   walkSpeed: 5
   rotateSpeed: 10
-  attackDistance: 0
+  attackDistance: 1
   defaultSkill:
   - SingleBullet
   - HookRope
