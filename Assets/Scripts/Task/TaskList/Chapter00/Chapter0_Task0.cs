@@ -7,6 +7,11 @@ namespace Task
     {
         Common.NPC_Pooling npc;
 
+        public Chapter0_Task0()
+        {
+            this.partDescription = "前往陌生人处进行对话";
+        }
+
         public override void EnterTaskEvent(Chapter chapter, bool isLoaded)
         {
             this.chapter = chapter;
@@ -22,14 +27,13 @@ namespace Task
         {
             //单单显示下对话，不需要什么额外操作
             UI.BigDialog.Instance.ShowBigdialog(chapter.GetDiglogText(0), null);
-            Package.PackageSimple.Instance.AddItem("Letter");
             return true;
         }
 
         bool BeginNPCDialog()
         {
             GameObject NPC = Resources.Load<GameObject>("Prefab/Character/NPC_Simple");
-            npc = (Common.NPC_Pooling)Common.SceneObjectPool.Instance.GetObject(
+            npc = Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>(
                 "NPC_Simple", NPC, new Vector3(280, 0.5f, 180), Quaternion.identity);
             InteracteDelegate interacte = npc.gameObject.AddComponent<InteracteDelegate>();
             interacte.interDelegate = () =>

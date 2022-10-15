@@ -17,7 +17,10 @@ namespace Task
         /// </summary>
         /// <param name="chapter">所属章节</param>
         /// <param name="isLoaded">是否加载过，false就是第一次加载</param>
-        public abstract void EnterTaskEvent(Chapter chapter, bool isLoaded);
+        public virtual void EnterTaskEvent(Chapter chapter, bool isLoaded)
+        {
+            this.chapter = chapter;
+        }
         /// <summary>
         /// 是否任务完成任务，用于检测任务是否完成，一般只有在传入一个任务交互，同时该交互的对应章节ID
         /// 就是该任务时才会进行使用，一般不用担心是否会交互出错，也就是被其他任务调用了

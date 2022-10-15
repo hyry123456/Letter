@@ -52,7 +52,7 @@ namespace UI
 
             for (int i=0; i<items.Count; i++)
             {
-                UIPackageItem item = (UIPackageItem)SceneObjectPool.Instance.GetObject(
+                UIPackageItem item = SceneObjectPool.Instance.GetObject<UIPackageItem> (
                     "PackageItem", origin, Vector3.zero, Quaternion.identity);
                 item.SetImage(items[i], this);
                 item.transform.parent = context;

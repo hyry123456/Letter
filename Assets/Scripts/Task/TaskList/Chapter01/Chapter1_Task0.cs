@@ -10,6 +10,11 @@ namespace Task
     /// </summary>
     public class Chapter1_Task0 : ChapterPart
     {
+        public Chapter1_Task0()
+        {
+            this.partDescription = "沿着石子路前往坤家";
+        }
+
         //初始化NPC的编号，不要一次全部加载出来
         int index;
         GameObject npc; //普通NPC
@@ -38,8 +43,7 @@ namespace Task
                         childe = Resources.Load<GameObject>("Prefab/Character/Childe");
                         return false;
                     }
-                    childeNPC = (Common.NPC_Pooling)
-                        Common.SceneObjectPool.Instance.GetObject("Childe", childe, new Vector3(155, 7.6f, 110),
+                    childeNPC = Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>("Childe", childe, new Vector3(155, 7.6f, 110),
                         new Vector3(156, 7.6f, 110));
                     interacte = childeNPC.gameObject.AddComponent<InteracteDelegate>();
                     interacte.interDelegate = () =>
@@ -65,14 +69,14 @@ namespace Task
                         npc = Resources.Load<GameObject>("Prefab/Character/NPC_Simple");
                         return false;
                     }
-                    npcs.Add((Common.NPC_Pooling)
-                        Common.SceneObjectPool.Instance.GetObject("NPC_Simple", npc, new Vector3(155, 0.5f, 152),
+                    npcs.Add(
+                        Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling> ("NPC_Simple", npc, new Vector3(155, 0.5f, 152),
                         Quaternion.identity));
                     index++;
                     return false;
                 case 2:             //加载侍女2
-                    npcs.Add((Common.NPC_Pooling)
-                        Common.SceneObjectPool.Instance.GetObject("NPC_Simple", npc, new Vector3(155, 0.5f, 153),
+                    npcs.Add(
+                        Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>("NPC_Simple", npc, new Vector3(155, 0.5f, 153),
                         Quaternion.identity));
                     index++;
                     return false;

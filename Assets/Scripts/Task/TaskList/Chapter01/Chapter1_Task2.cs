@@ -36,7 +36,7 @@ namespace Task
                 childe = Resources.Load<GameObject>("Prefab/Character/Childe");
                 return false;
             }
-            childePooling = (Common.NPC_Pooling)Common.SceneObjectPool.Instance.GetObject(
+            childePooling = Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>(
                 "Childe", childe, new Vector3(155, 7.6f, 110),
                         new Vector3(156, 7.6f, 110));
             InteracteDelegate interacte = childePooling.gameObject.AddComponent<InteracteDelegate>();
@@ -60,6 +60,7 @@ namespace Task
 
         public override void ExitTaskEvent(Chapter chapter)
         {
+            //πÿ±’…Ÿ“Ø
             childePooling.CloseObject();
         }
 

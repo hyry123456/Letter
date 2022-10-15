@@ -52,10 +52,10 @@ namespace Common
         /// <param name="origin">根据的物体</param>
         /// <param name="postion">初始化的位置</param>
         /// <param name="quaternion">旋转数据</param>
-        public ObjectPoolBase GetObject(string name, GameObject origin,
-            Vector3 postion, Quaternion quaternion)
+        public T GetObject<T>(string name, GameObject origin,
+            Vector3 postion, Quaternion quaternion) where T : ObjectPoolBase
         {
-            ObjectPoolBase objectPool = GetData(name, origin);
+            T objectPool = (T)GetData(name, origin);
             objectPool.InitializeObject(postion, quaternion);
             return objectPool;
         }
@@ -68,10 +68,10 @@ namespace Common
         /// <param name="origin">根据的物体</param>
         /// <param name="postion">初始化的位置</param>
         /// <param name="lookAt">物体看向的目标位置</param>
-        public ObjectPoolBase GetObject(string name, GameObject origin,
-            Vector3 postion, Vector3 lookAt)
+        public T GetObject<T>(string name, GameObject origin,
+            Vector3 postion, Vector3 lookAt) where T : ObjectPoolBase
         {
-            ObjectPoolBase objectPool = GetData(name, origin);
+            T objectPool = (T)GetData(name, origin);
             objectPool.InitializeObject(postion, lookAt);
             return objectPool;
         }

@@ -78,8 +78,8 @@ namespace Task
             //循环创建所有的敌人
             for(; enemyIndex < enemyPoss.Length;)
             {
-                Control.EnemyControl enemy = (Control.EnemyControl)
-                    Common.SceneObjectPool.Instance.GetObject("Enemy", origin, enemyPoss[enemyIndex], 
+                Control.EnemyControl enemy = Common.SceneObjectPool.Instance.
+                    GetObject<Control.EnemyControl>("Enemy", origin, enemyPoss[enemyIndex], 
                     Quaternion.identity);
                 Info.EnemyInfo enemyInfo = enemy.GetComponent<Info.EnemyInfo>();
                 enemyInfo.dieBehavior = EnemyDieBehavior;

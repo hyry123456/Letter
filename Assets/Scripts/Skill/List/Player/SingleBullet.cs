@@ -22,7 +22,7 @@ namespace Skill
             Camera camera = Camera.main;
             if (camera == null) return;
             Bullet_Pooling bullet_Pooling = 
-                (Bullet_Pooling)Common.SceneObjectPool.Instance.GetObject("Pooling_Bullet", 
+                Common.SceneObjectPool.Instance.GetObject<Bullet_Pooling>("Pooling_Bullet", 
                 originBullet, mana.transform.position + camera.transform.forward, 
                 camera.transform.rotation);
             bullet_Pooling.attackTargetTag = "Enemy";

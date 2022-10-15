@@ -1,5 +1,4 @@
 ﻿
-using DefferedRender;
 using UnityEngine;
 
 namespace Motor
@@ -22,8 +21,11 @@ namespace Motor
         private bool desiredJump = false;
 
         public float jumpHeight = 2f;
-        /// <summary>    /// 最大跳跃次数    /// </summary>
+        /// <summary>    
+        /// 最大空中跳跃次数，注意这个是空中跳，不包含地面跳跃
+        /// </summary>
         public int maxAirJumps = 2;
+        [SerializeField]
         private int airJumps = 0;
 
         /// <summary>    /// 是否在地面上    /// </summary>
@@ -88,28 +90,6 @@ namespace Motor
             characterInfo = GetComponent<Info.CharacterInfo>();
             if (characterInfo == null) Debug.LogError("角色信息为空");
 
-            drawData = new ParticleDrawData
-            {
-                beginPos = transform.position,
-                //beginSpeed = Vector3.up * 3,
-                speedMode = SpeedMode.VerticalVelocityOutside,
-                useGravity = false,
-                followSpeed = true,
-                //radian = 3.14f,
-                //radius = 10f,
-                cubeOffset = new Vector3(1, 0.2f, 1),
-                lifeTime = 3,
-                showTime = 3,
-                frequency = 1f,
-                octave = 8,
-                intensity = 10,
-                sizeRange = Vector2.up * 0.5f,
-                colorIndex = ColorIndexMode.HighlightToAlpha,
-                sizeIndex = SizeCurveMode.Small_Hight_Small,
-                textureIndex = 0,
-                groupCount = 100,
-            };
-
         }
 
         public void Move(float horizontal, float vertical)
@@ -126,10 +106,6 @@ namespace Motor
                 desiredVelocity = Vector3.forward * playInput.x + Vector3.right * playInput.y;
             }
             desiredVelocity = desiredVelocity * characterInfo.runSpeed;
-
-            //与运算，防止输入被关闭
-            desiredJump |= Input.GetButtonDown("Jump");
-
         }
 
         private void FixedUpdate()
@@ -162,12 +138,14 @@ namespace Motor
             stepSinceLastGround += 1;
             stepSinceLastJump += 1;
             velocity = body.velocity;
+
             //当不在地面时执行贴近地面方法
             if (onGround/*在地上*/ || SnapToGround()/*可以贴近地面，也就是刚刚未经过跳跃，但是飞了出去*/
                 || CheckSteepContacts()/*在斜面上，且被斜面包围*/)
             {
-                stepSinceLastGround = 0;
                 airJumps = 0;
+
+                stepSinceLastGround = 0;
 
                 contactNormal.Normalize();
                 LoadTargetY(desiredVelocity);
@@ -211,7 +189,6 @@ namespace Motor
             {
                 //在斜面就用斜面方向，同时添加一个向上的方向，保证能够往上爬
                 jumpDirction = (steepNormal + Vector3.up).normalized;
-                airJumps = -1;
                 //在斜面时根据斜面方向调整旋转方向
                 LoadTargetY(steepNormal);
             }
@@ -219,7 +196,6 @@ namespace Motor
             {
                 //如果不在地上也不在斜面，并且可以在空中跳跃
                 jumpDirction = Vector3.up;
-
                 //根据期望调整方向
                 LoadTargetY(desiredVelocity);
             }
@@ -281,9 +257,6 @@ namespace Motor
             if(Vector3.Dot(dir, direct) < 0.3)
             {
                 maxSpeed = -1;
-                //body.useGravity = true;
-                //velocity *= 0.3f;
-                //这里还是把速度衰减去掉了，看起来更连贯一点 ————Egg
                 HookRopeManage.Instance.CloseHookRope();
                 return false;
             }
@@ -297,17 +270,6 @@ namespace Motor
             EvaluateCollision(collision);
         }
 
-        ParticleDrawData drawData;
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            drawData.beginSpeed = collision.contacts[0].normal * 3;
-            drawData.beginPos = collision.contacts[0].point;
-            drawData.cubeOffset.x = 1.0f - collision.contacts[0].normal.x;
-            drawData.cubeOffset.y = 1.0f - collision.contacts[0].normal.y;
-            drawData.cubeOffset.z = 1.0f - collision.contacts[0].normal.z;
-            //ParticleNoiseFactory.Instance.DrawCube(drawData);
-        }
 
         private void OnCollisionStay(Collision collision)
         {
@@ -367,6 +329,11 @@ namespace Motor
             //移动要根据这个平面的方向来移动，因此根据实际值与期望值的差确定要增加的速度大小，
             //然后乘以投影计算出来的X值以及Z值确定最后的移动值
             velocity += xAixs * (newX - currentX) + zAxis * (newZ - currentZ);
+
+            if (steepNormal.y == 0 && OnSteep)
+            {
+                velocity.y = Mathf.Max(velocity.y, 0);
+            }
         }
 
         /// <summary>

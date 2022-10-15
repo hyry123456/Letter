@@ -59,7 +59,7 @@ namespace Task
             }
             for(int i=0; i<poss.Length; i++)
             {
-                enemys[i] = (Control.EnemyControl)Common.SceneObjectPool.Instance.GetObject(
+                enemys[i] = Common.SceneObjectPool.Instance.GetObject<Control.EnemyControl>(
                     "Enemy", origin, poss[i], Quaternion.identity);
                 enemys[i].transform.localScale = Vector3.one * 4;
                 Info.CharacterInfo character = enemys[i].GetComponent<Info.CharacterInfo>();

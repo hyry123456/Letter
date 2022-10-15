@@ -38,7 +38,7 @@ namespace Skill
 
             begin = mana.transform.position + (cam.transform.forward +
                 cam.transform.right + cam.transform.up) * character.attackDistance;
-            useObj = (Sphere_Pooling)Common.SceneObjectPool.Instance.GetObject(
+            useObj = Common.SceneObjectPool.Instance.GetObject<Sphere_Pooling>(
                 "Sphere_Pooling", origin, begin, manaTran.position);        //朝向我们这边，方便碰撞检测
             useObj.collsionEnter = (Collision collision) =>
             {

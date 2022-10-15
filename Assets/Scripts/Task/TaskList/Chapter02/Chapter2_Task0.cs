@@ -6,6 +6,11 @@ namespace Task
     //章节2第一章，也就是启动一下传送祭坛传送而已
     public class Chapter2_Task0 : ChapterPart
     {
+        public Chapter2_Task0()
+        {
+            partDescription = "前往祭坛";
+        }
+
         float moveTime = 3f;
         float nowRadio;
 
@@ -18,10 +23,13 @@ namespace Task
             Common.SustainCoroutine.Instance.AddCoroutine(CreateAlterTrigger);
         }
 
+        //显示提示
         bool ShowHint()
         {
             UI.SmallDialog.Instance.ShowSmallDialog(
                 chapter.GetDiglogText(0), null);
+            //添加物品
+            Package.PackageSimple.Instance.AddItem<Package.Letter>("Letter");
             return true;
         }
 

@@ -32,7 +32,7 @@ namespace Task
             }
             if(npc == null)
             {
-                npc = (Common.NPC_Pooling)Common.SceneObjectPool.Instance.GetObject(
+                npc = Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>(
                     "NPC_Simple", origin, new Vector3(137, 21, 293), Quaternion.identity);
                 return false;
             }

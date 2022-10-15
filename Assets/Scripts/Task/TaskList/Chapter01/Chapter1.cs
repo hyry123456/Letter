@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Task
 {
@@ -8,8 +6,8 @@ namespace Task
     {
         public Chapter1()
         {
-            chapterName = "为何死，何为死";
-            chapterDescription = "半夜惨叫，心脏骤停，为何认定他杀";
+            chapterName = "疑云漫漫";
+            chapterDescription = "再入坤家庄";
             taskPartCount = 3;
             chapterID = 1;
 
@@ -45,7 +43,8 @@ namespace Task
 
         public override void ExitChapter()
         {
-            AsynTaskControl.Instance.AddChapter(2);
+            AsynTaskControl.Instance.AddChapter(2);     //主线任务
+            AsynTaskControl.Instance.AddChapter(4);     //支线任务
             return;
         }
     }

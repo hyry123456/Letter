@@ -25,7 +25,7 @@ namespace Task
             }
             Control.PlayerControl.Instance.transform.position = new Vector3(-211, 23, 277);
 
-            npc = (Common.NPC_Pooling)Common.SceneObjectPool.Instance.GetObject(
+            npc = Common.SceneObjectPool.Instance.GetObject<Common.NPC_Pooling>(
                 "Childe", origin, new Vector3(-270, 1.5f, 313),
                 Quaternion.Euler(new Vector3(0, 180, 0)));
             InteracteDelegate interacte = npc.gameObject.AddComponent<InteracteDelegate>();

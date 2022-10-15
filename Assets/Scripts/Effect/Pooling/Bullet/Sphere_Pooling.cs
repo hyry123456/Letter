@@ -69,12 +69,12 @@ public class Sphere_Pooling : ObjectPoolBase
         };
     }
 
-    /// <summary> /// 球体的移动由外界控制，球体本身只是一个碰撞器 /// </summary>
-    private void Update()
-    {
-        drawData.beginPos = transform.position;
-        ParticleNoiseFactory.Instance.DrawPos(drawData);
-    }
+    ///// <summary> /// 球体的移动由外界控制，球体本身只是一个碰撞器 /// </summary>
+    //private void Update()
+    //{
+    //    drawData.beginPos = transform.position;
+    //    ParticleNoiseFactory.Instance.DrawPos(drawData);
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {

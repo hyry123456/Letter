@@ -86,7 +86,7 @@ namespace Control
             if (time > buttleRayTime)
             {
                 time = 0;
-                Bullet_Pooling bullet_Pooling = (Bullet_Pooling)Common.SceneObjectPool.Instance.GetObject("Pooling_Bullet", originBullet,
+                Bullet_Pooling bullet_Pooling = Common.SceneObjectPool.Instance.GetObject<Bullet_Pooling>("Pooling_Bullet", originBullet,
                     transform.position + playerDir * enemyInfo.attackDistance, player.position);
                 bullet_Pooling.attackTargetTag = "Player";
             }

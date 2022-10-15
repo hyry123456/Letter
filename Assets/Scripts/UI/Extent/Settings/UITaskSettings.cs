@@ -52,7 +52,7 @@ namespace UI
             //在对象池中取出n个物体
             for (int i = 0; i < chapters.Count; i++)
             {
-                UITaskButton button = (UITaskButton)SceneObjectPool.Instance.GetObject(
+                UITaskButton button = SceneObjectPool.Instance.GetObject<UITaskButton>(
                     "TaskButton", origin, Vector3.zero, Quaternion.identity);
                 button.transform.parent = context;
                 button.transform.localScale = Vector3.one;

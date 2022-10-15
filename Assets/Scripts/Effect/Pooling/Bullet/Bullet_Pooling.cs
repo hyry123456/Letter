@@ -83,15 +83,15 @@ public class Bullet_Pooling : ObjectPoolBase
     private void FixedUpdate()
     {
         time += Time.deltaTime;
-        if(time > maxLifeTime)
+        if (time > maxLifeTime)
         {
             CloseObject();
             return;
         }
         transform.position += transform.forward * Time.deltaTime * moveSpeed;
-        drawData.beginPos = transform.position;
-        drawData.beginSpeed = transform.forward * moveSpeed;
-        ParticleNoiseFactory.Instance.DrawPos(drawData);
+        //drawData.beginPos = transform.position;
+        //drawData.beginSpeed = transform.forward * moveSpeed;
+        //ParticleNoiseFactory.Instance.DrawPos(drawData);
     }
 
     private void OnCollisionEnter(Collision collision)

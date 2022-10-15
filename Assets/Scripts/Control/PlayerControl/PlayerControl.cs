@@ -15,6 +15,9 @@ namespace Control
         /// <summary>     /// 判断是否启动控制      /// </summary>
         bool useControl = true;
         public bool UseControl => useControl;
+
+        public Motor.RigibodyMotor Motor => motor;
+
         /// <summary>        /// 启动角色控制        /// </summary>
         public void BeginControl()
         {

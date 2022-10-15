@@ -214,10 +214,10 @@ namespace Task
         /// 检查任务是否完成，任务加载是以分支为根据的，所以只需要检查前面是否已经完成就够了，
         /// 因此这里只提供检查的方法
         /// </summary>
-        /// <param name="taskId">任务的编号，注意该编号值要唯一</param>
-        public bool CheckChapterIsComplete(int taskId)
+        /// <param name="chapterId">任务的编号，注意该编号值要唯一</param>
+        public bool CheckChapterIsComplete(int chapterId)
         {
-            return taskMap[taskId].state == TaskMode.Finish;
+            return taskMap[chapterId].state == TaskMode.Finish;
         }
 
         /// <summary>        /// 任务完成的通用行为，将该任务退出，然后保存文件        /// </summary>
