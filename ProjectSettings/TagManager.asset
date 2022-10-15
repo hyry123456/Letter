@@ -6,11 +6,12 @@ TagManager:
   tags:
   - ControlObject
   - ControlObj_BeginClose
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Shelter
   - Water
   - UI
   - 
