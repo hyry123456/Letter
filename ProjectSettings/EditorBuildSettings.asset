@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Detective/BeginScene.unity
+    guid: 603f8812d277f1143ae6cb268d8410e1
+  - enabled: 1
     path: Assets/Scenes/Detective/AmongRemain.unity
     guid: eac7e9d30c570b54999af1914d46795d
   - enabled: 1
@@ -14,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Detective/ReceiveLetter.unity
     guid: 5077ed3e445eea348ade6552d02367b6
+  - enabled: 1
+    path: Assets/Scenes/Detective/FinalScene.unity
+    guid: 6a3e01101573e364aa1474e1d55c7b46
+  - enabled: 1
+    path: Assets/Scenes/Detective/EndScene.unity
+    guid: 73199be3890acc842b8e7624d37dbb6b
   m_configObjects: {}

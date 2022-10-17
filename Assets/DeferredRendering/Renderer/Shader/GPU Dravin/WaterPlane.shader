@@ -16,7 +16,7 @@ Shader "Unlit/WaterPlane"
         [NoScaleOffset] _BumpMap ("Normalmap ", 2D) = "bump" {}
         WaveSpeed ("Wave speed (map1 x,y; map2 x,y)", Vector) = (19,9,-16,-7)
         [NoScaleOffset] _ReflectiveColor ("Reflective color (RGB) fresnel (A) ", 2D) = "" {}
-        _HorizonColor ("Water color", COLOR)  = ( .172, .463, .435, 1)
+        _WaterColor ("Water color", COLOR)  = ( .172, .463, .435, .3)
 
         _Gloss("Specular Scale", Float) = 50
         _NearDistance("Near Distance", Range(0.0, 10.0)) = 0.01

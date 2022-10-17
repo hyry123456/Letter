@@ -56,7 +56,7 @@ MonoBehaviour:
     useFog: 1
     fogMaxHeight: 200
     fogMinHeight: 0
-    fogMaxDepth: 0.325
+    fogMaxDepth: 0.1
     fogMinDepth: 0
     fogDepthFallOff: 3
     fogPosYFallOff: 3

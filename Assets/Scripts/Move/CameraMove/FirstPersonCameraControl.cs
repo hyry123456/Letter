@@ -12,7 +12,7 @@ namespace Motor
         /// <summary>        /// 玩家输入        /// </summary>
         Vector2 playerInput;
         /// <summary>        /// 相机高度        /// </summary>
-        public float CameraHeight = 0;
+        public float CameraHeight = 3;
         /// <summary>    /// 获取相机视锥    /// </summary>
         Vector3 CameraHalfExtends
         {

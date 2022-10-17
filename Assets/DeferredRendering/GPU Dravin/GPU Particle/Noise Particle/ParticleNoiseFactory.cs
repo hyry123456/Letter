@@ -150,8 +150,8 @@ namespace DefferedRender
             colorKeys[1] = new GradientColorKey(); colorKeys[1].color = Color.white; colorKeys[0].time = 1;
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[4];
             alphaKeys[0] = new GradientAlphaKey(); alphaKeys[0].alpha = 0; alphaKeys[0].time = 0;
-            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.05f;
-            alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 1; alphaKeys[2].time = 0.95f;
+            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.2f;
+            alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 1; alphaKeys[2].time = 0.8f;
             alphaKeys[3] = new GradientAlphaKey(); alphaKeys[3].alpha = 0; alphaKeys[3].time = 1f;
             gradients[0].SetKeys(colorKeys, alphaKeys);
 
@@ -174,7 +174,7 @@ namespace DefferedRender
             gradients[2] = new Gradient();
             alphaKeys = new GradientAlphaKey[3];
             alphaKeys[0] = new GradientAlphaKey(); alphaKeys[0].alpha = 1; alphaKeys[0].time = 0;
-            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.95f;
+            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.8f;
             alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 0; alphaKeys[2].time = 1f;
             gradients[2].SetKeys(colorKeys, alphaKeys);     //颜色值不变
 
@@ -182,8 +182,8 @@ namespace DefferedRender
             gradients[3] = new Gradient();
             alphaKeys = new GradientAlphaKey[4];
             alphaKeys[0] = new GradientAlphaKey(); alphaKeys[0].alpha = 0; alphaKeys[0].time = 0;
-            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.05f;
-            alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 1; alphaKeys[2].time = 0.95f;
+            alphaKeys[1] = new GradientAlphaKey(); alphaKeys[1].alpha = 1; alphaKeys[1].time = 0.2f;
+            alphaKeys[2] = new GradientAlphaKey(); alphaKeys[2].alpha = 1; alphaKeys[2].time = 0.8f;
             alphaKeys[3] = new GradientAlphaKey(); alphaKeys[3].alpha = 0; alphaKeys[3].time = 1f;
             colorKeys = new GradientColorKey[2];
             colorKeys[0] = new GradientColorKey(); colorKeys[0].color = new Color(24.0f, 2.3f, 0);

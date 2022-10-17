@@ -38,7 +38,12 @@ namespace UI
 
         public Sprite GetTexture(string name)
         {
-            return texturesDictionary[name];
+            Sprite sprite = null;
+            if(!texturesDictionary.TryGetValue(name, out sprite))
+            {
+                Debug.LogError(name + " ²»´æÔÚ");
+            }
+            return sprite;
         }
     }
 }

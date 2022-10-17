@@ -25,7 +25,6 @@ namespace Motor
         /// 最大空中跳跃次数，注意这个是空中跳，不包含地面跳跃
         /// </summary>
         public int maxAirJumps = 2;
-        [SerializeField]
         private int airJumps = 0;
 
         /// <summary>    /// 是否在地面上    /// </summary>
@@ -127,7 +126,7 @@ namespace Motor
                 Rotate();
             }
 
-            velocity = Vector3.ClampMagnitude(velocity, 40);
+            velocity = Vector3.ClampMagnitude(velocity, 20);
 
             body.velocity = velocity;
             ClearState();

@@ -87,8 +87,8 @@ void InitialFactory(ParticleNodeData origin, inout NoiseParticleData particle){
             offsetPos = particle.random.xyz;
             break;
     }
-
-    float speed = length(origin.beginSpeed) * particle.random.y;    //根据速度大小确定一个随机速度
+    float ramdom = (particle.random.y + particle.random.x + particle.random.z) / 3.0;
+    float speed = length(origin.beginSpeed) * ramdom;    //根据速度大小确定一个随机速度
     float3 normal = normalize(origin.beginSpeed);
     float3 direct = normalize(offsetPos);
 
@@ -102,15 +102,17 @@ void InitialFactory(ParticleNodeData origin, inout NoiseParticleData particle){
             particle.nowSpeed = -normalize( (direct - normal * dot(direct, normal)) ) * speed;
             break;
         case 3:     //朝向起始位置的速度，也就是往中间汇集
-            particle.nowSpeed = -normalize(offsetPos) * speed;
+            particle.nowSpeed = -direct * speed;
             break;
         case 4:     //离开起始位置的速度，也就是从中间往外面跑
-            particle.nowSpeed = normalize(offsetPos) * speed;
+            particle.nowSpeed = direct * speed;
             break;
         default: //默认模式,传入速度就是初始化速度
             particle.nowSpeed = origin.beginSpeed * particle.random.xyz;
             break;
     }
+
+    // particle.nowSpeed = float3(0, 100, 0);
 
     //图片编号以及标记为存活
     particle.index = uint2(origin.initEnum.z, 1);

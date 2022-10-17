@@ -24,7 +24,7 @@ CBUFFER_START(UnityPerMaterial)
     float _WaveScale;
     float _RefrDistort;
     float3 _RefrColor;  //水透视时看到的颜色
-    float4 _HorizonColor;
+    float4 _WaterColor;
     float _Gloss;
 
     float3 _SpecularColor;
@@ -184,7 +184,7 @@ void frag(FragInput i,
     float3 bump = (bump0 + bump1) * 0.5;
     float3 normal = normalize( BlendNormalRNM(i.normal, bump) ) * 0.5 + 0.5;
 
-    _GBufferColorTex = float4(1, 0, 0, 0.3);
+    _GBufferColorTex = _WaterColor;
 
     _GBufferNormalTex = float4(normal, 1);
 }

@@ -62,7 +62,10 @@ namespace Common
         public GameObject FindControlObject(string name)
         {
             GameObject obj = null;
-            if (objectMap.TryGetValue(name, out obj)) { }
+           
+            if(objectMap == null) Debug.Log(name);
+            if (!objectMap.TryGetValue(name, out obj)) {
+            }
             return obj;
         }
 

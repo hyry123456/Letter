@@ -35,7 +35,7 @@ namespace Task
                     () =>
                     {
                         AsynTaskControl.Instance.CheckChapter(chapter.chapterID, new InteracteInfo());
-                        Control.SceneChangeControl.Instance.ChangeScene("MainScene");
+                        Control.SceneChangeControl.Instance.ChangeScene("FinalScene");
                     });
             };
             return true;

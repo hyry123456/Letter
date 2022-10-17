@@ -45,6 +45,7 @@ namespace ScriptAnimate
                 fXSetting.SetColorFilter(Color.white);
                 Debug.Log("ChangeScene " + TargetSceneName);
                 Control.SceneChangeControl.Instance.ChangeScene(TargetSceneName);
+                Task.AsynTaskControl.ClearData();
 
                 return true;
             }

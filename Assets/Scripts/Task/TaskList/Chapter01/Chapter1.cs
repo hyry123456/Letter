@@ -27,13 +27,13 @@ namespace Task
 
         public override void CompleteChapter(bool isInThisScene)
         {
-            Debug.Log("第二章完成");
             Common.SustainCoroutine.Instance.AddCoroutine(AddSkill);
             return;
         }
         //添加技能
         bool AddSkill()
         {
+            if (Control.PlayerControl.Instance == null) return true;
             Control.PlayerControl.Instance.AddSkill("SingleBullet");
             Control.PlayerControl.Instance.AddSkill("DetectiveView");
             Control.PlayerControl.Instance.AddSkill("WaveSickle");

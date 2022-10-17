@@ -27,7 +27,17 @@ namespace Task
 
         public override void CompleteChapter(bool isInThisScene)
         {
-            Debug.Log("第4章完成");
+            Common.SustainCoroutine.Instance.AddCoroutine(AddSkill);
+        }
+
+        bool AddSkill()
+        {
+            if (Control.PlayerControl.Instance == null) return true;
+            Control.PlayerControl.Instance.AddSkill("HookRope");
+            Control.PlayerControl.Instance.AddSkill("SingleBullet");
+            Control.PlayerControl.Instance.AddSkill("WaveSickle");
+            Control.PlayerControl.Instance.AddSkill("DetectiveView");
+            return true;
         }
 
         public override void ExitChapter()

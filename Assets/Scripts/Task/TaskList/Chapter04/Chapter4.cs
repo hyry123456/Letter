@@ -35,6 +35,8 @@ namespace Task
 
         bool AddSkill()
         {
+            if (Control.PlayerControl.Instance == null)
+                return true;
             Control.PlayerControl.Instance.Motor.maxAirJumps = 1;
             return true;
         }

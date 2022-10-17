@@ -55,7 +55,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7675198840180452834}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -117,8 +117,7 @@ MonoBehaviour:
   groundAcceleration: 10
   airAcceleration: 5
   jumpHeight: 2
-  maxAirJumps: 2
-  airJumps: 0
+  maxAirJumps: 0
   maxGroundAngle: 60
   maxStairAngle: 40
   maxSnapSpeed: 100
@@ -202,11 +201,7 @@ MonoBehaviour:
   walkSpeed: 5
   rotateSpeed: 10
   attackDistance: 1
-  defaultSkill:
-  - SingleBullet
-  - HookRope
-  - Accelerate
-  - WaveSickle
+  defaultSkill: []
   fXSetting: {fileID: 11400000, guid: c37d4c811b7c23842bf94550434951b9, type: 2}
 --- !u!114 &7675198840180452840
 MonoBehaviour:

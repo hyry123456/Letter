@@ -84,23 +84,24 @@ Material:
     - _RefrDistort: 0.15
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 1
+    - _Speed: 5
     - _SrcBlend: 1
     - _Steepness: 0.186
     - _UVSec: 0
-    - _WaveLength: 1
-    - _WaveScale: 0.15
+    - _WaveLength: 5
+    - _WaveScale: 0.02
     - _ZWrite: 0
     m_Colors:
     - WaveSpeed: {r: 5, g: 5, b: 5.52, a: 5}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Direction: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HorizonColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+    - _HorizonColor: {r: 1, g: 0, b: 0, a: 1}
     - _MainColor: {r: 0.13, g: 0.22, b: 0.38, a: 1}
     - _NearColor: {r: 0, g: 0.81578946, b: 1, a: 1}
     - _RefrColor: {r: 0.34, g: 0.85, b: 0.92, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WaterColor: {r: 0.172, g: 0.463, b: 0.435, a: 0.15686275}
     - _WaveDir0: {r: 1, g: -1, b: 0, a: 1}
-    - _WaveDir1: {r: 1, g: 2, b: 3, a: -1}
+    - _WaveDir1: {r: 3, g: 2, b: 3, a: -1}
   m_BuildTextureStacks: []

@@ -20,7 +20,7 @@ namespace ScriptAnimate
         private int nowIndex;
         private float nowRadio;
         [SerializeField]
-        bool beginUse = true;
+        bool beginUse = false;
 
         private void Start()
         {
@@ -36,7 +36,7 @@ namespace ScriptAnimate
         {
             if (!beginUse) return;
             if (points == null || nowIndex >= points.Length) return;
-            
+
             nowRadio += Time.deltaTime * (1.0f / times[0]);
             if(nowRadio > 1.0f)
             {
@@ -85,6 +85,7 @@ namespace ScriptAnimate
         public void BeginUse()
         {
             beginUse = true;
+            nowIndex = 1;
             scripts[0]?.BeginAnimate(this);
         }
 

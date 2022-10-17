@@ -27,7 +27,6 @@ namespace Task {
 
         public override void CompleteChapter(bool isInThisScene)
         {
-            Debug.Log("第一章已经完成了");
         }
 
         public override void ExitChapter()

@@ -36,7 +36,7 @@ namespace Control
             get
             {
                 if(instance == null)
-                    instance = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+                    instance = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerControl>();
                 return instance; 
             }
         }
