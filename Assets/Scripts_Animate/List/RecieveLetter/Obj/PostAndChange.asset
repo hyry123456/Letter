@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56e37b91ce2cac4b9eeb4620201cda0, type: 3}
   m_Name: PostAndChange
   m_EditorClassIdentifier: 
-  fXSetting: {fileID: 11400000, guid: c37d4c811b7c23842bf94550434951b9, type: 2}
+  fXSetting: {fileID: 11400000, guid: cd4dd73ad2664444885dfbd39a692807, type: 2}
   time: 3
   TargetSceneName: MainScene
